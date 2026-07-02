@@ -10,6 +10,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
+    <!-- iOS & Browser Theme Support -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tasbih Pro">
+<meta name="theme-color" content="#0ea5e9">
+
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 50%, #7dd3fc 100%);
@@ -522,6 +528,43 @@
     </div>
 
     <script>
+    
+    // Dynamic PWA Manifest Injector
+function setupDynamicPWA() {
+    const manifestData = {
+        "name": "Digital Tasbih - Pro Islamic Suite",
+        "short_name": "Tasbih Pro",
+        "description": "Premium Islamic Suite with Zikr and Breathing exercises.",
+        "display": "standalone",
+        "background_color": "#e0f2fe",
+        "theme_color": "#0ea5e9",
+        "orientation": "portrait",
+        "start_url": ".",
+        "icons": [
+            {
+                // এখানে একটি এক্সটার্নাল আইকনের লিংক দেওয়া হলো (তুমি চাইলে তোমার ড্রাইভ/হোস্টিং লিংক দিতে পারো)
+                "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRGi96bBE8ZPbVVdFlaqyWCbC4WilkD2QDOIOyp8rVg958g1iFN3POihyqvrWig2t9-PtGakrdR4WDxMMLpFBQwmZkEE_u8XhrF08tY1jZ9hVgDkT7zV3DLv_MSXtOMRuV7PIrPas9P3PfPKlHOrfLPjiOXo6ruLMTq-nhzWCCqzkGVCthqLb-eE2lQlA/s1600/beads.png", 
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any maskable"
+            }
+        ]
+    };
+
+    // JSON ডেটা থেকে Blob তৈরি করে ভার্চুয়াল URL জেনারেট করা
+    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+    const manifestURL = URL.createObjectURL(manifestBlob);
+    
+    // <head> এর ভেতর manifest লিংক অ্যাড করা
+    const link = document.createElement('link');
+    link.rel = 'manifest';
+    link.href = manifestURL;
+    document.head.appendChild(link);
+}
+
+// ফাংশনটি কল করা
+setupDynamicPWA();
+
         const zikrMetadata = [
             { name: "সুবহানাল্লাহ", meaning: "অর্থ: আল্লাহ পরম পবিত্র।", fazilat: "ফজিলত: আল্লাহর আরশের নিচে স্থান পাওয়ার আমল।" },
             { name: "আলহামদুলিল্লাহ", meaning: "অর্থ: সমস্ত প্রশংসা আল্লাহর জন্য।", fazilat: "ফজিলত: কেয়ামতের দিন নেকির পাল্লা ভারী করবে।" },
@@ -544,17 +587,27 @@
             }
         }
 
-        function checkNamazReminders() {
-            const now = new Date();
-            const currentMinutes = now.getHours() * 60 + now.getMinutes();
-            if (now.getSeconds() !== 0) return; 
+        let lastAlertedDateAndName = ""; // ডুপ্লিকেট অ্যালার্ট ঠেকানোর জন্য
 
-            for (let name in namazTimes) {
-                let [h, m] = namazTimes[name].split(':').map(Number);
-                let namazMinutes = h * 60 + m;
-                if (namazMinutes - currentMinutes === 15) triggerNamazAlert(name);
+function checkNamazReminders() {
+    const now = new Date();
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const todayStr = getTodayDateString();
+
+    for (let name in namazTimes) {
+        let [h, m] = namazTimes[name].split(':').map(Number);
+        let namazMinutes = h * 60 + m;
+        
+        // ওয়াক্তের ১৫ মিনিট আগে চেক
+        if (namazMinutes - currentMinutes === 15) {
+            let currentAlertSignature = name + "_" + todayStr;
+            if (lastAlertedDateAndName !== currentAlertSignature) {
+                triggerNamazAlert(name);
+                lastAlertedDateAndName = currentAlertSignature; // সেভ করে রাখা হলো
             }
         }
+    }
+}
 
         function triggerNamazAlert(namazName) {
             azanAudio.currentTime = 0; 
@@ -633,23 +686,28 @@
         }
 
         function checkAndUpdateStreak() {
-            const today = getTodayDateString();
-            if (lastActiveDate === "") {
-                streakCount = 1;
-            } else {
-                const prev = new Date(lastActiveDate);
-                const curr = new Date(today);
-                const diffTime = Math.abs(curr - prev);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const todayStr = getTodayDateString();
+    
+    if (lastActiveDate === "") {
+        streakCount = 1;
+    } else if (lastActiveDate !== todayStr) {
+        // শুধু ডেট কম্পেয়ার করার জন্য টাইম জিরো করে নেওয়া
+        const prev = new Date(lastActiveDate).setHours(0, 0, 0, 0);
+        const curr = new Date(todayStr).setHours(0, 0, 0, 0);
+        const diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
 
-                if (diffDays === 1) streakCount += 1;
-                else if (diffDays > 1) streakCount = 1; 
-            }
-            lastActiveDate = today;
-            localStorage.setItem('tb_streak', streakCount);
-            localStorage.setItem('tb_last_date', lastActiveDate);
-            streakText.innerText = `${bnNum(streakCount)} দিন`;
+        if (diffDays === 1) {
+            streakCount += 1; // ঠিক পরের দিন হলে স্ট্রিক বাড়বে
+        } else if (diffDays > 1) {
+            streakCount = 1; // গ্যাপ পড়লে আবার ১ থেকে শুরু
         }
+    }
+    lastActiveDate = todayStr;
+    localStorage.setItem('tb_streak', streakCount);
+    localStorage.setItem('tb_last_date', lastActiveDate);
+    streakText.innerText = `${bnNum(streakCount)} দিন`;
+}
+
 
         function logAnalytics(amount) {
             const today = getTodayDateString();
@@ -884,20 +942,41 @@
         document.getElementById('dailyInspirationText').innerText = inspirations[dayOfYear % inspirations.length];
 
         function updateRamadanTimer() {
-            const now = new Date(); const currentHour = now.getHours(); const currentMin = now.getMinutes(); const currentSec = now.getSeconds();
-            let targetHour = 18; let targetMin = 40; let label = "ইফতারের সময় বাকি";
-            const nowMinutes = currentHour * 60 + currentMin; const sehriMinutes = 4 * 60 + 30; const iftarMinutes = 18 * 60 + 40; 
-            if (nowMinutes < sehriMinutes || nowMinutes >= iftarMinutes) {
-                label = "সেহরির সময় বাকি"; targetHour = 4; targetMin = 30; if (nowMinutes >= iftarMinutes) targetHour += 24;
-            }
-            document.getElementById('ramadanLabel').innerText = label;
-            let diffHours = targetHour - currentHour; let diffMins = targetMin - currentMin; let diffSecs = 60 - currentSec;
-            if (diffSecs === 60) { diffSecs = 0; } else { diffMins--; }
-            if (diffMins < 0) { diffMins += 60; diffHours--; }
-            if (diffHours < 0) { diffHours += 24; }
-            const pad = num => num.toString().padStart(2, '0'); const bnStr = str => str.replace(/\d/g, d => ['০','১','২','৩','৪','৫','৬','৭','৮','৯'][d]);
-            document.getElementById('ramadanTimer').innerText = bnStr(`${pad(diffHours)}:${pad(diffMins)}:${pad(diffSecs)}`);
+    const now = new Date();
+    let target = new Date();
+    let label = "ইফতারের সময় বাকি";
+
+    // বর্তমান সময়কে মিনিটের হিসাবে বের করা
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    const sehriMinutes = 4 * 60 + 30; // 04:30 AM
+    const iftarMinutes = 18 * 60 + 40; // 06:40 PM
+
+    if (currentMinutes >= sehriMinutes && currentMinutes < iftarMinutes) {
+        // ইফতারের টার্গেট (আজকের ১৮:৪০)
+        target.setHours(18, 40, 0, 0);
+    } else {
+        label = "সেহরির সময় বাকি";
+        // সেহরির টার্গেট (যদি ইফতার পার হয়ে যায়, তাহলে পরের দিনের ০৪:৩০)
+        target.setHours(4, 30, 0, 0);
+        if (currentMinutes >= iftarMinutes) {
+            target.setDate(target.getDate() + 1);
         }
+    }
+    
+    document.getElementById('ramadanLabel').innerText = label;
+
+    let diffMs = target - now;
+    if (diffMs < 0) diffMs = 0; // সেফটি চেক
+
+    let diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    let diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+    let diffSecs = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+    const pad = num => num.toString().padStart(2, '0');
+    const bnStr = str => str.replace(/\d/g, d => ['০','১','২','৩','৪','৫','৬','৭','৮','৯'][d]);
+    
+    document.getElementById('ramadanTimer').innerText = bnStr(`${pad(diffHours)}:${pad(diffMins)}:${pad(diffSecs)}`);
+}
         setInterval(updateRamadanTimer, 1000); updateRamadanTimer();
 
         const asmaulHusna = [
