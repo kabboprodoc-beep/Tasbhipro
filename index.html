@@ -10,11 +10,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    <!-- iOS & Browser Theme Support -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Tasbih Pro">
-<meta name="theme-color" content="#0ea5e9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tasbih Pro">
+    <meta name="theme-color" content="#0ea5e9">
 
     <style>
         :root {
@@ -62,10 +61,11 @@
             height: calc(100dvh - 70px);
             background: var(--container-bg);
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            padding: 20px 15px;
+            padding: 20px 15px 20px 15px; 
             overflow-y: auto;
             overflow-x: hidden;
             display: flex; flex-direction: column; gap: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .app-container::-webkit-scrollbar { display: none; }
@@ -75,6 +75,7 @@
             display: flex; justify-content: center; align-items: center;
             width: 100%; margin-bottom: 5px; padding-bottom: 10px;
             border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
         }
 
         .app-title { font-size: 1.3rem; font-weight: 700; color: var(--text-title); letter-spacing: 0.5px; }
@@ -82,6 +83,8 @@
         /* Widgets Grid */
         .widget-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+            transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+            overflow: hidden;
         }
 
         .mini-card {
@@ -100,6 +103,7 @@
             background: var(--panel-bg); border: 1px solid var(--panel-border);
             border-radius: 24px; padding: 15px; text-align: center; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.05); margin-top: 5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .target-badge {
@@ -117,21 +121,35 @@
         .meaning-box { margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); min-height: 38px; line-height: 1.3; }
 
         /* Inputs Area */
-        .inputs-group { display: flex; gap: 10px; margin-top: 5px; }
+        .inputs-group { 
+            display: flex; gap: 10px; margin-top: 5px; width: 100%; 
+            transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+            overflow: hidden;
+        }
+        
         .zikr-select {
             flex: 1; padding: 12px; background: var(--panel-bg);
             border: 1px solid rgba(14, 165, 233, 0.2); border-radius: 14px;
-            color: var(--text-title); font-size: 0.95rem; font-weight: 600;
+            color: var(--text-title); font-size: 0.9rem; font-weight: 600;
             outline: none; cursor: pointer;
+            width: 100%; max-width: 100%;
+            min-width: 0;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
         }
+        
         .custom-input {
             flex: 0.4; padding: 12px; background: var(--panel-bg);
             border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 14px;
             color: var(--text-title); font-size: 0.95rem; font-weight: 600; text-align: center;
-            display: none; outline: none;
+            display: none; outline: none; min-width: 0;
         }
 
         /* Controller Area */
+        .controller-section {
+            display: flex; flex-direction: row; justify-content: space-evenly; align-items: center; 
+            margin-top: auto; padding-bottom: 10px; width: 100%; flex-shrink: 0;
+        }
+
         .main-tap-btn {
             width: 140px; height: 140px; border-radius: 50%;
             background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
@@ -151,7 +169,11 @@
 
         @keyframes pulse-blue { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.22); opacity: 0; } }
 
-        .action-btn-wrapper { display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-muted); font-weight: 600;}
+        .action-btn-wrapper { 
+            display: flex; flex-direction: column; align-items: center; gap: 6px; 
+            font-size: 0.85rem; color: var(--text-muted); font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
         
         .icon-btn {
             background: var(--btn-bg); border: 1px solid rgba(14, 165, 233, 0.2);
@@ -187,6 +209,7 @@
             display: flex; justify-content: space-around; align-items: center;
             z-index: 900 !important; padding-bottom: env(safe-area-inset-bottom);
             box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .nav-item {
@@ -196,6 +219,27 @@
         }
         .nav-item.active { color: #0ea5e9; }
         .nav-icon { font-size: 1.3rem; margin-bottom: 2px; }
+
+        /* Zen Mode Toggle Button Styles */
+        .zen-toggle-btn {
+            position: absolute; right: 0;
+            background: var(--btn-bg); border: 1px solid rgba(14, 165, 233, 0.2);
+            color: var(--text-title); width: 36px; height: 36px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; transition: 0.2s; font-size: 0.9rem;
+        }
+
+        .zen-toggle-btn.active { 
+            background: #10b981; color: white; border-color: #10b981; 
+        }
+
+        /* --- ZEN MODE LOGIC --- */
+        body.is-zen-mode .bottom-nav { transform: translateY(100%); }
+        body.is-zen-mode .app-container { height: 100dvh; justify-content: center; padding-bottom: 40px; }
+        body.is-zen-mode .widget-grid { max-height: 0; opacity: 0; margin: 0; gap: 0; }
+        body.is-zen-mode .inputs-group { max-height: 0; opacity: 0; margin: 0; pointer-events: none; }
+        body.is-zen-mode .action-btn-wrapper { opacity: 0; pointer-events: none; }
+        body.is-zen-mode .display-panel { transform: scale(1.05); margin-bottom: 20px; }
 
         /* Slide-Up Dashboard/Settings Panels */
         .slide-overlay {
@@ -284,13 +328,19 @@
         .dev-item i { color: #0ea5e9; width: 16px; text-align: center; }
         .dev-item:last-child { margin-bottom: 0; }
         .export-opt:hover { background: rgba(14, 165, 233, 0.1); }
+
     </style>
 </head>
 <body>
 
-    <div class="app-container" id="appContainer">
+    <div class="app-container">
+
         <div class="top-bar">
             <span class="app-title"><i class="fa-solid fa-mosque"></i> তাসবিহ প্রো</span>
+            
+            <button class="zen-toggle-btn" id="zenToggleBtn" title="Zen Mode">
+                <i class="fa-solid fa-eye-slash"></i>
+            </button>
         </div>
 
         <div class="widget-grid">
@@ -336,13 +386,19 @@
                 <option value="34" data-idx="2">আল্লাহু আকবার (৩৪ বার)</option>
                 <option value="100" data-idx="3">লা ইলাহা ইল্লাল্লাহ (১০০ বার)</option>
                 <option value="100" data-idx="4">আস্তাগফিরুল্লাহ (১০০ বার)</option>
-                <option value="custom" data-idx="5">কাস্টম লক্ষ্য</option>
-                <option value="unlimited" data-idx="6">সীমাহীন</option>
+                <option value="100" data-idx="5">সুবহানাল্লাহি ওয়া বিহামদিহি, সুবহানাল্লাহিল আযীম (১০০ বার)</option>
+                <option value="100" data-idx="6">লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ (১০০ বার)</option>
+                <option value="100" data-idx="7">সুবহানাল্লাহি ওয়াল হামদুলিল্লাহি ওয়া লা ইলাহা ইল্লাল্লাহু ওয়াল্লাহু আকবার (১০০ বার)</option>
+                <option value="100" data-idx="8">আল্লাহুম্মা সাল্লি আলা মুহাম্মাদিওঁ ওয়া আলা আলি মুহাম্মাদ (১০০ বার)</option>
+                <option value="100" data-idx="9">ইয়া হাইয়্যু ইয়া কাইয়্যুম, বিরাহমতিকা আস্তাগিস (১০০ বার)</option>
+                <option value="100" data-idx="10">লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুনতু মিনাজ জলিহীন (১০০ বার)</option>
+                <option value="custom" data-idx="11">কাস্টম লক্ষ্য</option>
+                <option value="unlimited" data-idx="12">সীমাহীন</option>
             </select>
             <input type="number" class="custom-input" id="customInput" placeholder="১০০" min="1">
         </div>
 
-        <div class="controller-section" style="display: flex; flex-direction: row; justify-content: space-evenly; align-items: center; margin-top: auto; padding-bottom: 25px; width: 100%;">
+        <div class="controller-section">
             <div class="action-btn-wrapper">
                 <button class="icon-btn" id="minusBtn"><i class="fa-solid fa-minus"></i></button>
                 <span>কমান</span>
@@ -360,9 +416,8 @@
                 <span>রিসেট</span>
             </div>
         </div>
-    </div>
 
-    <div class="bottom-nav">
+    </div> <div class="bottom-nav">
         <div class="nav-item active" id="navHome">
             <i class="fa-solid fa-house nav-icon"></i>
             <span>হোম</span>
@@ -528,42 +583,37 @@
     </div>
 
     <script>
-    
-    // Dynamic PWA Manifest Injector
-function setupDynamicPWA() {
-    const manifestData = {
-        "name": "Digital Tasbih - Pro Islamic Suite",
-        "short_name": "Tasbih Pro",
-        "description": "Premium Islamic Suite with Zikr and Breathing exercises.",
-        "display": "standalone",
-        "background_color": "#e0f2fe",
-        "theme_color": "#0ea5e9",
-        "orientation": "portrait",
-        "start_url": ".",
-        "icons": [
-            {
-                // এখানে একটি এক্সটার্নাল আইকনের লিংক দেওয়া হলো (তুমি চাইলে তোমার ড্রাইভ/হোস্টিং লিংক দিতে পারো)
-                "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRGi96bBE8ZPbVVdFlaqyWCbC4WilkD2QDOIOyp8rVg958g1iFN3POihyqvrWig2t9-PtGakrdR4WDxMMLpFBQwmZkEE_u8XhrF08tY1jZ9hVgDkT7zV3DLv_MSXtOMRuV7PIrPas9P3PfPKlHOrfLPjiOXo6ruLMTq-nhzWCCqzkGVCthqLb-eE2lQlA/s1600/beads.png", 
-                "sizes": "512x512",
-                "type": "image/png",
-                "purpose": "any maskable"
-            }
-        ]
-    };
+        // Dynamic PWA Manifest Injector
+        function setupDynamicPWA() {
+            const manifestData = {
+                "name": "Digital Tasbih - Pro Islamic Suite",
+                "short_name": "Tasbih Pro",
+                "description": "Premium Islamic Suite with Zikr and Breathing exercises.",
+                "display": "standalone",
+                "background_color": "#e0f2fe",
+                "theme_color": "#0ea5e9",
+                "orientation": "portrait",
+                "start_url": ".",
+                "icons": [
+                    {
+                        "src": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRGi96bBE8ZPbVVdFlaqyWCbC4WilkD2QDOIOyp8rVg958g1iFN3POihyqvrWig2t9-PtGakrdR4WDxMMLpFBQwmZkEE_u8XhrF08tY1jZ9hVgDkT7zV3DLv_MSXtOMRuV7PIrPas9P3PfPKlHOrfLPjiOXo6ruLMTq-nhzWCCqzkGVCthqLb-eE2lQlA/s1600/beads.png", 
+                        "sizes": "512x512",
+                        "type": "image/png",
+                        "purpose": "any maskable"
+                    }
+                ]
+            };
 
-    // JSON ডেটা থেকে Blob তৈরি করে ভার্চুয়াল URL জেনারেট করা
-    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
-    const manifestURL = URL.createObjectURL(manifestBlob);
-    
-    // <head> এর ভেতর manifest লিংক অ্যাড করা
-    const link = document.createElement('link');
-    link.rel = 'manifest';
-    link.href = manifestURL;
-    document.head.appendChild(link);
-}
+            const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = manifestURL;
+            document.head.appendChild(link);
+        }
 
-// ফাংশনটি কল করা
-setupDynamicPWA();
+        setupDynamicPWA();
 
         const zikrMetadata = [
             { name: "সুবহানাল্লাহ", meaning: "অর্থ: আল্লাহ পরম পবিত্র।", fazilat: "ফজিলত: আল্লাহর আরশের নিচে স্থান পাওয়ার আমল।" },
@@ -571,8 +621,14 @@ setupDynamicPWA();
             { name: "আল্লাহু আকবার", meaning: "অর্থ: আল্লাহ সবচেয়ে মহান।", fazilat: "ফজিলত: আকাশ ও পৃথিবীর মধ্যবর্তী স্থান সওয়াবে পূর্ণ হয়।" },
             { name: "লা ইলাহা ইল্লাল্লাহ", meaning: "অর্থ: আল্লাহ ছাড়া কোনো উপাস্য নেই।", fazilat: "ফজিলত: এটি সর্বোত্তম জিকির এবং ইমানের মূল শাখা।" },
             { name: "আস্তাগফিরুল্লাহ", meaning: "অর্থ: আমি আল্লাহর নিকট ক্ষমা প্রার্থনা করছি।", fazilat: "ফজিলত: জীবিকায় বরকত আসে এবং দুশ্চিন্তা দূর হয়।" },
-            { name: "কাস্টম জিকির", meaning: "আপনার পছন্দনীয় যেকোনো আমল কাউন্ট করুন।", fazilat: "" },
-            { name: "সীমাহীন জিকির", meaning: "চলমান জিকিরের জন্য কোনো বাধ্যবাধকতা নেই।", fazilat: "" }
+            { name: "সুবহানাল্লাহি ওয়া বিহামদিহি, সুবহানাল্লাহিল আযীম", meaning: "অর্থ: আল্লাহ পরম পবিত্র এবং সমস্ত প্রশংসা তাঁরই, আল্লাহ মহান।", fazilat: "ফজিলত: এই জিকিরটি অনেক সহজ কিন্তু নেকির পাল্লায় অত্যন্ত ভারী।" },
+            { name: "লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ", meaning: "অর্থ: আল্লাহর সাহায্য ও শক্তি ছাড়া কোনো পরিবর্তন বা ক্ষমতা নেই।", fazilat: "ফজিলত: এটি জান্নাতের গুপ্তধনগুলোর মধ্যে একটি।" },
+            { name: "সুবহানাল্লাহি ওয়াল হামদুলিল্লাহি ওয়া লা ইলাহা ইল্লাল্লাহু ওয়াল্লাহু আকবার", meaning: "অর্থ: আল্লাহ পবিত্র, সমস্ত প্রশংসা আল্লাহর, আল্লাহ ছাড়া কোনো উপাস্য নেই, আল্লাহ মহান।", fazilat: "ফজিলত: এই জিকিরটি সূর্যোদয় ও সূর্যাস্তের মধ্যবর্তী সময়ের সমস্ত সদকার চেয়েও উত্তম।" },
+            { name: "আল্লাহুম্মা সাল্লি আলা মুহাম্মাদিওঁ ওয়া আলা আলি মুহাম্মাদ (দরুদ শরীফ)", meaning: "অর্থ: হে আল্লাহ! আপনি মুহাম্মাদ (সা.) ও তাঁর পরিবারের ওপর রহমত বর্ষণ করুন।", fazilat: "ফজিলত: দরুদ শরীফ পাঠ করলে অগণিত সওয়াব ও বরকত পাওয়া যায়।" },
+            { name: "ইয়া হাইয়্যু ইয়া কাইয়্যুম, বিরাহমতিকা আস্তাগিস", meaning: "অর্থ: হে চিরঞ্জীব, হে বিশ্বচরাচরের ধারক! তোমার রহমতের অসিলায় আমি সাহায্য প্রার্থনা করছি।", fazilat: "ফজিলত: কঠিন বিপদ থেকে উত্তরণের জন্য অত্যন্ত বরকতপূর্ণ দোয়া।" },
+            { name: "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুনতু মিনাজ জলিহীন (ইউনুস আ.-এর দোয়া)", meaning: "অর্থ: তুমি ছাড়া কোনো উপাস্য নেই, তুমি পবিত্র, আমি নিশ্চয়ই জালিমদের অন্তর্ভুক্ত।", fazilat: "ফজিলত: বিপদ থেকে মুক্তির জন্য পরীক্ষিত আমল।" },
+            { name: "কাস্টম জিকির", meaning: "অর্থ: আপনার পছন্দনীয় জিকির।", fazilat: "ফজিলত: আল্লাহর স্মরণে আপনার নিজস্ব লক্ষ্য।" },
+            { name: "সীমাহীন জিকির", meaning: "অর্থ: জিকিরের কোনো নির্দিষ্ট সীমা নেই।", fazilat: "ফজিলত: সবসময় আল্লাহর স্মরণে থাকার অশেষ সওয়াব।" }
         ];
 
         const azanAudio = new Audio('https://www.islamcan.com/audio/adhan/azan2.mp3'); 
@@ -587,27 +643,26 @@ setupDynamicPWA();
             }
         }
 
-        let lastAlertedDateAndName = ""; // ডুপ্লিকেট অ্যালার্ট ঠেকানোর জন্য
+        let lastAlertedDateAndName = ""; 
 
-function checkNamazReminders() {
-    const now = new Date();
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    const todayStr = getTodayDateString();
+        function checkNamazReminders() {
+            const now = new Date();
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            const todayStr = getTodayDateString();
 
-    for (let name in namazTimes) {
-        let [h, m] = namazTimes[name].split(':').map(Number);
-        let namazMinutes = h * 60 + m;
-        
-        // ওয়াক্তের ১৫ মিনিট আগে চেক
-        if (namazMinutes - currentMinutes === 15) {
-            let currentAlertSignature = name + "_" + todayStr;
-            if (lastAlertedDateAndName !== currentAlertSignature) {
-                triggerNamazAlert(name);
-                lastAlertedDateAndName = currentAlertSignature; // সেভ করে রাখা হলো
+            for (let name in namazTimes) {
+                let [h, m] = namazTimes[name].split(':').map(Number);
+                let namazMinutes = h * 60 + m;
+                
+                if (namazMinutes - currentMinutes === 15) {
+                    let currentAlertSignature = name + "_" + todayStr;
+                    if (lastAlertedDateAndName !== currentAlertSignature) {
+                        triggerNamazAlert(name);
+                        lastAlertedDateAndName = currentAlertSignature; 
+                    }
+                }
             }
         }
-    }
-}
 
         function triggerNamazAlert(namazName) {
             azanAudio.currentTime = 0; 
@@ -686,28 +741,26 @@ function checkNamazReminders() {
         }
 
         function checkAndUpdateStreak() {
-    const todayStr = getTodayDateString();
-    
-    if (lastActiveDate === "") {
-        streakCount = 1;
-    } else if (lastActiveDate !== todayStr) {
-        // শুধু ডেট কম্পেয়ার করার জন্য টাইম জিরো করে নেওয়া
-        const prev = new Date(lastActiveDate).setHours(0, 0, 0, 0);
-        const curr = new Date(todayStr).setHours(0, 0, 0, 0);
-        const diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
+            const todayStr = getTodayDateString();
+            
+            if (lastActiveDate === "") {
+                streakCount = 1;
+            } else if (lastActiveDate !== todayStr) {
+                const prev = new Date(lastActiveDate).setHours(0, 0, 0, 0);
+                const curr = new Date(todayStr).setHours(0, 0, 0, 0);
+                const diffDays = Math.round((curr - prev) / (1000 * 60 * 60 * 24));
 
-        if (diffDays === 1) {
-            streakCount += 1; // ঠিক পরের দিন হলে স্ট্রিক বাড়বে
-        } else if (diffDays > 1) {
-            streakCount = 1; // গ্যাপ পড়লে আবার ১ থেকে শুরু
+                if (diffDays === 1) {
+                    streakCount += 1; 
+                } else if (diffDays > 1) {
+                    streakCount = 1; 
+                }
+            }
+            lastActiveDate = todayStr;
+            localStorage.setItem('tb_streak', streakCount);
+            localStorage.setItem('tb_last_date', lastActiveDate);
+            streakText.innerText = `${bnNum(streakCount)} দিন`;
         }
-    }
-    lastActiveDate = todayStr;
-    localStorage.setItem('tb_streak', streakCount);
-    localStorage.setItem('tb_last_date', lastActiveDate);
-    streakText.innerText = `${bnNum(streakCount)} দিন`;
-}
-
 
         function logAnalytics(amount) {
             const today = getTodayDateString();
@@ -925,12 +978,12 @@ function checkNamazReminders() {
             "ধৈর্য ধারণ করো, নিশ্চয়ই আল্লাহ ধৈর্যশীলদের সাথে আছেন। (সূরা আনফাল: ৪৬)", "যে ব্যক্তি আল্লাহর প্রতি তাওয়াক্কুল করে, আল্লাহই তার জন্য যথেষ্ট। (সূরা ত্বালাক: ৩)",
             "তোমরা আমাকে ডাকো, আমি তোমাদের ডাকে সাড়া দেব। (সূরা গাফির: ৬০)", "নিশ্চয়ই কষ্টের সাথেই রয়েছে স্বস্তি। (সূরা ইনশিরাহ: ৬)",
             "আল্লাহ কারও ওপর তার সাধ্যের অতীত বোঝা চাপিয়ে দেন না। (সূরা বাকারা: ২৮৬)", "যে ব্যক্তি মানুষের প্রতি দয়া করে না, আল্লাহ তার প্রতি দয়া করেন না। (বুখারি)",
-            "তোমরা যেখানেই থাকো না কেন, আল্লাহকে ভয় করো। (তিরমিজি)", "নামাজ কায়েম করো, নিশ্চয়ই নামাজ অশ্লীল কাজ থেকে বিরত রাখে। (সূরা আনকাবুত: ৪৫)",
+            "তোমরা যেখানেই থাকো গঠন করো, আল্লাহকে ভয় করো। (তিরমিজি)", "নামাজ কায়েম করো, নিশ্চয়ই নামাজ অশ্লীল কাজ থেকে বিরত রাখে। (সূরা আনকাবুত: ৪৫)",
             "যে চুপ থাকে, সে মুক্তি পায়। (তিরমিজি)", "সৎকাজ হলো উত্তম চরিত্র। (মুসলিম)", "আল্লাহ তায়ালা সুন্দর, তিনি সৌন্দর্য ভালোবাসেন। (মুসলিম)",
             "তোমাদের মধ্যে সর্বোত্তম সে, যে আল-কোরআন শেখে এবং শেখায়। (বুখারি)", "রাগ কোরো না, তাহলে তোমার জন্য জান্নাত। (তাবারানি)",
             "যে ব্যক্তি ইলম অন্বেষণে বের হয়, আল্লাহ তার জান্নাতের পথ সহজ করে দেন। (মুসলিম)", "লজ্জাশীলতা ঈমানের অঙ্গ। (বুখারি)",
             "মুমিনের জন্য দুনিয়া কারাগার আর জান্নাত হলো আখিরাত। (মুসলিম)", "যে ব্যক্তি আমাদের ছোটদের স্নেহ করে না, সে আমাদের দলভুক্ত নয়। (তিরমিজি)",
-            "দান-সদকা সম্পদ কমায় না। (মুসলিম)", "মুমিন এক গর্তে দুইবার দংশিত হয় না। (বুখারি)", "আল্লাহর নিকট সবচেয়ে প্রিয় আমল হলো যা নিয়মিত করা হয়। (বুখারি)",
+            "দান-সদকা সম্পদ কমায় না। (মুসলিম)", "মুমিন এক গর্তে দুইবার দংশিত হয় গঠন করো না। (বুখারি)", "আল্লাহর নিকট সবচেয়ে প্রিয় আমল হলো যা নিয়মিত করা হয়। (বুখারি)",
             "তোমরা একে অপরের প্রতি হিংসা কোরো না। (মুসলিম)", "অর্ধেক ঈমান হলো পবিত্রতা। (মুসলিম)", "যে ব্যক্তি আখিরাতকে তার মূল লক্ষ্য বানায়, আল্লাহ তার হৃদয়কে অভাবমুক্ত করে দেন। (তিরমিজি)",
             "মিথ্যা বলা থেকে বিরত থাকো, মিথ্যা মানুষকে পাপের দিকে নিয়ে যায়। (বুখারি)", "মাতা-পিতার সন্তুষ্টির মাঝেই আল্লাহর সন্তুষ্টি। (তিরমিজি)",
             "হাসিমুখে কথা বলাও একটি সদকা। (তিরমিজি)", "আল্লাহ সেই ব্যক্তির প্রতি রহম করুন, যে ক্রয়-বিক্রয়ে নম্রতা প্রদর্শন করে। (বুখারি)",
@@ -942,41 +995,38 @@ function checkNamazReminders() {
         document.getElementById('dailyInspirationText').innerText = inspirations[dayOfYear % inspirations.length];
 
         function updateRamadanTimer() {
-    const now = new Date();
-    let target = new Date();
-    let label = "ইফতারের সময় বাকি";
+            const now = new Date();
+            let target = new Date();
+            let label = "ইফতারের সময় বাকি";
 
-    // বর্তমান সময়কে মিনিটের হিসাবে বের করা
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    const sehriMinutes = 4 * 60 + 30; // 04:30 AM
-    const iftarMinutes = 18 * 60 + 40; // 06:40 PM
+            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+            const sehriMinutes = 4 * 60 + 30; 
+            const iftarMinutes = 18 * 60 + 40; 
 
-    if (currentMinutes >= sehriMinutes && currentMinutes < iftarMinutes) {
-        // ইফতারের টার্গেট (আজকের ১৮:৪০)
-        target.setHours(18, 40, 0, 0);
-    } else {
-        label = "সেহরির সময় বাকি";
-        // সেহরির টার্গেট (যদি ইফতার পার হয়ে যায়, তাহলে পরের দিনের ০৪:৩০)
-        target.setHours(4, 30, 0, 0);
-        if (currentMinutes >= iftarMinutes) {
-            target.setDate(target.getDate() + 1);
+            if (currentMinutes >= sehriMinutes && currentMinutes < iftarMinutes) {
+                target.setHours(18, 40, 0, 0);
+            } else {
+                label = "সেহরির সময় বাকি";
+                target.setHours(4, 30, 0, 0);
+                if (currentMinutes >= iftarMinutes) {
+                    target.setDate(target.getDate() + 1);
+                }
+            }
+            
+            document.getElementById('ramadanLabel').innerText = label;
+
+            let diffMs = target - now;
+            if (diffMs < 0) diffMs = 0; 
+
+            let diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            let diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+            let diffSecs = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+            const pad = num => num.toString().padStart(2, '0');
+            const bnStr = str => str.replace(/\d/g, d => ['০','১','২','৩','৪','৫','৬','৭','৮','৯'][d]);
+            
+            document.getElementById('ramadanTimer').innerText = bnStr(`${pad(diffHours)}:${pad(diffMins)}:${pad(diffSecs)}`);
         }
-    }
-    
-    document.getElementById('ramadanLabel').innerText = label;
-
-    let diffMs = target - now;
-    if (diffMs < 0) diffMs = 0; // সেফটি চেক
-
-    let diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    let diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-    let diffSecs = Math.floor((diffMs % (1000 * 60)) / 1000);
-
-    const pad = num => num.toString().padStart(2, '0');
-    const bnStr = str => str.replace(/\d/g, d => ['০','১','২','৩','৪','৫','৬','৭','৮','৯'][d]);
-    
-    document.getElementById('ramadanTimer').innerText = bnStr(`${pad(diffHours)}:${pad(diffMins)}:${pad(diffSecs)}`);
-}
         setInterval(updateRamadanTimer, 1000); updateRamadanTimer();
 
         const asmaulHusna = [
@@ -1114,7 +1164,7 @@ function checkNamazReminders() {
         function closeWebModal() { const modal = document.getElementById('webModal'); const frame = document.getElementById('webFrame'); frame.src = ''; modal.style.display = 'none'; }
 
         // ==========================================
-        // Voice Recognition (Fixed)
+        // Voice Recognition 
         // ==========================================
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
@@ -1125,7 +1175,13 @@ function checkNamazReminders() {
             1: ["আলহামদুলিল্লাহ", "আলহামদু", "আলহামদুলিল্লা", "হামদ"],
             2: ["আল্লাহু আকবার", "আল্লাহু", "আকবার", "আল্লাহুয়াকবার", "আল্লাহ আকবার"],
             3: ["লা ইলাহা ইল্লাল্লাহ", "লা ইলাহা", "ইল্লাল্লাহ", "লা ইলাহা ইল্লাল্লাহু"],
-            4: ["আস্তাগফিরুল্লাহ", "আস্তাগফির", "আস্তাগফিরুল্লা", "ক্ষমা"]
+            4: ["আস্তাগফিরুল্লাহ", "আস্তাগফির", "আস্তাগফিরুল্লা", "ক্ষমা"],
+            5: ["সুবহানাল্লাহি ওয়া বিহামদিহি", "সুবহানাল্লাহি", "সুবহানাল্লাহিল আযীম", "বিহামদিহি"],
+            6: ["লা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ", "লা হাওলা", "লা কুওয়াতা"],
+            7: ["সুবহানাল্লাহি ওয়াল হামদুলিল্লাহি", "সুবহানাল্লাহি ওয়াল হামদুলিল্লাহি ওয়া লা ইলাহা ইল্লাল্লাহু ওয়াল্লাহু আকবার"],
+            8: ["দরুদ শরীফ", "আল্লাহুম্মা সাল্লি", "দরুদ", "সালাতুস সালাম"],
+            9: ["ইয়া হাইয়্যু ইয়া কাইয়্যুম", "ইয়া হাইয়্যু", "ইয়া কাইয়্যুম", "বিরাহমতিকা"],
+            10: ["ইউনুস", "ইউনুসের দোয়া", "লা ইলাহা ইল্লা আনতা", "সুবহানাকা ইন্নি কুনতু"]
         };
 
         if (SpeechRecognition) {
@@ -1195,6 +1251,27 @@ function checkNamazReminders() {
         if(voiceBtnElement) {
             voiceBtnElement.removeEventListener('click', toggleVoiceRecognition);
             voiceBtnElement.addEventListener('click', toggleVoiceRecognition);
+        }
+        
+        
+        // Zen Mode Logic
+        
+        let isZenMode = false;
+        const zenToggleBtn = document.getElementById('zenToggleBtn');
+
+        if(zenToggleBtn) {
+            zenToggleBtn.addEventListener('click', () => {
+                isZenMode = !isZenMode;
+                
+                document.body.classList.toggle('is-zen-mode', isZenMode);
+                zenToggleBtn.classList.toggle('active', isZenMode);
+                
+                if(isZenMode) {
+                    zenToggleBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                } else {
+                    zenToggleBtn.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+                }
+            });
         }
 
     </script>
