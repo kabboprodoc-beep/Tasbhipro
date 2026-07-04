@@ -383,6 +383,21 @@
         .dev-item:last-child { margin-bottom: 0; }
         .export-opt:hover { background: rgba(14, 165, 233, 0.1); }
 
+/* Morning & Evening Adhkar UI */
+        .adhkar-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 16px; padding: 15px; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: all 0.3s; margin-bottom: 12px; }
+        .adhkar-card.completed { background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); }
+        .adhkar-arabic { font-size: 1.25rem; color: #0ea5e9; font-weight: 700; font-family: 'Noto Serif Bengali', serif; text-align: right; margin-bottom: 10px; line-height:1.6;}
+        .adhkar-bangla { font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin-bottom: 6px; }
+        .adhkar-meaning { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.4; }
+        .adhkar-action { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 12px; }
+        .adhkar-count-badge { background: rgba(14, 165, 233, 0.1); color: #0ea5e9; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
+        .adhkar-tap-btn { background: #0ea5e9; color: white; border: none; padding: 8px 24px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 0.9rem; }
+        .adhkar-tap-btn:active { transform: scale(0.95); }
+        .adhkar-card.completed .adhkar-count-badge { background: #10b981; color: white; }
+        .adhkar-card.completed .adhkar-tap-btn { background: #10b981; pointer-events: none; }
+        
+        .dark-version .adhkar-card.completed { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); }
+        
     </style>
 </head>
 <body>
@@ -483,6 +498,10 @@
             <i class="fa-solid fa-book-open-reader nav-icon"></i>
             <span>৯৯ নাম</span>
         </div>
+        <div class="nav-item" id="navAdhkar">
+            <i class="fa-solid fa-cloud-sun nav-icon"></i>
+            <span>আমল</span>
+        </div>
         <div class="nav-item" id="navStats">
             <i class="fa-solid fa-chart-pie nav-icon"></i>
             <span>রিপোর্ট</span>
@@ -494,6 +513,23 @@
         <div class="nav-item" id="navSettings">
             <i class="fa-solid fa-bars nav-icon"></i>
             <span>মেনু</span>
+        </div>
+    </div>
+    
+    <!-- সকাল ও সন্ধ্যার আমল ওভারলে (New Adhkar Feature) -->
+    <div class="slide-overlay" id="adhkarOverlay" style="height: 90dvh;">
+        <div class="overlay-header">
+            <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-cloud-sun"></i> প্রতিদিনের আমল</h3>
+            <button class="icon-btn" id="closeAdhkarBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-shrink: 0;">
+            <button class="modal-btn" id="tabMorning" style="background: #0ea5e9; color: white; padding: 10px;">সকালের আমল</button>
+            <button class="modal-btn" id="tabEvening" style="background: var(--btn-bg); color: var(--text-main); border: 1px solid rgba(14, 165, 233, 0.2); padding: 10px;">সন্ধ্যার আমল</button>
+        </div>
+        
+        <div id="adhkarListContainer" style="overflow-y: auto; flex: 1; padding-bottom: 20px; padding-right: 5px;">
+            <!-- Adhkar Cards will be injected here by JS -->
         </div>
     </div>
 
@@ -533,12 +569,12 @@
 
             <h4 style="margin-bottom: 10px; color: var(--text-main);">ইসলামিক রিসোর্স</h4>
             <div class="settings-grid">
-                <div class="setting-card" onclick="openWebExternal('https://dua.gtaf.org/')"><i class="fa-solid fa-book-open"></i> <span>দুআ</span></div>
-                <div class="setting-card" onclick="openWebExternal('https://www.hadithbd.com/')"><i class="fa-solid fa-scroll"></i> <span>হাদিস</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://dua.gtaf.org/')"><i class="fa-solid fa-book-open"></i> <span>হিসনুল মুসলিম</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://www.hadithbd.com/')"><i class="fa-solid fa-scroll"></i> <span>বাংলা হাদিস</span></div>
                 <div class="setting-card" onclick="openWebExternal('https://quran.com/')"><i class="fa-solid fa-book-quran"></i> <span>কুরআন</span></div>
-                <div class="setting-card" onclick="openWebExternal('https://islamqa.info/bn')"><i class="fa-solid fa-question-circle"></i> <span>ফতোয়া</span></div>
-                <div class="setting-card" onclick="openWebExternal('https://qiblafinder.withgoogle.com/')"><i class="fa-solid fa-location-arrow"></i> <span>কিবলা</span></div>
-                <div class="setting-card" onclick="openWebExternal('https://wafilife.com/')"><i class="fa-solid fa-shopping-bag"></i> <span>বই</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://muslimbangla.com/masails')"><i class="fa-solid fa-question-circle"></i> <span>মাসলা-মাসায়েল</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://www.al-habib.info/qibla-pointer/online-qibla-compass.htm')"><i class="fa-solid fa-location-arrow"></i> <span>কিবলা</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://boimate.com/')"><i class="fa-solid fa-shopping-bag"></i> <span>বই</span></div>
             </div>
         </div>
     </div>
@@ -650,7 +686,7 @@
         <div class="modal-box">
             <div class="dev-avatar"><i class="fa-solid fa-code"></i></div>
             <h3 style="color: var(--text-title); margin-bottom: 5px;">Developer Info</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Crafted with ♥ in Bangladesh</p>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Developed By KabboMedIT🩺</p>
             <div class="dev-details">
                 <div class="dev-item"><i class="fa-solid fa-user"></i> Shahriar Mahamud Kabbo</div>
                 <div class="dev-item"><i class="fa-solid fa-phone"></i> 01724651212</div>
@@ -784,6 +820,8 @@
         const namesOverlay = document.getElementById('namesOverlay');
         const customModal = document.getElementById('customModal');
         const devModal = document.getElementById('devModal');
+        const adhkarOverlay = document.getElementById('adhkarOverlay');
+
         
         // ==========================================
         // ডায়নামিক থিম লজিক (Dynamic Theme Controller)
@@ -1016,8 +1054,21 @@
         customInput.addEventListener('input', (e) => { target = parseInt(e.target.value) || 0; localStorage.setItem('tb_custom_val', target); updateDisplay(); });
 
         const navItems = document.querySelectorAll('.nav-item');
-        function closeAllSheets() {
-            settingsOverlay.classList.remove('open'); analyticsOverlay.classList.remove('open'); namesOverlay.classList.remove('open');
+        
+        function stopAdhkarAudioSafely() {
+            if (currentAdhkarAudio) {
+                currentAdhkarAudio.pause();
+                currentAdhkarAudio = null;
+                playingAdhkarId = null;
+            }
+        }
+        
+            function closeAllSheets() {
+            stopAdhkarAudioSafely(); 
+            settingsOverlay.classList.remove('open'); 
+            analyticsOverlay.classList.remove('open'); 
+            namesOverlay.classList.remove('open');
+            document.getElementById('adhkarOverlay').classList.remove('open');     
             navItems.forEach(n => n.classList.remove('active'));
         }
 
@@ -1298,6 +1349,7 @@
             displayHijriDate(); 
             requestNotificationPermission(); 
             setInterval(checkNamazReminders, 1000); 
+            initAdhkar(); 
         };
 
         function openWebExternal(url) { window.open(url, '_blank'); settingsOverlay.classList.remove('open'); }
@@ -1437,6 +1489,340 @@
                 }
             });
         }
+        
+        // ==========================================
+        // সকাল ও সন্ধ্যার আমল লজিক (Morning & Evening Adhkar Logic)
+        // ==========================================
+                                        const adhkarData = {
+            morning: [
+                { 
+                    id: "m1", 
+                    ar: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ", 
+                    bn: "<strong>আয়াতুল কুরসি</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আল্লাহু লা ইলাহা ইল্লা হুওয়াল হাইয়্যুল কাইয়্যুম। লা তা’খুযুহু সিনাতুঁও ওয়ালা নাওম। লাহু মা ফিস্ সামাওয়াতি ওয়ামা ফিল আরদ্ব। মান যাল্লাযী ইয়াশফাউ ইন্দাহু ইল্লা বিইযনিহি। ইয়ালামু মা বাইনা আইদীহিম ওয়ামা খালফাহুম। ওয়ালা ইউহিতূনা বিশাইয়িম মিন ইলমিহি ইল্লা বিমা শাআ। ওয়াসিয়া কুরসিয়্যুহুস সামাওয়াতি ওয়াল আরদ্ব। ওয়ালা ইয়াউদুহু হিফযুহুমা ওয়াহুওয়াল আলিয়্যুল আযীম।</span>", 
+                    mean: "<strong>অর্থ:</strong> আল্লাহ, তিনি ছাড়া কোনো উপাস্য নেই; তিনি চিরঞ্জীব, সর্বসত্তার ধারক। তাঁকে তন্দ্রাও স্পর্শ করতে পারে না এবং নিদ্রাও নয়। আসমান ও জমিনে যা কিছু রয়েছে সবই তাঁর। কে আছে এমন, যে সুপারিশ করবে তাঁর কাছে তাঁর অনুমতি ছাড়া? দৃষ্টির সামনে কিংবা পিছনে যা কিছু রয়েছে সে সবই তিনি জানেন। তাঁর জ্ঞানসীমা থেকে তারা কোনো কিছুকেই আয়ত্ত করতে পারে না, কেবল ততটুকু ছাড়া যতটুকু তিনি ইচ্ছা করেন। তাঁর কুরসি সমস্ত আসমান ও জমিনকে পরিবেষ্টন করে আছে। আর সেগুলোকে রক্ষণাবেক্ষণ করা তাঁকে ক্লান্ত করে না। তিনি সর্বোচ্চ এবং সর্বাপেক্ষা মহান।<br><br><strong>ফজিলত:</strong> যে ব্যক্তি সকালে এটি পড়বে, সন্ধ্যা পর্যন্ত সে শয়তান থেকে সুরক্ষিত থাকবে।", 
+                    target: 1,
+                    audio: "https://everyayah.com/data/Alafasy_128kbps/002255.mp3" 
+                },                
+                { 
+                    id: "m2", 
+                    ar: "সূরা ইখলাস:\nقُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ\n\nসূরা ফালাক:\nقُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِن شَرِّ مَا خَلَقَ. وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ\n\nসূরা নাস:\nقُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَهِ النَّاسِ. مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَ النَّاسِ", 
+    bn: "<strong>সূরা ইখলাস, ফালাক ও নাস</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ (ইখলাস): কুল হুওয়াল্লাহু আহাদ। আল্লাহুছ ছামাদ। লাম ইয়ালিদ ওয়া লাম ইউলাদ। ওয়া লাম ইয়াকুল্লাহু কুফুওয়ান আহাদ।<br><br>উচ্চারণ (ফালাক): কুল আউযু বিরাব্বিল ফালাক। মিন শাররি মা খালাক। ওয়া মিন শাররি গাসিকিন ইযা ওয়াকাব। ওয়া মিন শাররিন নাফফাসাতে ফিল উকাদ। ওয়া মিন শাররি হাসিদিন ইযা হাসাদ।<br><br>উচ্চারণ (নাস): কুল আউযু বিরাব্বিন নাস। মালিকিন্নাস। ইলাহিন্নাস। মিন শাররিল ওয়াসওয়াসিল খান্নাস। আল্লাযী ইউওয়াসউইসু ফী সুদূরিন্নাস। মিনাল জিন্নাতি ওয়ান নাস।</span>", 
+    mean: "<strong>অর্থ:</strong><br><strong>ইখলাস:</strong> বলুন, তিনিই আল্লাহ, এক-অদ্বিতীয়। আল্লাহ কারো মুখাপেক্ষী নন। তিনি কাউকে জন্ম দেননি এবং কারো থেকে জন্ম নেননি। আর তাঁর সমতুল্য কেউই নেই।<br><br><strong>ফালাক:</strong> বলুন, আমি আশ্রয় গ্রহণ করছি প্রভাতের রবের। তিনি যা সৃষ্টি করেছেন তার অনিষ্ট থেকে। এবং অন্ধকারের অনিষ্ট থেকে যখন তা গভীর হয়। এবং গিঁটে ফুঁ দেওয়া জাদুকরীদের অনিষ্ট থেকে। এবং হিংসুকের অনিষ্ট থেকে যখন সে হিংসা করে।<br><br><strong>নাস:</strong> বলুন, আমি আশ্রয় গ্রহণ করছি মানুষের রবের, মানুষের অধিপতির, মানুষের উপাস্যের। আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট থেকে, যে কুমন্ত্রণা দেয় মানুষের অন্তরে, জ্বিন ও মানুষের মধ্য থেকে।<br><br><strong>ফজিলত:</strong> সকাল ও সন্ধ্যায় ৩ বার পড়লে সবকিছুর জন্য যথেষ্ট হবে।", 
+    target: 3,
+                    audio: "https://server8.mp3quran.net/afs/112.mp3" 
+                },
+                { 
+                    id: "m3", 
+                    ar: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ", 
+                    bn: "<strong>সাইয়্যিদুল ইস্তিগফার</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আল্লাহুম্মা আনতা রব্বী, লা-ইলাহা ইল্লা আনতা, খালাকতানী ওয়া আনা আবদুকা, ওয়া আনা আলা আহদিকা ওয়া ওয়া'দিকা মাসতাতা'তু। আউযু বিকা মিন শাররি মা সানা'তু। আবুউ লাকা বিনি'মাতিকা আলাইয়্যা, ওয়া আবুউ লাকা বিযাম্বী, ফাগফিরলী ফাইন্নাহু লা ইয়াগফিরুয যুনূবা ইল্লা আনতা।</span>", 
+                    mean: "<strong>অর্থ:</strong> হে আল্লাহ! আপনি আমার রব, আপনি ছাড়া কোনো উপাস্য নেই। আপনি আমাকে সৃষ্টি করেছেন এবং আমি আপনার বান্দা...<br><br><strong>ফজিলত:</strong> দিনে পড়ে মারা গেলে জান্নাতি, রাতে পড়ে মারা গেলেও জান্নাতি।", 
+                    target: 1,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_079.mp3" 
+                },
+                { 
+                    id: "m4", 
+                    ar: "اللَّهُمَّ بِكَ أَصْبَحْنَا، وَبِكَ أَمْسَيْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ النُّشُورُ", 
+                    bn: "<strong>সকালের বিশেষ দোয়া</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আল্লাহুম্মা বিকা আসবাহনা, ওয়াবিকা আমসাইনা, ওয়াবিকা নাহইয়া, ওয়াবিকা নামূতু, ওয়া ইলাইকান নুশূর।</span>", 
+                    mean: "<strong>অর্থ:</strong> হে আল্লাহ! আপনার হুকুমে আমরা সকালে উপনীত হয়েছি এবং আপনার হুকুমে সন্ধ্যায় উপনীত হয়েছি...<br><br><strong>ফজিলত:</strong> নবীজি (সা.) প্রতিদিন সকালে এটি পড়তেন।", 
+                    target: 1,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_078.mp3" 
+                },
+                { 
+                    id: "m5", 
+                    ar: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", 
+                    bn: "<strong>বিসমিল্লাহিল্লাযী লা ইয়াদুররু</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: বিসমিল্লাহিল্লাযী লা ইয়াদুররু মাআসমিহি শাইয়ুন ফিল আরদ্বি ওয়ালা ফিস সামায়ি ওয়াহুওয়াস সামীউল আলীম।</span>", 
+                    mean: "<strong>অর্থ:</strong> সেই আল্লাহর নামে, যাঁর নামের বরকতে আসমান ও জমিনের কোনো কিছুই কোনো ক্ষতি করতে পারে না...<br><br><strong>ফজিলত:</strong> ৩ বার পড়লে সকাল থেকে সন্ধ্যা পর্যন্ত কোনো বিপদ আসবে না।", 
+                    target: 3,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_084.mp3" 
+                },
+                { 
+                    id: "m6", 
+                    ar: "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ", 
+                    bn: "<strong>হাসবিয়াল্লাহু লা ইলাহা ইল্লা হুওয়া</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: হাসবিয়াল্লাহু লা-ইলাহা ইল্লা হুওয়া, আলাইহি তাওয়াক্কালতু ওয়াহুওয়া রব্বুল আরশিল আযীম।</span>", 
+                    mean: "<strong>অর্থ:</strong> আমার জন্য আল্লাহই যথেষ্ট, তিনি ছাড়া কোনো সত্য উপাস্য নেই। আমি তাঁরই ওপর ভরসা করেছি...<br><br><strong>ফজিলত:</strong> সকাল-সন্ধ্যায় ৭ বার পড়লে আল্লাহ তার দুনিয়া ও আখেরাতের সব চিন্তার জন্য যথেষ্ট হয়ে যাবেন।", 
+                    target: 7,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_083.mp3" 
+                },
+                { 
+                    id: "m7", 
+                    ar: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ", 
+                    bn: "<strong>পেরেশানি দূর করার দোয়া</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: ইয়া হাইয়্যু ইয়া কাইয়্যুমু বিরাহমাতিকা আসতাগীছ, আসলিহ লী শা’নী কুল্লাহু, ওয়ালা তাকিলনী ইলা নাফসী তারফাতা আইন।</span>", 
+                    mean: "<strong>অর্থ:</strong> হে চিরঞ্জীব, হে চিরস্থায়ী! আমি আপনার রহমতের উসিলায় সাহায্য প্রার্থনা করছি। আপনি আমার সব কাজ গুছিয়ে দিন...<br><br><strong>ফজিলত:</strong> এটি সর্বশ্রেষ্ঠ পেরেশানি দূরকারী দোয়া।", 
+                    target: 1,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_086.mp3" 
+                },
+                { 
+                    id: "m8", 
+                    ar: "رَضِيتُ بِاللَّهِ رَبًّا، وَبِالْإِسْلَامِ دِينًا، وَبِمُحَمَّدٍ نَبِيًّا", 
+                    bn: "<strong>রাদীতু বিল্লাহি রাব্বাও</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: রাদীতু বিল্লাহি রব্বাওঁ ওয়াবিল ইসলামি দ্বীনাওঁ ওয়াবি মুহাম্মাদিন নাবিয়্যা।</span>", 
+                    mean: "<strong>অর্থ:</strong> আমি আল্লাহকে রব হিসেবে, ইসলামকে দ্বীন হিসেবে এবং মুহাম্মাদ (সা.)-কে নবী হিসেবে পেয়ে সন্তুষ্ট।<br><br><strong>ফজিলত:</strong> ৩ বার পড়লে আল্লাহ তাকে সন্তুষ্ট করার দায়িত্ব নেন।", 
+                    target: 3,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_085.mp3" 
+                },
+                { 
+                    id: "m9", 
+                    ar: "سُبْحَانَ اللهِ وَبِحَمْدِهِ: عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ", 
+                    bn: "<strong>মিজানে সবচেয়ে ভারী জিকির</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: সুবহানাল্লাহি ওয়া বিহামদিহি আদাদা খালকিহি, ওয়া রিদা নাফসিহি, ওয়া যিনাতা আরশিহি, ওয়া মিদাদা কালিমাতিহি।</span>", 
+                    mean: "<strong>অর্থ:</strong> আমি আল্লাহর পবিত্রতা বর্ণনা করছি এবং তাঁর প্রশংসা করছি—তাঁর সৃষ্টির সংখ্যার সমপরিমাণ...<br><br><strong>ফজিলত:</strong> এটি ৩ বার পড়লে সকাল থেকে দুপুর পর্যন্ত করা অন্য সব জিকিরের চেয়েও বেশি সওয়াব পাওয়া যায়।", 
+                    target: 3,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_092.mp3" 
+                },
+                { 
+                    id: "m10", 
+                    ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", 
+                    bn: "<strong>সুবহানাল্লাহি ওয়া বিহামদিহি</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: সুবহানাল্লাহি ওয়া বিহামদিহি।</span>", 
+                    mean: "<strong>অর্থ:</strong> আল্লাহ পবিত্র এবং সমস্ত প্রশংসা তাঁরই।<br><br><strong>ফজিলত:</strong> ১০০ বার পড়লে কিয়ামতের দিন তার চেয়ে উত্তম আমল নিয়ে কেউ আসবে না।", 
+                    target: 100,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_090.mp3" 
+                }
+            ],
+            evening: [
+                { 
+                    id: "e1", 
+                    ar: "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ", 
+                    bn: "<strong>আয়াতুল কুরসি</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আল্লাহু লা ইলাহা ইল্লা হুওয়াল হাইয়্যুল কাইয়্যুম। লা তা’খুযুহু সিনাতুঁও ওয়ালা নাওম। লাহু মা ফিস্ সামাওয়াতি ওয়ামা ফিল আরদ্ব। মান যাল্লাযী ইয়াশফাউ ইন্দাহু ইল্লা বিইযনিহি। ইয়ালামু মা বাইনা আইদীহিম ওয়ামা খালফাহুম। ওয়ালা ইউহিতূনা বিশাইয়িম মিন ইলমিহি ইল্লা বিমা শাআ। ওয়াসিয়া কুরসিয়্যুহুস সামাওয়াতি ওয়াল আরদ্ব। ওয়ালা ইয়াউদুহু হিফযুহুমা ওয়াহুওয়াল আলিয়্যুল আযীম।</span>", 
+                    mean: "<strong>অর্থ:</strong> আল্লাহ, তিনি ছাড়া কোনো উপাস্য নেই; তিনি চিরঞ্জীব, সর্বসত্তার ধারক। তাঁকে তন্দ্রাও স্পর্শ করতে পারে না এবং নিদ্রাও নয়। আসমান ও জমিনে যা কিছু রয়েছে সবই তাঁর। কে আছে এমন, যে সুপারিশ করবে তাঁর কাছে তাঁর অনুমতি ছাড়া? দৃষ্টির সামনে কিংবা পিছনে যা কিছু রয়েছে সে সবই তিনি জানেন। তাঁর জ্ঞানসীমা থেকে তারা কোনো কিছুকেই আয়ত্ত করতে পারে না, কেবল ততটুকু ছাড়া যতটুকু তিনি ইচ্ছা করেন। তাঁর কুরসি সমস্ত আসমান ও জমিনকে পরিবেষ্টন করে আছে। আর সেগুলোকে রক্ষণাবেক্ষণ করা তাঁকে ক্লান্ত করে না। তিনি সর্বোচ্চ এবং সর্বাপেক্ষা মহান।<br><br><strong>ফজিলত:</strong> যে ব্যক্তি সকালে এটি পড়বে, সন্ধ্যা পর্যন্ত সে শয়তান থেকে সুরক্ষিত থাকবে।", 
+                    target: 1,
+                    audio: "https://everyayah.com/data/Alafasy_128kbps/002255.mp3" 
+                },                
+                { 
+                    id: "e2", 
+                    ar: "সূরা ইখলাস:\nقُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ\n\nসূরা ফালাক:\nقُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِن شَرِّ مَا خَلَقَ. وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ\n\nসূরা নাস:\nقُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَهِ النَّاسِ. مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَ النَّاسِ", 
+    bn: "<strong>সূরা ইখলাস, ফালাক ও নাস</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ (ইখলাস): কুল হুওয়াল্লাহু আহাদ। আল্লাহুছ ছামাদ। লাম ইয়ালিদ ওয়া লাম ইউলাদ। ওয়া লাম ইয়াকুল্লাহু কুফুওয়ান আহাদ।<br><br>উচ্চারণ (ফালাক): কুল আউযু বিরাব্বিল ফালাক। মিন শাররি মা খালাক। ওয়া মিন শাররি গাসিকিন ইযা ওয়াকাব। ওয়া মিন শাররিন নাফফাসাতে ফিল উকাদ। ওয়া মিন শাররি হাসিদিন ইযা হাসাদ।<br><br>উচ্চারণ (নাস): কুল আউযু বিরাব্বিন নাস। মালিকিন্নাস। ইলাহিন্নাস। মিন শাররিল ওয়াসওয়াসিল খান্নাস। আল্লাযী ইউওয়াসউইসু ফী সুদূরিন্নাস। মিনাল জিন্নাতি ওয়ান নাস।</span>", 
+    mean: "<strong>অর্থ:</strong><br><strong>ইখলাস:</strong> বলুন, তিনিই আল্লাহ, এক-অদ্বিতীয়। আল্লাহ কারো মুখাপেক্ষী নন। তিনি কাউকে জন্ম দেননি এবং কারো থেকে জন্ম নেননি। আর তাঁর সমতুল্য কেউই নেই।<br><br><strong>ফালাক:</strong> বলুন, আমি আশ্রয় গ্রহণ করছি প্রভাতের রবের। তিনি যা সৃষ্টি করেছেন তার অনিষ্ট থেকে। এবং অন্ধকারের অনিষ্ট থেকে যখন তা গভীর হয়। এবং গিঁটে ফুঁ দেওয়া জাদুকরীদের অনিষ্ট থেকে। এবং হিংসুকের অনিষ্ট থেকে যখন সে হিংসা করে।<br><br><strong>নাস:</strong> বলুন, আমি আশ্রয় গ্রহণ করছি মানুষের রবের, মানুষের অধিপতির, মানুষের উপাস্যের। আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট থেকে, যে কুমন্ত্রণা দেয় মানুষের অন্তরে, জ্বিন ও মানুষের মধ্য থেকে।<br><br><strong>ফজিলত:</strong> সকাল ও সন্ধ্যায় ৩ বার পড়লে সবকিছুর জন্য যথেষ্ট হবে।", 
+    target: 3,
+                    audio: "https://server8.mp3quran.net/afs/112.mp3" 
+                },
+                { 
+                    id: "e3", 
+                    ar: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ", 
+                    bn: "<strong>সাইয়্যিদুল ইস্তিগফার</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আল্লাহুম্মা আনতা রব্বী, লা-ইলাহা ইল্লা আনতা, খালাকতানী ওয়া আনা আবদুকা, ওয়া আনা আলা আহদিকা... ফাগফিরলী ফাইন্নাহু লা ইয়াগফিরুয যুনূবা ইল্লা আনতা।</span>", 
+                    mean: "<strong>অর্থ:</strong> হে আল্লাহ! আপনি আমার রব, আপনি ছাড়া কোনো উপাস্য নেই। আপনি আমাকে সৃষ্টি করেছেন এবং আমি আপনার বান্দা...<br><br><strong>ফজিলত:</strong> দিনে পড়ে মারা গেলে জান্নাতি, রাতে পড়ে মারা গেলেও জান্নাতি।", 
+                    target: 1,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_079.mp3" 
+                },
+                { 
+                    id: "e4", 
+                    ar: "اللَّهُمَّ بِكَ أَمْسَيْنَا، وَبِكَ أَصْبَحْنَا، وَبِكَ نَحْيَا، وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ", 
+                    bn: "<strong>সন্ধ্যার বিশেষ দোয়া</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আল্লাহুম্মা বিকা আমসাইনা, ওয়াবিকা আসবাহনা, ওয়াবিকা নাহইয়া, ওয়াবিকা নামূতু, ওয়া ইলাইকাল মাসীর।</span>", 
+                    mean: "<strong>অর্থ:</strong> হে আল্লাহ! আপনার হুকুমে আমরা সন্ধ্যায় উপনীত হয়েছি এবং আপনার হুকুমে সকালে উপনীত হয়েছি...<br><br><strong>ফজিলত:</strong> রাসূলুল্লাহ (সা.) প্রতিদিন সন্ধ্যায় এটি পাঠ করতেন।", 
+                    target: 1,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_078.mp3" 
+                },
+                { 
+                    id: "e5", 
+                    ar: "بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ", 
+                    bn: "<strong>বিসমিল্লাহিল্লাযী লা ইয়াদুররু</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: বিসমিল্লাহিল্লাযী লা ইয়াদুররু মাআসমিহি শাইয়ুন ফিল আরদ্বি ওয়ালা ফিস সামায়ি ওয়াহুওয়াস সামীউল আলীম।</span>", 
+                    mean: "<strong>অর্থ:</strong> সেই আল্লাহর নামে, যাঁর নামের বরকতে আসমান ও জমিনের কোনো কিছুই কোনো ক্ষতি করতে পারে না...<br><br><strong>ফজিলত:</strong> ৩ বার পড়লে সন্ধ্যা থেকে সকাল পর্যন্ত কোনো বিপদ আসবে না।", 
+                    target: 3,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_084.mp3" 
+                },
+                { 
+                    id: "e6", 
+                    ar: "حَسْبِيَ اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ ۖ عَلَيْهِ تَوَكَّلْتُ ۖ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ", 
+                    bn: "<strong>হাসবিয়াল্লাহু লা ইলাহা ইল্লা হুওয়া</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: হাসবিয়াল্লাহু লা-ইলাহা ইল্লা হুওয়া, আলাইহি তাওয়াক্কালতু ওয়াহুওয়া রব্বুল আরশিল আযীম।</span>", 
+                    mean: "<strong>অর্থ:</strong> আমার জন্য আল্লাহই যথেষ্ট, তিনি ছাড়া কোনো সত্য উপাস্য নেই। আমি তাঁরই ওপর ভরসা করেছি...<br><br><strong>ফজিলত:</strong> সকাল-সন্ধ্যায় ৭ বার পড়লে আল্লাহ তার দুনিয়া ও আখেরাতের সব চিন্তার জন্য যথেষ্ট হয়ে যাবেন।", 
+                    target: 7,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_083.mp3" 
+                },
+                { 
+                    id: "e7", 
+                    ar: "يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلَا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ", 
+                    bn: "<strong>পেরেশানি দূর করার দোয়া</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: ইয়া হাইয়্যু ইয়া কাইয়্যুমু বিরাহমাতিকা আসতাগীছ, আসলিহ লী শা’নী كুল্লাহু, ওয়ালা তাকিলনী ইলা নাফসী তারফাতা আইন।</span>", 
+                    mean: "<strong>অর্থ:</strong> হে চিরঞ্জীব, হে চিরস্থায়ী! আমি আপনার রহমতের উসিলায় সাহায্য প্রার্থনা করছি। আপনি আমার সব কাজ গুছিয়ে দিন...<br><br><strong>ফজিলত:</strong> এটি সর্বশ্রেষ্ঠ পেরেশানি দূরকারী দোয়া।", 
+                    target: 1,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_086.mp3" 
+                },
+                { 
+                    id: "e8", 
+                    ar: "أَعُوذُ بِكَلِمَاتِ اللَّهِ التَّامَّاتِ مِنْ شَرِّ مَا خَلَقَ", 
+                    bn: "<strong>আউযু বিকালিমা-তিল্লাহিত তাম্মা-তি</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আউযু বিকালিমা-তিল্লাহিত তাম্মা-তি মিন শাররি মা খালাক।</span>", 
+                    mean: "<strong>অর্থ:</strong> আমি আল্লাহর পরিপূর্ণ কালিমাসমূহের ওসিলায় তাঁর সৃষ্ট যাবতীয় জিনিসের অনিষ্ট থেকে আশ্রয় প্রার্থনা করছি।<br><br><strong>ফজিলত:</strong> সন্ধ্যায় ৩ বার পড়লে রাতে কোনো বিষাক্ত প্রাণী ক্ষতি করতে পারবে না।", 
+                    target: 3,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_098.mp3" 
+                },
+                { 
+                    id: "e9", 
+                    ar: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ", 
+                    bn: "<strong>ইস্তিগফার</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: আস্তাগফিরুল্লাহা ওয়া আতূবু ইলাইহি।</span>", 
+                    mean: "<strong>অর্থ:</strong> আমি আল্লাহর কাছে ক্ষমা প্রার্থনা করছি এবং তাঁর দিকেই ফিরে যাচ্ছি।<br><br><strong>ফজিলত:</strong> রাসূলুল্লাহ (সা.) দিনে ১০০ বার ইস্তিগফার করতেন। এটি গুনাহ মাফ এবং রিজিকে বরকতের সবচেয়ে বড় মাধ্যম।", 
+                    target: 100,
+                    audio: "https://www.hisnmuslim.com/audio/ar/ar_099.mp3" 
+                },
+                { 
+                    id: "e10", 
+                    ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", 
+                    bn: "<strong>সুবহানাল্লাহি ওয়া বিহামদিহি</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: সুবহানাল্লাহি ওয়া বিহামদিহি।</span>", 
+                    mean: "<strong>অর্থ:</strong> আল্লাহ পবিত্র এবং সমস্ত প্রশংসা তাঁরই।<br><br><strong>ফজিলত:</strong> ১০০ বার পড়লে সমুদ্রের ফেনার সমপরিমাণ গুনাহ মাফ হয়ে যায়।", 
+                    target: 100,
+                    audio: "https://audiomack.com//zikr-e-elahi/song/subhanallahi-wabihamdihi-subhanallahil-azeem" 
+                }
+            ]
+        };        
+
+        
+        let adhkarProgress = JSON.parse(localStorage.getItem('tb_adhkar_prog')) || {};
+        
+        let currentAdhkarTab = 'morning';
+
+        function initAdhkar() {
+            const todayStr = getTodayDateString();
+            if(!adhkarProgress[todayStr]) { adhkarProgress = {}; adhkarProgress[todayStr] = {}; }
+            renderAdhkarList();
+        }
+
+                        function renderAdhkarList() {
+            const todayStr = getTodayDateString();
+            const container = document.getElementById('adhkarListContainer');
+            container.innerHTML = '';
+            
+            const list = adhkarData[currentAdhkarTab];
+            list.forEach(item => {
+                const currentCount = adhkarProgress[todayStr][item.id] || 0;
+                const isCompleted = currentCount >= item.target;
+                const isPlaying = playingAdhkarId === item.id;
+                
+                // অডিও বাটন HTML
+                const audioBtn = item.audio ? 
+                    `<button class="icon-btn" onclick="toggleAdhkarAudio('${item.id}', '${item.audio}')" style="width: 32px; height: 32px; border: none; background: ${isPlaying ? '#ef4444' : 'rgba(14, 165, 233, 0.15)'}; color: ${isPlaying ? 'white' : '#0ea5e9'}; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                        <i class="fa-solid ${isPlaying ? 'fa-stop' : 'fa-play'}"></i>
+                    </button>` : '';
+
+                const card = document.createElement('div');
+                card.className = `adhkar-card ${isCompleted ? 'completed' : ''}`;
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 10px;">
+                        ${audioBtn}
+                        <div class="adhkar-arabic" style="margin-bottom: 0; flex: 1;">${item.ar}</div>
+                    </div>
+                    <div class="adhkar-bangla">${item.bn}</div>
+                    <div class="adhkar-meaning">${item.mean}</div>
+                    <div class="adhkar-action">
+                        <span class="adhkar-count-badge">${bnNum(currentCount)} / ${bnNum(item.target)}</span>
+                        <button class="adhkar-tap-btn" onclick="tapAdhkarItem('${item.id}', ${item.target})">
+                            ${isCompleted ? '<i class="fa-solid fa-check"></i>' : 'পড়ুন'}
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.tapAdhkarItem = function(id, target) {
+            initAudio(); if ("vibrate" in navigator) navigator.vibrate(30);
+            
+            const todayStr = getTodayDateString();
+            if(!adhkarProgress[todayStr][id]) adhkarProgress[todayStr][id] = 0;
+            
+            if(adhkarProgress[todayStr][id] < target) {
+                adhkarProgress[todayStr][id]++;
+                localStorage.setItem('tb_adhkar_prog', JSON.stringify(adhkarProgress));
+                
+                if(adhkarProgress[todayStr][id] === target) {
+                    if ("vibrate" in navigator) navigator.vibrate([100, 50, 100]);
+                    playTapSound(true);
+                } else {
+                    playTapSound(false);
+                }
+                renderAdhkarList();
+            }
+        };
+        
+                // আমল মেনু ওপেন করা
+        document.getElementById('navAdhkar').addEventListener('click', () => { 
+            closeAllSheets(); 
+            document.getElementById('navAdhkar').classList.add('active'); 
+            adhkarOverlay.classList.add('open'); 
+        });
+
+        // আমল মেনু ক্লোজ করা
+        document.getElementById('closeAdhkarBtn').addEventListener('click', () => { 
+            closeAllSheets(); 
+            document.getElementById('navHome').classList.add('active'); 
+        });
+
+        // সকালের আমল ট্যাব ক্লিক ইভেন্ট
+        document.getElementById('tabMorning').addEventListener('click', () => { 
+            stopAdhkarAudioSafely(); // অডিও চললে তা বন্ধ করবে
+            currentAdhkarTab = 'morning'; 
+            
+            // সকালের ট্যাব অ্যাক্টিভ স্টাইল
+            document.getElementById('tabMorning').style.background = '#0ea5e9';
+            document.getElementById('tabMorning').style.color = 'white';
+            document.getElementById('tabMorning').style.border = 'none';
+            
+            // সন্ধ্যার ট্যাব ইনঅ্যাক্টিভ স্টাইল
+            document.getElementById('tabEvening').style.background = 'var(--btn-bg)';
+            document.getElementById('tabEvening').style.color = 'var(--text-main)';
+            document.getElementById('tabEvening').style.border = '1px solid rgba(14, 165, 233, 0.2)';
+            
+            renderAdhkarList(); 
+        });
+
+        // সন্ধ্যার আমল ট্যাব ক্লিক ইভেন্ট
+        document.getElementById('tabEvening').addEventListener('click', () => { 
+            stopAdhkarAudioSafely(); // অডিও চললে তা বন্ধ করবে
+            currentAdhkarTab = 'evening'; 
+            
+            // সন্ধ্যার ট্যাব অ্যাক্টিভ স্টাইল
+            document.getElementById('tabEvening').style.background = '#0ea5e9';
+            document.getElementById('tabEvening').style.color = 'white';
+            document.getElementById('tabEvening').style.border = 'none';
+            
+            // সকালের ট্যাব ইনঅ্যাক্টিভ স্টাইল
+            document.getElementById('tabMorning').style.background = 'var(--btn-bg)';
+            document.getElementById('tabMorning').style.color = 'var(--text-main)';
+            document.getElementById('tabMorning').style.border = '1px solid rgba(14, 165, 233, 0.2)';
+            
+            renderAdhkarList(); 
+        });
+
+        // অডিও কন্ট্রোলের জন্য ভেরিয়েবল
+        let currentAdhkarAudio = null;
+        let playingAdhkarId = null;
+
+        // অডিও প্লে/পজ করার ফাংশন
+        window.toggleAdhkarAudio = function(id, audioUrl) {
+            if (!audioUrl || audioUrl === 'undefined') {
+                alert("এই আমলটির অডিও এখনো যুক্ত করা হয়নি।");
+                return;
+            }
+
+            // যদি একই অডিও চলতে থাকে, তবে পজ করে দিন
+            if (currentAdhkarAudio && playingAdhkarId === id) {
+                currentAdhkarAudio.pause();
+                currentAdhkarAudio = null;
+                playingAdhkarId = null;
+                renderAdhkarList(); // UI আপডেট করার জন্য
+                return;
+            }
+
+            // অন্য কোনো অডিও চলতে থাকলে তা বন্ধ করুন
+            if (currentAdhkarAudio) {
+                currentAdhkarAudio.pause();
+            }
+
+            // নতুন অডিও চালু করুন
+            currentAdhkarAudio = new Audio(audioUrl);
+            playingAdhkarId = id;
+            
+            currentAdhkarAudio.play().catch(e => {
+                console.log("Audio play error:", e);
+                alert("অডিও প্লে করতে সমস্যা হচ্ছে। ইন্টারনেট কানেকশন চেক করুন।");
+                playingAdhkarId = null;
+                renderAdhkarList();
+            });
+            
+            // অডিও শেষ হলে স্টেট রিসেট করুন
+            currentAdhkarAudio.onended = () => {
+                currentAdhkarAudio = null;
+                playingAdhkarId = null;
+                renderAdhkarList();
+            };
+
+            renderAdhkarList(); // UI আপডেট করে পজ বাটন দেখানোর জন্য
+        };
+
     </script>
 </body>
 </html>
