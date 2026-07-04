@@ -40,6 +40,50 @@
             --bottom-nav-bg: rgba(15, 23, 42, 0.85);
         }
 
+        /* মদিনা গ্রিন (Medina Green) */
+        .theme-medina {
+            --bg-gradient: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #6ee7b7 100%);
+            --container-bg: rgba(255, 255, 255, 0.45);
+            --panel-bg: rgba(255, 255, 255, 0.75);
+            --panel-border: rgba(16, 185, 129, 0.3);
+            --text-main: #064e3b;
+            --text-title: #059669;
+            --text-muted: #10b981;
+            --btn-bg: rgba(255, 255, 255, 0.7);
+            --bottom-nav-bg: rgba(255, 255, 255, 0.85);
+        }
+        .theme-medina .main-tap-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3), inset 0 4px 6px rgba(255, 255, 255, 0.4);
+        }
+        .theme-medina .main-tap-btn::before { border-color: rgba(16, 185, 129, 0.4); }
+        .theme-medina .target-badge { background: #10b981; color: white; }
+        .theme-medina .nav-item.active { color: #10b981; }
+        .theme-medina .name-arabic { color: #059669; }
+
+        /* কাবা ব্ল্যাক (Kaaba Black) */
+        .theme-kaaba {
+            --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+            --container-bg: rgba(10, 10, 10, 0.7);
+            --panel-bg: rgba(20, 20, 20, 0.9);
+            --panel-border: rgba(212, 175, 55, 0.25);
+            --text-main: #f8fafc;
+            --text-title: #d4af37;
+            --text-muted: #94a3b8;
+            --btn-bg: rgba(30, 30, 30, 0.8);
+            --bottom-nav-bg: rgba(15, 15, 15, 0.95);
+        }
+        .theme-kaaba .main-tap-btn {
+            background: linear-gradient(135deg, #222 0%, #111 100%);
+            border: 5px solid #d4af37;
+            color: #d4af37;
+            box-shadow: 0 15px 35px rgba(212, 175, 55, 0.15), inset 0 4px 6px rgba(0, 0, 0, 0.6);
+        }
+        .theme-kaaba .main-tap-btn::before { border-color: rgba(212, 175, 55, 0.3); }
+        .theme-kaaba .target-badge { background: #d4af37; color: #000; }
+        .theme-kaaba .nav-item.active { color: #d4af37; }
+        .theme-kaaba .name-arabic { color: #d4af37; }
+
         * {
             margin: 0; padding: 0; box-sizing: border-box;
             font-family: 'Poppins', 'Noto Serif Bengali', sans-serif;
@@ -160,7 +204,6 @@
             cursor: pointer; position: relative; outline: none; z-index: 10;
         }
 
-        .dark-version .main-tap-btn { border-color: rgba(30, 41, 59, 0.9); }
         .main-tap-btn:active { transform: scale(0.93); }
         .main-tap-btn::before {
             content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px;
@@ -250,7 +293,7 @@
             display: flex; flex-direction: column; gap: 15px; box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
         }
         .slide-overlay.open { bottom: 0; }
-        .overlay-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 15px; margin-bottom: 5px; }
+        .overlay-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 15px; margin-bottom: 5px; flex-shrink: 0; }
 
         /* Settings Grid inside Sheet */
         .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; overflow-y: auto; }
@@ -309,8 +352,19 @@
             100% { transform: scale(1); box-shadow: 0 0 20px rgba(14, 165, 233, 0.3); }
         }
 
-        /* 99 Names */
-        .names-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; overflow-y: auto; padding-right: 5px; padding-bottom: 20px; margin-top: 10px; }
+        /* 99 Names Fixed CSS */
+        .names-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 12px; 
+            overflow-y: auto; 
+            padding-right: 5px; 
+            padding-bottom: 20px; 
+            margin-top: 10px;
+            flex: 1; 
+            min-height: 0; 
+            align-content: start; 
+        }
         .names-grid::-webkit-scrollbar { display: none; }
         .name-card {
             background: rgba(255, 255, 255, 0.4); border: 1px solid rgba(255, 255, 255, 0.5);
@@ -336,7 +390,10 @@
     <div class="app-container">
 
         <div class="top-bar">
-            <span class="app-title"><i class="fa-solid fa-mosque"></i> তাসবিহ প্রো</span>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+                <span class="app-title"><i class="fa-solid fa-mosque"></i> তাসবিহ প্রো</span>
+                <span id="hijriDateDisplay" style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-top: 2px;">হিজরি তারিখ লোড হচ্ছে...</span>
+            </div>
             
             <button class="zen-toggle-btn" id="zenToggleBtn" title="Zen Mode">
                 <i class="fa-solid fa-eye-slash"></i>
@@ -450,18 +507,30 @@
                 <i class="fa-solid fa-clock" style="color: #10b981; font-size: 1.2rem;"></i>
                 <span style="color: #10b981; font-weight: 600;">নামাজের সময় নির্ধারণ</span>
             </div>
-            <h4 style="margin-bottom: 10px; color: var(--text-main);">অ্যাপ সেটিংস</h4>
-            <div class="settings-grid" style="margin-bottom: 20px;">
-                <div class="setting-card" id="darkBtn">
-                    <i class="fa-solid fa-moon"></i> <span>ডার্ক</span>
+            
+            <h4 style="margin-bottom: 10px; color: var(--text-main);">থিম ও অ্যাপ সেটিংস</h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+                <div class="setting-card theme-btn active" data-theme="default" style="padding: 10px;">
+                    <i class="fa-solid fa-droplet" style="color: #0ea5e9;"></i> <span style="font-size:0.75rem;">স্কাই</span>
                 </div>
-                <div class="setting-card" id="fsBtn">
-                    <i class="fa-solid fa-expand"></i> <span>ফুল</span>
+                <div class="setting-card theme-btn" data-theme="dark" style="padding: 10px;">
+                    <i class="fa-solid fa-moon" style="color: #94a3b8;"></i> <span style="font-size:0.75rem;">ডার্ক</span>
                 </div>
-                <div class="setting-card" id="openDevBtn" style="background: rgba(37, 99, 235, 0.1); border-color: rgba(37, 99, 235, 0.2);">
-                    <i class="fa-solid fa-code" style="color: #2563eb;"></i> <span style="color: #2563eb;">ডেভ</span>
+                <div class="setting-card theme-btn" data-theme="medina" style="padding: 10px;">
+                    <i class="fa-solid fa-leaf" style="color: #10b981;"></i> <span style="font-size:0.75rem;">মদিনা</span>
+                </div>
+                <div class="setting-card theme-btn" data-theme="kaaba" style="padding: 10px;">
+                    <i class="fa-solid fa-cube" style="color: #d4af37;"></i> <span style="font-size:0.75rem;">কাবা</span>
+                </div>
+                
+                <div class="setting-card" id="fsBtn" style="padding: 10px;">
+                    <i class="fa-solid fa-expand"></i> <span style="font-size:0.75rem;">ফুলস্ক্রিন</span>
+                </div>
+                <div class="setting-card" id="openDevBtn" style="background: rgba(37, 99, 235, 0.1); border-color: rgba(37, 99, 235, 0.2); padding: 10px;">
+                    <i class="fa-solid fa-code" style="color: #2563eb;"></i> <span style="color: #2563eb; font-size:0.75rem;">ডেভ</span>
                 </div>
             </div>
+
             <h4 style="margin-bottom: 10px; color: var(--text-main);">ইসলামিক রিসোর্স</h4>
             <div class="settings-grid">
                 <div class="setting-card" onclick="openWebExternal('https://dua.gtaf.org/')"><i class="fa-solid fa-book-open"></i> <span>দুআ</span></div>
@@ -490,6 +559,7 @@
             </div>
         </div>
         <div id="exportableReportArea" style="display: flex; flex-direction: column; gap: 15px; flex: 1; padding: 10px; background: var(--panel-bg); border-radius: 16px; overflow-y: auto;">
+            
             <div style="display: flex; gap: 10px;">
                 <div class="mini-card" style="flex: 1; background: rgba(14, 165, 233, 0.1); border: none; flex-direction: column; align-items: flex-start;">
                     <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">আজকের মোট জিকির</span>
@@ -500,7 +570,18 @@
                     <span id="weeklyTotalCount" style="font-size: 1.4rem; font-weight: 700; color: #2563eb;">০</span>
                 </div>
             </div>
+            
             <div class="chart-container" id="chartWrapper" style="padding: 10px; background: rgba(0,0,0,0.02); border-radius: 12px; border: 1px solid rgba(0,0,0,0.05);"></div>
+            
+            <div style="display: flex; gap: 10px; margin-top: auto; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.05);">
+                <button class="modal-btn" onclick="resetTodayReport()" style="background: #f59e0b; color: white; font-size: 0.85rem; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fa-solid fa-calendar-day"></i> আজকের রিসেট
+                </button>
+                <button class="modal-btn" onclick="resetAllReport()" style="background: #ef4444; color: white; font-size: 0.85rem; padding: 12px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                    <i class="fa-solid fa-trash-can"></i> অল রিসেট
+                </button>
+            </div>
+
         </div>
     </div>
 
@@ -626,7 +707,7 @@
             { name: "সুবহানাল্লাহি ওয়াল হামদুলিল্লাহি ওয়া লা ইলাহা ইল্লাল্লাহু ওয়াল্লাহু আকবার", meaning: "অর্থ: আল্লাহ পবিত্র, সমস্ত প্রশংসা আল্লাহর, আল্লাহ ছাড়া কোনো উপাস্য নেই, আল্লাহ মহান।", fazilat: "ফজিলত: এই জিকিরটি সূর্যোদয় ও সূর্যাস্তের মধ্যবর্তী সময়ের সমস্ত সদকার চেয়েও উত্তম।" },
             { name: "আল্লাহুম্মা সাল্লি আলা মুহাম্মাদিওঁ ওয়া আলা আলি মুহাম্মাদ (দরুদ শরীফ)", meaning: "অর্থ: হে আল্লাহ! আপনি মুহাম্মাদ (সা.) ও তাঁর পরিবারের ওপর রহমত বর্ষণ করুন।", fazilat: "ফজিলত: দরুদ শরীফ পাঠ করলে অগণিত সওয়াব ও বরকত পাওয়া যায়।" },
             { name: "ইয়া হাইয়্যু ইয়া কাইয়্যুম, বিরাহমতিকা আস্তাগিস", meaning: "অর্থ: হে চিরঞ্জীব, হে বিশ্বচরাচরের ধারক! তোমার রহমতের অসিলায় আমি সাহায্য প্রার্থনা করছি।", fazilat: "ফজিলত: কঠিন বিপদ থেকে উত্তরণের জন্য অত্যন্ত বরকতপূর্ণ দোয়া।" },
-            { name: "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুনতু মিনাজ জলিহীন (ইউনুস আ.-এর দোয়া)", meaning: "অর্থ: তুমি ছাড়া কোনো উপাস্য নেই, তুমি পবিত্র, আমি নিশ্চয়ই জালিমদের অন্তর্ভুক্ত।", fazilat: "ফজিলত: বিপদ থেকে মুক্তির জন্য পরীক্ষিত আমল।" },
+            { name: "লা ইলাহা ইল্লা আনতা সুবহানাকা ইন্নি কুনতু মিনাজ জলিমীন (ইউনুস আ.-এর দোয়া)", meaning: "অর্থ: তুমি ছাড়া কোনো উপাস্য নেই, তুমি পবিত্র, আমি নিশ্চয়ই জালিমদের অন্তর্ভুক্ত।", fazilat: "ফজিলত: বিপদ থেকে মুক্তির জন্য পরীক্ষিত আমল।" },
             { name: "কাস্টম জিকির", meaning: "অর্থ: আপনার পছন্দনীয় জিকির।", fazilat: "ফজিলত: আল্লাহর স্মরণে আপনার নিজস্ব লক্ষ্য।" },
             { name: "সীমাহীন জিকির", meaning: "অর্থ: জিকিরের কোনো নির্দিষ্ট সীমা নেই।", fazilat: "ফজিলত: সবসময় আল্লাহর স্মরণে থাকার অশেষ সওয়াব।" }
         ];
@@ -670,7 +751,7 @@
 
             if ("Notification" in window && Notification.permission === "granted") {
                 new Notification("নামাজের রিমাইন্ডার 🕌", {
-                    body: `${namazName} নামাজের আর মাত্র ১৫ মিনিট বাকি আছে। দয়া করে ওযু করে প্রস্তুত হোন।`,
+                    body: `${namazName} নামাজের আর মাত্র ১৫ মিনিট বাকি আছে। দয়া করে ওযু করে প্রস্তুত হোন। বেশি বেশি ইসতেগফার,তাসবিহ তাহলীল পাঠ করুন।`,
                     tag: "namaz-reminder",
                     requireInteraction: true 
                 });
@@ -684,7 +765,6 @@
         let historyData = JSON.parse(localStorage.getItem('tb_history_logs')) || {};
         let streakCount = parseInt(localStorage.getItem('tb_streak')) || 0;
         let lastActiveDate = localStorage.getItem('tb_last_date') || "";
-        let isDarkMode = localStorage.getItem('tb_dark') === 'true';
         let lastTargetReached = false;
 
         const counterDisplay = document.getElementById('counterDisplay');
@@ -704,23 +784,50 @@
         const namesOverlay = document.getElementById('namesOverlay');
         const customModal = document.getElementById('customModal');
         const devModal = document.getElementById('devModal');
-        const darkBtn = document.getElementById('darkBtn');
+        
+        // ==========================================
+        // ডায়নামিক থিম লজিক (Dynamic Theme Controller)
+        // ==========================================
+        const themeBtns = document.querySelectorAll('.theme-btn');
+        let currentTheme = localStorage.getItem('tb_theme') || (localStorage.getItem('tb_dark') === 'true' ? 'dark' : 'default');
 
-        function applyAdaptiveTheme() {
-            if (isDarkMode) {
-                document.body.classList.add('dark-version');
-                document.getElementById('darkBtn').classList.add('active');
-            } else {
-                document.body.classList.remove('dark-version', 'theme-morning', 'theme-noon', 'theme-evening', 'theme-night');
-                document.getElementById('darkBtn').classList.remove('active');
-            }
+        function applyAppTheme(themeName) {
+            document.body.classList.remove('dark-version', 'theme-medina', 'theme-kaaba');
+            
+            if(themeName === 'dark') document.body.classList.add('dark-version');
+            else if(themeName === 'medina') document.body.classList.add('theme-medina');
+            else if(themeName === 'kaaba') document.body.classList.add('theme-kaaba');
+            
+            localStorage.setItem('tb_theme', themeName);
+            currentTheme = themeName;
+
+            themeBtns.forEach(btn => {
+                const icon = btn.querySelector('i');
+                if(btn.dataset.theme === themeName) {
+                    btn.classList.add('active');
+                    btn.style.background = 'var(--text-title)';
+                    btn.style.color = '#fff';
+                    if(icon) icon.style.color = '#fff';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.background = '';
+                    btn.style.color = 'var(--text-main)';
+                    if(icon) {
+                        if(btn.dataset.theme === 'default') icon.style.color = '#0ea5e9';
+                        if(btn.dataset.theme === 'dark') icon.style.color = '#94a3b8';
+                        if(btn.dataset.theme === 'medina') icon.style.color = '#10b981';
+                        if(btn.dataset.theme === 'kaaba') icon.style.color = '#d4af37';
+                    }
+                }
+            });
         }
 
+        themeBtns.forEach(btn => {
+            btn.addEventListener('click', () => applyAppTheme(btn.dataset.theme));
+        });
+
+        
         function initApp() {
-            if(isDarkMode) {
-                document.body.classList.add('dark-version');
-                darkBtn.classList.add('active');
-            }
             zikrSelector.selectedIndex = currentZikrIdx;
             
             if (localStorage.getItem('tb_target') === 'custom') {
@@ -732,7 +839,7 @@
             checkAndUpdateStreak();
             updateDisplay();
             calcNamazTime();
-            applyAdaptiveTheme();
+            applyAppTheme(currentTheme);
         }
 
         function getTodayDateString() {
@@ -922,14 +1029,6 @@
         document.getElementById('navSettings').addEventListener('click', () => { closeAllSheets(); document.getElementById('navSettings').classList.add('active'); settingsOverlay.classList.add('open'); });
         document.getElementById('closeSettingsBtn').addEventListener('click', () => { closeAllSheets(); document.getElementById('navHome').classList.add('active'); });
 
-        darkBtn.addEventListener('click', () => {
-            isDarkMode = !isDarkMode;
-            document.body.classList.toggle('dark-version', isDarkMode);
-            darkBtn.classList.toggle('active', isDarkMode);
-            localStorage.setItem('tb_dark', isDarkMode);
-            applyAdaptiveTheme();
-        });
-
         document.getElementById('fsBtn').addEventListener('click', () => { settingsOverlay.classList.remove('open'); fsOverlay.style.display = 'flex'; });
         document.getElementById('closeFs').addEventListener('click', () => { fsOverlay.style.display = 'none'; document.getElementById('navHome').classList.add('active'); });
         document.getElementById('openDevBtn').addEventListener('click', () => devModal.classList.add('show'));
@@ -982,8 +1081,8 @@
             "যে চুপ থাকে, সে মুক্তি পায়। (তিরমিজি)", "সৎকাজ হলো উত্তম চরিত্র। (মুসলিম)", "আল্লাহ তায়ালা সুন্দর, তিনি সৌন্দর্য ভালোবাসেন। (মুসলিম)",
             "তোমাদের মধ্যে সর্বোত্তম সে, যে আল-কোরআন শেখে এবং শেখায়। (বুখারি)", "রাগ কোরো না, তাহলে তোমার জন্য জান্নাত। (তাবারানি)",
             "যে ব্যক্তি ইলম অন্বেষণে বের হয়, আল্লাহ তার জান্নাতের পথ সহজ করে দেন। (মুসলিম)", "লজ্জাশীলতা ঈমানের অঙ্গ। (বুখারি)",
-            "মুমিনের জন্য দুনিয়া কারাগার আর জান্নাত হলো আখিরাত। (মুসলিম)", "যে ব্যক্তি আমাদের ছোটদের স্নেহ করে না, সে আমাদের দলভুক্ত নয়। (তিরমিজি)",
-            "দান-সদকা সম্পদ কমায় না। (মুসলিম)", "মুমিন এক গর্তে দুইবার দংশিত হয় গঠন করো না। (বুখারি)", "আল্লাহর নিকট সবচেয়ে প্রিয় আমল হলো যা নিয়মিত করা হয়। (বুখারি)",
+            "মুমিনের জন্য দুনিয়া কারাগার আর জান্নাত হলো আখিরাত। (মুসলিম)", "যে ব্যক্তি আমাদের ছোটদের স্নেহ করে بدی না, সে আমাদের দলভুক্ত নয়। (তিরমিজি)",
+            "দান-সদকা সম্পদ কমায় না। (মুসলিম)", "মুমিন এক গর্তে দুইবার দংশিত হয় না। (বুখারি)", "আল্লাহর নিকট সবচেয়ে প্রিয় আমল হলো যা নিয়মিত করা হয়। (বুখারি)",
             "তোমরা একে অপরের প্রতি হিংসা কোরো না। (মুসলিম)", "অর্ধেক ঈমান হলো পবিত্রতা। (মুসলিম)", "যে ব্যক্তি আখিরাতকে তার মূল লক্ষ্য বানায়, আল্লাহ তার হৃদয়কে অভাবমুক্ত করে দেন। (তিরমিজি)",
             "মিথ্যা বলা থেকে বিরত থাকো, মিথ্যা মানুষকে পাপের দিকে নিয়ে যায়। (বুখারি)", "মাতা-পিতার সন্তুষ্টির মাঝেই আল্লাহর সন্তুষ্টি। (তিরমিজি)",
             "হাসিমুখে কথা বলাও একটি সদকা। (তিরমিজি)", "আল্লাহ সেই ব্যক্তির প্রতি রহম করুন, যে ক্রয়-বিক্রয়ে নম্রতা প্রদর্শন করে। (বুখারি)",
@@ -1037,7 +1136,7 @@
             { ar: "ٱلْجَبَّارُ", bn: "আল-জাব্বার", mean: "অপ্রতিরোধ্য" }, { ar: "ٱلْمُتَكَبِّرُ", bn: "আল-মুতাকাব্বির", mean: "অহংকারের অধিকারী" },
             { ar: "ٱلْخَالِقُ", bn: "আল-খালিক", mean: "সৃষ্টিকর্তা" }, { ar: "ٱلْبَارِئُ", bn: "আল-বারী", mean: "সঠিকভাবে রূপদানকারী" },
             { ar: "ٱلْمُصَوِّرُ", bn: "আল-মুসাওয়ির", mean: "আকৃতিদানকারী" }, { ar: "ٱلْغَفَّارُ", bn: "আল-গাফফার", mean: "পরম ক্ষমাশীল" },
-            { ar: "ٱلْقَهَّارُ", bn: "আল-কাহহার", mean: "কঠোর দমনকারী" }, { ar: "ٱلْوَهَّابُ", bn: "আল-ওয়াহহাব", mean: "সবকিছু দানকারী" },
+            { ar: "ٱلْقَهَّارُ", bn: "আল-কাহহার", mean: "ক কঠোর দমনকারী" }, { ar: "ٱلْوَهَّابُ", bn: "আল-ওয়াহহাব", mean: "সবকিছু দানকারী" },
             { ar: "ٱلرَّزَّاقُ", bn: "আর-রাজ্জাক", mean: "রিজিকদাতা" }, { ar: "ٱلْفَتَّاحُ", bn: "আল-ফাত্তাহ", mean: "বিজয়দানকারী" },
             { ar: "ٱلْعَلِيْمُ", bn: "আল-আলীম", mean: "সর্বজ্ঞানী" }, { ar: "ٱلْقَابِضُ", bn: "আল-ক্বাবিদ", mean: "সংকুচিতকারী" },
             { ar: "ٱلْبَاسِطُ", bn: "আল-বাসিত", mean: "প্রসারিতকারী" }, { ar: "ٱلْخَافِضُ", bn: "আল-খাফিদ", mean: "অবনতকারী" },
@@ -1130,6 +1229,43 @@
             document.getElementById('nextNamazText').innerText = nextNamaz;
         }
 
+        // ==========================================
+        // হিজরি ক্যালেন্ডার (Hijri Date Logic - Bug Fixed)
+        // ==========================================
+        function displayHijriDate() {
+            try {
+                const formatter = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura', {
+                    day: 'numeric', month: 'numeric', year: 'numeric'
+                });
+                const parts = formatter.formatToParts(new Date());
+                
+                let hDay, hMonthIdx, hYear;
+                parts.forEach(p => {
+                    if(p.type === 'day') hDay = p.value;
+                    if(p.type === 'month') hMonthIdx = parseInt(p.value) - 1; 
+                    if(p.type === 'year') hYear = p.value.split(' ')[0]; 
+                });
+
+                const hijriMonthsBn = [
+                    "মুহাররম", "সফর", "রবিউল আউয়াল", "রবিউস সানি", 
+                    "জমাদিউল আউয়াল", "জমাদিউস সানি", "রজব", "শাবান", 
+                    "রমজান", "শাওয়াল", "জিলকদ", "জিলহজ"
+                ];
+                
+                const bnNum = (n) => n.toString().replace(/\d/g, d => ['০','১','২','৩','৪','৫','৬','৭','৮','৯'][d]);
+                
+                const hijriDateStr = `${bnNum(hDay)} ${hijriMonthsBn[hMonthIdx]}, ${bnNum(hYear)} হিজরি`;
+                
+                const hijriElement = document.getElementById('hijriDateDisplay');
+                if (hijriElement) {
+                    hijriElement.innerText = hijriDateStr;
+                }
+            } catch (e) {
+                console.log("হিজরি ক্যালেন্ডার সাপোর্ট করছে না।", e);
+                document.getElementById('hijriDateDisplay').style.display = 'none';
+            }
+        }
+
         const exportMenuBtn = document.getElementById('exportMenuBtn');
         const exportDropdown = document.getElementById('exportDropdown');
         exportMenuBtn.addEventListener('click', (e) => { e.stopPropagation(); exportDropdown.style.display = exportDropdown.style.display === 'flex' ? 'none' : 'flex'; });
@@ -1157,7 +1293,11 @@
         }
 
         window.onload = () => {
-            initApp(); calcNamazTime(); requestNotificationPermission(); setInterval(checkNamazReminders, 1000); 
+            initApp(); 
+            calcNamazTime(); 
+            displayHijriDate(); 
+            requestNotificationPermission(); 
+            setInterval(checkNamazReminders, 1000); 
         };
 
         function openWebExternal(url) { window.open(url, '_blank'); settingsOverlay.classList.remove('open'); }
@@ -1183,6 +1323,34 @@
             9: ["ইয়া হাইয়্যু ইয়া কাইয়্যুম", "ইয়া হাইয়্যু", "ইয়া কাইয়্যুম", "বিরাহমতিকা"],
             10: ["ইউনুস", "ইউনুসের দোয়া", "লা ইলাহা ইল্লা আনতা", "সুবহানাকা ইন্নি কুনতু"]
         };
+
+        // ==========================================
+        // জিকির রিপোর্ট রিসেট লজিক
+        // ==========================================
+        function resetTodayReport() {
+            const today = getTodayDateString();
+            if (!historyData[today] || Object.keys(historyData[today]).length === 0) {
+                alert("আজকের কোনো জিকির ডেটা নেই!");
+                return;
+            }
+            if(confirm("আপনি কি নিশ্চিতভাবে শুধুমাত্র 'আজকের' জিকির রিপোর্ট মুছে ফেলতে চান?")) {
+                delete historyData[today];
+                localStorage.setItem('tb_history_logs', JSON.stringify(historyData)); 
+                renderAnalyticsView(); 
+            }
+        }
+
+        function resetAllReport() {
+            if (Object.keys(historyData).length === 0) {
+                alert("রিসেট করার মতো কোনো ডেটা নেই!");
+                return;
+            }
+            if(confirm("সতর্কতা: আপনি কি নিশ্চিতভাবে সমস্ত জিকিরের ইতিহাস (রিসেট অল) মুছে ফেলতে চান? এই কাজটি ফেরানো যাবে না।")) {
+                historyData = {}; 
+                localStorage.removeItem('tb_history_logs'); 
+                renderAnalyticsView(); 
+            }
+        }
 
         if (SpeechRecognition) {
             recognition = new SpeechRecognition();
@@ -1251,21 +1419,17 @@
         if(voiceBtnElement) {
             voiceBtnElement.removeEventListener('click', toggleVoiceRecognition);
             voiceBtnElement.addEventListener('click', toggleVoiceRecognition);
-        }
-        
+        }        
         
         // Zen Mode Logic
-        
         let isZenMode = false;
         const zenToggleBtn = document.getElementById('zenToggleBtn');
 
         if(zenToggleBtn) {
             zenToggleBtn.addEventListener('click', () => {
                 isZenMode = !isZenMode;
-                
                 document.body.classList.toggle('is-zen-mode', isZenMode);
                 zenToggleBtn.classList.toggle('active', isZenMode);
-                
                 if(isZenMode) {
                     zenToggleBtn.innerHTML = '<i class="fa-solid fa-eye"></i>';
                 } else {
@@ -1273,7 +1437,6 @@
                 }
             });
         }
-
     </script>
 </body>
 </html>
