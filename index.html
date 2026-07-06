@@ -563,7 +563,7 @@
                     <i class="fa-solid fa-expand"></i> <span style="font-size:0.75rem;">ফুলস্ক্রিন</span>
                 </div>
                 <div class="setting-card" id="openDevBtn" style="background: rgba(37, 99, 235, 0.1); border-color: rgba(37, 99, 235, 0.2); padding: 10px;">
-                    <i class="fa-solid fa-code" style="color: #2563eb;"></i> <span style="color: #2563eb; font-size:0.75rem;">ডেভ</span>
+                    <i class="fa-solid fa-code" style="color: #2563eb;"></i> <span style="color: #2563eb; font-size:0.75rem;">ডেভেলপার ইনফো</span>
                 </div>
             </div>
 
@@ -594,6 +594,19 @@
                 <button class="icon-btn" id="closeAnalyticsBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
             </div>
         </div>
+        
+        <div style="display: flex; gap: 8px; margin-bottom: 15px; width: 100%;">
+    <select id="filterTypeSelect" style="padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-title); font-weight: 600; outline: none; flex-shrink: 0;">
+        <option value="default">ডিফল্ট (৭ দিন)</option>
+        <option value="day">দিন অনুযায়ী</option>
+        <option value="month">মাস অনুযায়ী</option>
+    </select>
+    
+    <input type="date" id="dateFilterInput" style="display: none; flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-main); font-family: inherit; outline: none; font-weight: 500;">
+    
+    <input type="month" id="monthFilterInput" style="display: none; flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-main); font-family: inherit; outline: none; font-weight: 500;">
+</div>
+
         <div id="exportableReportArea" style="display: flex; flex-direction: column; gap: 15px; flex: 1; padding: 10px; background: var(--panel-bg); border-radius: 16px; overflow-y: auto;">
             
             <div style="display: flex; gap: 10px;">
@@ -623,7 +636,7 @@
 
     <div class="slide-overlay" id="namesOverlay" style="height: 90dvh;">
         <div class="overlay-header">
-            <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-list-ul"></i> আল্লাহর ৯৯ নাম</h3>
+            <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-list-ul"></i> আসমাউল-হুসনা</h3>
             <button class="icon-btn" id="closeNamesBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="names-grid" id="namesGrid"></div>
@@ -663,6 +676,17 @@
         </div>
     </div>
 
+<div class="modal-overlay" id="exitModal">
+    <div class="modal-box">
+        <h4 style="margin-bottom: 10px; color: var(--text-main); font-size: 1.2rem;"><i class="fa-solid fa-right-from-bracket" style="color: #ef4444;"></i> অ্যাপ বন্ধ করবেন?</h4>
+        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.4;">আপনি কি নিশ্চিতভাবে তাসবিহ প্রো অ্যাপটি থেকে বের হতে চান?</p>
+        <div class="modal-btns">
+            <button class="modal-btn" id="exitNoBtn" style="background: #e2e8f0; color: #333;">না</button>
+            <button class="modal-btn" id="exitYesBtn" style="background: #ef4444; color: white;">হ্যাঁ</button>
+        </div>
+    </div>
+</div>
+
     <div class="modal-overlay" id="namazSettingsModal">
         <div class="modal-box">
             <h4 style="margin-bottom: 15px; color: var(--text-main);">নামাজের সময় সেট করুন</h4>
@@ -683,21 +707,30 @@
     </div>
 
     <div class="modal-overlay" id="devModal">
-        <div class="modal-box">
-            <div class="dev-avatar"><i class="fa-solid fa-code"></i></div>
-            <h3 style="color: var(--text-title); margin-bottom: 5px;">Developer Info</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted);">Developed By KabboMedIT🩺</p>
-            <div class="dev-details">
-                <div class="dev-item"><i class="fa-solid fa-user"></i> Shahriar Mahamud Kabbo</div>
-                <div class="dev-item"><i class="fa-solid fa-phone"></i> 01724651212</div>
-                <div class="dev-item"><i class="fa-solid fa-envelope"></i> smkabbo95@gmail.com</div>
-                <div class="dev-item"><i class="fa-solid fa-location-dot"></i> Cox's Bazar</div>
+    <div class="modal-box">
+        <div class="dev-avatar"><i class="fa-solid fa-code"></i></div>
+        <h3 style="color: var(--text-title); margin-bottom: 5px;">Developer Info</h3>
+        <p style="font-size: 0.85rem; color: var(--text-muted);">Developed By KabboMedIT🩺</p>
+        <div class="dev-details">
+            <div class="dev-item"><i class="fa-solid fa-user"></i> Shahriar Mahamud Kabbo</div>
+            
+            <div class="dev-item">
+                <i class="fa-solid fa-phone"></i> 
+                <a href="tel:01724651212" style="color: inherit; text-decoration: none; width: 100%; display: block;">01724651212</a>
             </div>
-            <div class="modal-btns">
-                <button class="modal-btn" id="closeDevModal" style="background: #0ea5e9; color: white; width: 100%;">Close</button>
+            
+            <div class="dev-item">
+                <i class="fa-solid fa-envelope"></i> 
+                <a href="mailto:smkabbo95@gmail.com" style="color: inherit; text-decoration: none; width: 100%; display: block;">smkabbo95@gmail.com</a>
             </div>
+            
+            <div class="dev-item"><i class="fa-solid fa-location-dot"></i> Cox's Bazar</div>
+        </div>
+        <div class="modal-btns">
+            <button class="modal-btn" id="closeDevModal" style="background: #0ea5e9; color: white; width: 100%;">Close</button>
         </div>
     </div>
+</div>
 
     <script>
         // Dynamic PWA Manifest Injector
@@ -999,43 +1032,89 @@
         }
 
         function renderAnalyticsView() {
-            chartWrapper.innerHTML = "";
-            const today = getTodayDateString();
-            let todayTotal = 0;
-            if(historyData[today]) Object.values(historyData[today]).forEach(v => todayTotal += v);
-            document.getElementById('todayTotalCount').innerText = bnNum(todayTotal);
+    chartWrapper.innerHTML = "";
+    
+    // Get filter values
+    const filterType = document.getElementById('filterTypeSelect') ? document.getElementById('filterTypeSelect').value : 'default';
+    const dateVal = document.getElementById('dateFilterInput') ? document.getElementById('dateFilterInput').value : '';
+    const monthVal = document.getElementById('monthFilterInput') ? document.getElementById('monthFilterInput').value : '';
 
-            let weeklyTotal = 0;
-            let zikrAggregates = {};
-            const dates = Object.keys(historyData).sort().reverse().slice(0, 7);
-            
-            dates.forEach(d => {
+    let displayTotal = 0;
+    let zikrAggregates = {};
+    
+    // UI Label Elements
+    const card1Label = document.getElementById('todayTotalCount').previousElementSibling;
+    const card2Label = document.getElementById('weeklyTotalCount').previousElementSibling;
+
+    if ((filterType === 'day' && dateVal) || (filterType === 'month' && monthVal)) {
+        // FILTER MODE
+        let targetDates = [];
+        if(filterType === 'day') {
+            targetDates = [dateVal];
+            card1Label.innerText = "নির্বাচিত দিনের জিকির";
+        } else {
+            targetDates = Object.keys(historyData).filter(d => d.startsWith(monthVal));
+            card1Label.innerText = "নির্বাচিত মাসের জিকির";
+        }
+        
+        targetDates.forEach(d => {
+            if(historyData[d]) {
                 Object.keys(historyData[d]).forEach(z => {
                     const val = historyData[d][z];
-                    weeklyTotal += val;
+                    displayTotal += val;
                     if(!zikrAggregates[z]) zikrAggregates[z] = 0;
                     zikrAggregates[z] += val;
                 });
-            });
-            document.getElementById('weeklyTotalCount').innerText = bnNum(weeklyTotal);
-
-            const maxVal = Math.max(...Object.values(zikrAggregates), 1);
-            Object.keys(zikrAggregates).forEach(z => {
-                const countVal = zikrAggregates[z];
-                const percentage = (countVal / maxVal) * 100;
-                const row = document.createElement('div');
-                row.className = 'chart-row';
-                row.innerHTML = `
-                    <div class="chart-label"><span>${z}</span><span style="color: #0ea5e9;">${bnNum(countVal)} বার</span></div>
-                    <div class="bar-bg"><div class="bar-fill" style="width: ${percentage}%"></div></div>
-                `;
-                chartWrapper.appendChild(row);
-            });
-
-            if(Object.keys(zikrAggregates).length === 0) {
-                chartWrapper.innerHTML = `<p style="text-align:center; font-size:0.9rem; color:var(--text-muted); margin-top:20px;">কোনো ডেটা পাওয়া যায়নি। জিকির শুরু করুন!</p>`;
             }
-        }
+        });
+        
+        document.getElementById('todayTotalCount').innerText = bnNum(displayTotal);
+        card2Label.innerText = "জিকিরের ধরন";
+        document.getElementById('weeklyTotalCount').innerText = bnNum(Object.keys(zikrAggregates).length) + " টি";
+        
+    } else {
+        // DEFAULT MODE (Today & 7 Days)
+        card1Label.innerText = "আজকের মোট জিকির";
+        card2Label.innerText = "৭ দিনের জিকির";
+        
+        const today = getTodayDateString();
+        let todayTotal = 0;
+        if(historyData[today]) Object.values(historyData[today]).forEach(v => todayTotal += v);
+        document.getElementById('todayTotalCount').innerText = bnNum(todayTotal);
+
+        let weeklyTotal = 0;
+        const dates = Object.keys(historyData).sort().reverse().slice(0, 7);
+        
+        dates.forEach(d => {
+            Object.keys(historyData[d]).forEach(z => {
+                const val = historyData[d][z];
+                weeklyTotal += val;
+                if(!zikrAggregates[z]) zikrAggregates[z] = 0;
+                zikrAggregates[z] += val;
+            });
+        });
+        document.getElementById('weeklyTotalCount').innerText = bnNum(weeklyTotal);
+    }
+
+    // Render Chart
+    const maxVal = Math.max(...Object.values(zikrAggregates), 1);
+    Object.keys(zikrAggregates).forEach(z => {
+        const countVal = zikrAggregates[z];
+        const percentage = (countVal / maxVal) * 100;
+        const row = document.createElement('div');
+        row.className = 'chart-row';
+        row.innerHTML = `
+            <div class="chart-label"><span>${z}</span><span style="color: #0ea5e9;">${bnNum(countVal)} বার</span></div>
+            <div class="bar-bg"><div class="bar-fill" style="width: ${percentage}%"></div></div>
+        `;
+        chartWrapper.appendChild(row);
+    });
+
+    if(Object.keys(zikrAggregates).length === 0) {
+        chartWrapper.innerHTML = `<p style="text-align:center; font-size:0.9rem; color:var(--text-muted); margin-top:20px;">এই সময়ে কোনো ডেটা পাওয়া যায়নি।</p>`;
+    }
+}
+
 
         tapButton.addEventListener('touchstart', (e) => { e.preventDefault(); coreTap(); });
         tapButton.addEventListener('click', (e) => { if(e.pointerType !== 'touch') coreTap(); });
@@ -1351,6 +1430,31 @@
             setInterval(checkNamazReminders, 1000); 
             initAdhkar(); 
         };
+
+// Filter Logic Events
+document.addEventListener('DOMContentLoaded', () => {
+    const filterType = document.getElementById('filterTypeSelect');
+    const dateInput = document.getElementById('dateFilterInput');
+    const monthInput = document.getElementById('monthFilterInput');
+
+    if(filterType) {
+        filterType.addEventListener('change', (e) => {
+            const val = e.target.value;
+            dateInput.style.display = val === 'day' ? 'block' : 'none';
+            monthInput.style.display = val === 'month' ? 'block' : 'none';
+            
+            // Clear inputs when switching
+            if(val === 'default') {
+                dateInput.value = '';
+                monthInput.value = '';
+            }
+            renderAnalyticsView();
+        });
+        
+        dateInput.addEventListener('change', renderAnalyticsView);
+        monthInput.addEventListener('change', renderAnalyticsView);
+    }
+});
 
         function openWebExternal(url) { window.open(url, '_blank'); settingsOverlay.classList.remove('open'); }
         function closeWebModal() { const modal = document.getElementById('webModal'); const frame = document.getElementById('webFrame'); frame.src = ''; modal.style.display = 'none'; }
@@ -1822,6 +1926,73 @@
 
             renderAdhkarList(); // UI আপডেট করে পজ বাটন দেখানোর জন্য
         };
+
+// ==========================================
+// Page Reverse Logic & Exit Confirmation
+// ==========================================
+
+let allowAppExit = false;
+
+// অ্যাপ লোড হওয়ার সময় একটি ডিফল্ট হিস্ট্রি স্টেট পুশ করা হলো
+window.history.pushState({ page: 'home' }, "", "");
+
+window.addEventListener('popstate', function(event) {
+    if (allowAppExit) return; // যদি ইউজার 'হ্যাঁ' সিলেক্ট করে থাকে, তবে নরমালি ব্যাক হবে
+
+    // বর্তমানে কোন কোন ওভারলে/মডাল ওপেন আছে তা চেক করা
+    const openSlideOverlays = document.querySelectorAll('.slide-overlay.open');
+    const openFsOverlays = document.querySelectorAll('.fullscreen-overlay[style*="display: flex"]');
+    const openModals = document.querySelectorAll('.modal-overlay.show:not(#exitModal)');
+    const exitModal = document.getElementById('exitModal');
+
+    if (openSlideOverlays.length > 0 || openFsOverlays.length > 0 || openModals.length > 0) {
+        // যদি কোনো মেনু/ওভারলে ওপেন থাকে, তবে সেগুলো ক্লোজ করবে (অ্যাপ থেকে বের হবে না)
+        closeAllSheets(); 
+        
+        // ফুলস্ক্রিন ওভারলে ম্যানুয়ালি ক্লোজ করা
+        const fsOverlay = document.getElementById('fsOverlay');
+        const breatheOverlay = document.getElementById('breatheOverlay');
+        const webModal = document.getElementById('webModal');
+        if(fsOverlay) fsOverlay.style.display = 'none';
+        if(breatheOverlay) breatheOverlay.style.display = 'none';
+        if(webModal) webModal.style.display = 'none';
+        
+        // অন্যান্য কাস্টম মডাল ক্লোজ করা
+        openModals.forEach(m => m.classList.remove('show'));
+
+        // হোম স্টেট আবার পুশ করা, যাতে পরের বার ব্যাক চাপলে ইক্সিট মডাল আসে
+        window.history.pushState({ page: 'home' }, "", "");
+        
+    } else if (exitModal.classList.contains('show')) {
+        // ইক্সিট মডাল ওপেন থাকা অবস্থায় ব্যাক চাপলে মডালটি সরে যাবে
+        exitModal.classList.remove('show');
+        window.history.pushState({ page: 'home' }, "", "");
+        
+    } else {
+        // হোম পেজে থাকা অবস্থায় ব্যাক চাপলে ইক্সিট কনফার্মেশন মডাল দেখাবে
+        exitModal.classList.add('show');
+        window.history.pushState({ page: 'exit_confirm' }, "", "");
+    }
+});
+
+// "না" বাটনে ক্লিক করলে
+document.getElementById('exitNoBtn').addEventListener('click', () => {
+    document.getElementById('exitModal').classList.remove('show');
+});
+
+// "হ্যাঁ" বাটনে ক্লিক করলে
+document.getElementById('exitYesBtn').addEventListener('click', () => {
+    allowAppExit = true;
+    document.getElementById('exitModal').classList.remove('show');
+    
+    // ব্রাউজার বা PWA থেকে বের হওয়ার কমান্ড
+    window.history.go(-2); 
+    
+    // কিছু কিছু ডিভাইসে/ব্রাউজারে সরাসরি ক্লোজ করার ফলব্যাক
+    setTimeout(() => {
+        window.close();
+    }, 150);
+});
 
     </script>
 </body>
