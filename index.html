@@ -381,6 +381,58 @@
         .adhkar-card.completed .adhkar-tap-btn { background: #10b981; pointer-events: none; }
         
         .dark-version .adhkar-card.completed { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); }
+        
+        /* Tools and Blog Posts Collapsible CSS */
+.collapsible-section { 
+    margin-top: 25px; 
+}
+.collapsible-btn {
+    background: rgba(14, 165, 233, 0.1);
+    border: 1px solid rgba(14, 165, 233, 0.2);
+    color: var(--text-main);
+    padding: 14px 18px;
+    width: 100%;
+    text-align: left;
+    border-radius: 16px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    margin-bottom: 8px;
+    outline: none;
+}
+.collapsible-btn:active { 
+    transform: scale(0.98); 
+}
+.collapsible-btn i.fa-chevron-down { 
+    transition: transform 0.3s ease; 
+    color: #0ea5e9; 
+}
+.collapsible-btn.active { 
+    background: rgba(14, 165, 233, 0.2); 
+    border-color: rgba(14, 165, 233, 0.4);
+}
+.collapsible-btn.active i.fa-chevron-down { 
+    transform: rotate(180deg); 
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: rgba(0,0,0,0.02);
+    border-radius: 16px;
+}
+.collapsible-content-inner {
+    padding: 10px 0 15px 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
                
     </style>
 </head>
@@ -541,12 +593,13 @@
         </div>
     </div>
 
-    <div class="slide-overlay" id="settingsOverlay">
+        <div class="slide-overlay" id="settingsOverlay">
         <div class="overlay-header">
             <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-gear"></i> সেটিংস ও অন্যান্য</h3>
             <button class="icon-btn" id="closeSettingsBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div style="overflow-y: auto; flex: 1; padding-bottom: 20px;">
+        
+        <div style="overflow-y: auto; flex: 1; padding-bottom: 30px; padding-right: 5px;">
             <div class="setting-card" onclick="openNamazSettings()" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); margin-bottom: 25px; flex-direction: row; justify-content: flex-start; gap: 15px;">
                 <i class="fa-solid fa-clock" style="color: #10b981; font-size: 1.2rem;"></i>
                 <span style="color: #10b981; font-weight: 600;">নামাজের সময় নির্ধারণ</span>
@@ -575,7 +628,6 @@
                 </div>
             </div>
 
-            <!-- ডাটা ব্যাকআপ ও রিস্টোর সেকশন (ফিক্সড স্পেসিং) -->
             <h4 style="margin-top: 30px; margin-bottom: 12px; color: var(--text-main);">ডাটা ব্যাকআপ ও রিস্টোর</h4>
             <div class="settings-grid">
                 <div class="setting-card" id="backupDataBtn" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
@@ -588,12 +640,10 @@
                 </div>
             </div>
 
-            <!-- ফাইল সিলেক্ট করার হিডেন ইনপুট -->
             <input type="file" id="restoreFileInput" accept=".json" style="display: none;">
 
-            <!-- ইসলামিক রিসোর্স সেকশন (ফিক্সড স্পেসিং) -->
             <h4 style="margin-top: 30px; margin-bottom: 12px; color: var(--text-main);">ইসলামিক রিসোর্স</h4>
-            <div class="settings-grid">
+            <div class="settings-grid" style="align-items: start;">
                 <div class="setting-card" onclick="openWebExternal('https://dua.gtaf.org/')"><i class="fa-solid fa-book-open"></i> <span>হিসনুল মুসলিম</span></div>
                 <div class="setting-card" id="openDuaBtn" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
                     <i class="fa-solid fa-hands-praying" style="color: #10b981;"></i> 
@@ -608,6 +658,201 @@
                 <div class="setting-card" onclick="openWebExternal('https://muslimbangla.com/masails')"><i class="fa-solid fa-question-circle"></i> <span>মাসলা-মাসায়েল</span></div>
                 <div class="setting-card" onclick="openWebExternal('https://www.al-habib.info/qibla-pointer/online-qibla-compass.htm')"><i class="fa-solid fa-location-arrow"></i> <span>কিবলা</span></div>
                 <div class="setting-card" onclick="openWebExternal('https://boimate.com/')"><i class="fa-solid fa-shopping-bag"></i> <span>বই</span></div>
+                    <div class="setting-card" id="openToolsBtn" style="background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.2);">
+        <i class="fa-solid fa-toolbox" style="color: #0ea5e9;"></i> 
+        <span style="color: #0ea5e9;">প্রয়োজনীয় টুলস</span>
+    </div>
+    
+    <div class="setting-card" id="openBlogBtn" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
+        <i class="fa-solid fa-blog" style="color: #10b981;"></i> 
+        <span style="color: #10b981;">ইসলামিক ব্লগ</span>
+    </div>
+                </div>
+        </div>
+    </div>
+               
+                    <!-- টুলস ওভারলে -->
+    <div class="slide-overlay" id="toolsOverlay" style="height: 90dvh;">
+        <div class="overlay-header">
+            <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-toolbox"></i> প্রয়োজনীয় টুলস</h3>
+            <button class="icon-btn" id="closeToolsBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div style="overflow-y: auto; flex: 1; padding-bottom: 20px;">
+            <div class="settings-grid">
+                <div class="setting-card" onclick="openWebExternal('https://zakat.muslimsday.com/')"><i class="fa-solid fa-calculator" style="color: #10b981;"></i> <span>যাকাত ক্যালকুলেটর</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://uttoradhikar.keytobasics.com/')"><i class="fa-solid fa-scale-balanced" style="color: #8b5cf6;"></i> <span>ফারায়েজ (উত্তরাধিকার)</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://qazacalc.com/')"><i class="fa-solid fa-person-praying" style="color: #ef4444;"></i> <span>কাযা নামাজ হিসাব</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://www.islamicfinder.org/islamic-date-converter/')"><i class="fa-solid fa-calendar-days" style="color: #0ea5e9;"></i> <span>হিজরি কনভার্টার</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://www.ecodehalalcheck.com/')"><i class="fa-solid fa-barcode" style="color: #ec4899;"></i> <span>হালাল ই-কোড চেকার</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://myfairylandbd.com/baby-names/')"><i class="fa-solid fa-children" style="color: #10b981;"></i> <span>ইসলামিক নাম</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://assunnahfoundation.org/')"><i class="fa-solid fa-hand-holding-heart" style="color: #f59e0b;"></i> <span>আস-সুন্নাহ ফাউন্ডেশন</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://mahfil.net/')"><i class="fa-solid fa-microphone-lines" style="color: #f59e0b;"></i> <span>মাহফিল</span></div>
+                                <div class="setting-card" onclick="openWebExternal('https://makkahlive.net/tv.aspx')">
+                    <i class="fa-solid fa-kaaba" style="color: #d4af37;"></i> 
+                    <span>লাইভ মক্কা-মদিনা</span>
+                </div>
+                <div class="setting-card" onclick="openWebExternal('https://ruqyahbd.org/')">
+                    <i class="fa-solid fa-shield-halved" style="color: #10b981;"></i> 
+                    <span>রুকইয়াহ শারিয়াহ</span>
+                </div>
+                <div class="setting-card" onclick="openWebExternal('https://www.google.com/maps/search/mosque+near+me/')">
+                    <i class="fa-solid fa-mosque" style="color: #0ea5e9;"></i> 
+                    <span>নিকটস্থ মসজিদ</span>
+                </div>
+                <div class="setting-card" onclick="openWebExternal('https://islamhouse.com/bn/')">
+                    <i class="fa-solid fa-book-journal-whills" style="color: #8b5cf6;"></i> 
+                    <span>ইসলামিক লাইব্রেরি</span>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- ব্লগ ওভারলে -->
+    <div class="slide-overlay" id="blogOverlay" style="height: 90dvh;">
+        <div class="overlay-header">
+            <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-blog"></i> ইসলামিক ব্লগ</h3>
+            <button class="icon-btn" id="closeBlogBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div style="overflow-y: auto; flex: 1; padding-bottom: 20px;">
+            <div class="settings-grid">
+                <div class="setting-card" onclick="openWebExternal('https://muslimsday.com/blog/category/%e0%a6%ae%e0%a6%be%e0%a6%b8%e0%a6%a8%e0%a7%82%e0%a6%a8-%e0%a6%86%e0%a6%ae%e0%a6%b2/')"><i class="fa-solid fa-praying-hands" style="color: #10b981;"></i> <span>মাসনূন আমল</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://muslimsday.com/blog/category/%e0%a6%ae%e0%a6%be%e0%a6%b8%e0%a6%86%e0%a6%b2%e0%a6%be/')"><i class="fa-solid fa-book-open" style="color: #8b5cf6;"></i> <span>মাসআলা</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://muslimsday.com/blog/category/%e0%a6%87%e0%a6%b8%e0%a6%b2%e0%a6%be%e0%a6%ae%e0%a6%bf-%e0%a6%86%e0%a6%b0%e0%a7%8d%e0%a6%9f%e0%a6%bf%e0%a6%95%e0%a7%87%e0%a6%b2/')"><i class="fa-solid fa-file-lines" style="color: #ec4899;"></i> <span>আর্টিকেল</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://muslimsday.com/blog/tag/%E0%A6%B0%E0%A6%AE%E0%A6%9C%E0%A6%BE%E0%A6%A8%E0%A7%87%E0%A6%B0-%E0%A6%96%E0%A6%BE%E0%A6%A6%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%AD%E0%A7%8D%E0%A6%AF%E0%A6%BE%E0%A6%B8/')"><i class="fa-solid fa-utensils" style="color: #f59e0b;"></i> <span>রমজানের খাদ্য</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://muslimsday.com/blog/category/%e0%a6%95%e0%a7%81%e0%a6%b0%e0%a6%86%e0%a6%a8%e0%a7%87%e0%a6%b0-%e0%a6%b6%e0%a6%bf%e0%a6%95%e0%a7%8d%e0%a6%b7%e0%a6%be/')"><i class="fa-solid fa-book-quran" style="color: #0ea5e9;"></i> <span>কুরআনের শিক্ষা</span></div>
+                <div class="setting-card" onclick="openWebExternal('https://muslimsday.com/blog/category/%e0%a6%87%e0%a6%b8%e0%a6%b2%e0%a6%be%e0%a6%ae-%e0%a6%ac%e0%a6%bf%e0%a6%b7%e0%a6%af%e0%a6%bc%e0%a6%95-%e0%a6%aa%e0%a7%8d%e0%a6%b0%e0%a6%9a%e0%a6%b2%e0%a6%bf%e0%a6%a4-%e0%a6%ad%e0%a7%81%e0%a6%b2/')"><i class="fa-solid fa-circle-exclamation" style="color: #ef4444;"></i> <span>প্রচলিত ভুল</span></div>
+                                               <div class="setting-card" onclick="openWebExternal('https://www.hadithbd.com/books/section/?book=15')">
+                    <i class="fa-solid fa-users" style="color: #0ea5e9;"></i> 
+                    <span>নবী-সাহাবীদের জীবনী</span>
+                </div>
+                
+                <div class="setting-card" onclick="openWebExternal('https://www.muslimmedia.info/')">
+                    <i class="fa-solid fa-landmark-dome" style="color: #f59e0b;"></i> 
+                    <span>ইসলামের ইতিহাস</span>
+                </div>
+                
+                <div class="setting-card" onclick="openWebExternal('https://at-tahreek.com/site/show/1027')">
+                    <i class="fa-solid fa-house-chimney-window" style="color: #10b981;"></i> 
+                    <span>ইসলামী পরিবার</span>
+                </div>                                
+               <div class="setting-card" onclick="openWebExternal('https://quranmazid.com/')">
+    <i class="fa-solid fa-book-quran" style="color: #10b981;"></i> 
+    <span>কুরআন ও তাফসির</span>
+</div>
+
+<div class="setting-card" onclick="openWebExternal('https://sunnah.com/')">
+    <i class="fa-solid fa-book-open-reader" style="color: #3b82f6;"></i> 
+    <span>সুন্নাহ ডট কম (হাদিস)</span>
+</div>
+
+<div class="setting-card" onclick="openWebExternal('https://islamqa.info/bn')">
+    <i class="fa-solid fa-clipboard-question" style="color: #f59e0b;"></i> 
+    <span>প্রশ্ন ও ফতোয়া</span>
+</div>
+
+<div class="setting-card" onclick="openWebExternal('https://everyayah.com/')">
+    <i class="fa-solid fa-headphones" style="color: #8b5cf6;"></i> 
+    <span>কুরআন অডিও</span>
+</div>
+
+<div class="setting-card" onclick="openWebExternal('https://waytojannah.com/')">
+    <i class="fa-solid fa-box-open" style="color: #0ea5e9;"></i> 
+    <span>ওয়ে টু জান্নাহ</span>
+</div>
+
+<div class="setting-card" onclick="openWebExternal('https://tanzil.net/')">
+    <i class="fa-solid fa-magnifying-glass-chart" style="color: #14b8a6;"></i> 
+    <span>তানজিল (রিসার্চ)</span>
+</div>
+
+<div class="setting-card" onclick="openWebExternal('https://www.wafilife.com/')">
+    <i class="fa-solid fa-cart-shopping" style="color: #ec4899;"></i> 
+    <span>ওয়াফি লাইফ (বই)</span>
+</div>
+
+<div class="setting-card" onclick="openWebExternal('https://www.islamicfinder.org/')">
+    <i class="fa-solid fa-compass" style="color: #f43f5e;"></i> 
+    <span>ইসলামিক ফাইন্ডার</span>
+</div>
+<!-- মাসিক আলকাউসার (জনপ্রিয় ইসলামিক ম্যাগাজিন ও মাসআলা) -->
+<div class="setting-card" onclick="openWebExternal('https://www.alkawsar.com/')">
+    <i class="fa-solid fa-book-open" style="color: #3b82f6;"></i> 
+    <span>মাসিক আলকাউসার</span>
+</div>
+
+<!-- আস-সুন্নাহ ট্রাস্ট (ড. খন্দকার আব্দুল্লাহ জাহাঙ্গীর রহ. এর ওয়েবসাইট) -->
+<div class="setting-card" onclick="openWebExternal('https://assunnahtrust.com/')">
+    <i class="fa-solid fa-leaf" style="color: #10b981;"></i> 
+    <span>আস-সুন্নাহ ট্রাস্ট</span>
+</div>
+
+<!-- ইসলামিক ফাউন্ডেশন বাংলাদেশ (সরকারি ওয়েবসাইট) -->
+<div class="setting-card" onclick="openWebExternal('http://www.islamicfoundation.gov.bd/')">
+    <i class="fa-solid fa-building-columns" style="color: #f59e0b;"></i> 
+    <span>ইসলামিক ফাউন্ডেশন</span>
+</div>
+
+<!-- আল-কুরআন (বাংলাদেশ সরকারের ডিজিটাল কুরআন) -->
+<div class="setting-card" onclick="openWebExternal('http://www.quran.gov.bd/')">
+    <i class="fa-solid fa-quran" style="color: #0ea5e9;"></i> 
+    <span>আল-কুরআন (সরকারি)</span>
+</div>
+
+<!-- মুসলিম সেন্ট্রাল (বিশ্ববিখ্যাত স্কলারদের অডিও লেকচার) -->
+<div class="setting-card" onclick="openWebExternal('https://muslimcentral.com/')">
+    <i class="fa-solid fa-microphone" style="color: #8b5cf6;"></i> 
+    <span>মুসলিম সেন্ট্রাল</span>
+</div>
+
+<!-- আন্ডারস্ট্যান্ড কুরআন (সহজে কুরআন শেখার প্ল্যাটফর্ম) -->
+<div class="setting-card" onclick="openWebExternal('https://understandquran.com/bengali/')">
+    <i class="fa-solid fa-graduation-cap" style="color: #14b8a6;"></i> 
+    <span>কুরআন শিক্ষা</span>
+</div>
+
+<!-- দারুস সালাম বাংলাদেশ (নির্ভরযোগ্য ইসলামিক বই) -->
+<div class="setting-card" onclick="openWebExternal('https://darussalambd.com/')">
+    <i class="fa-solid fa-book" style="color: #ec4899;"></i> 
+    <span>দারুস সালাম (বই)</span>
+</div>
+
+<!-- রকমারি ইসলামিক (সব ধরনের ইসলামিক বইয়ের কালেকশন) -->
+<div class="setting-card" onclick="openWebExternal('https://www.rokomari.com/book/category/25/islamic')">
+    <i class="fa-solid fa-cart-arrow-down" style="color: #f43f5e;"></i> 
+    <span>রকমারি ইসলামিক</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.alkawsar.com/')">
+    <i class="fa-solid fa-newspaper" style="color: #3b82f6;"></i> <span>মাসিক আল-কাউসার</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.banglainternet.com/')">
+    <i class="fa-solid fa-globe" style="color: #10b981;"></i> <span>বাংলা ইন্টারনেট</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.islamichistory.net/')">
+    <i class="fa-solid fa-history" style="color: #f59e0b;"></i> <span>ইসলামিক হিস্ট্রি</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.banglaislamicbook.com/blog/')">
+    <i class="fa-solid fa-book-open-reader" style="color: #8b5cf6;"></i> <span>ইসলামিক ব্লগ</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.amarboi.org/')">
+    <i class="fa-solid fa-book" style="color: #ec4899;"></i> <span>আমার বই (গল্প/বই)</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.islamweb.net/en/')">
+    <i class="fa-solid fa-magnifying-glass" style="color: #0ea5e9;"></i> <span>ইসলামওয়েব (রিসার্চ)</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://shamela.ws/')">
+    <i class="fa-solid fa-database" style="color: #64748b;"></i> <span>শামেলা লাইব্রেরি</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.hadithbd.com/')">
+    <i class="fa-solid fa-scroll" style="color: #ef4444;"></i> <span>হাদিস বিডি (রিসার্চ)</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://www.historyofislam.com/')">
+    <i class="fa-solid fa-landmark-dome" style="color: #d4af37;"></i> <span>ইসলামের ইতিহাস</span>
+</div>
+<div class="setting-card" onclick="openWebExternal('https://lostislamichistory.com/')">
+    <i class="fa-solid fa-archway" style="color: #92400e;"></i> <span>লস্ট ইসলামিক হিস্ট্রি</span>
+</div>
+
             </div>
         </div>
     </div>
@@ -2768,6 +3013,26 @@ if (restoreFileInput) {
         reader.readAsText(file);
     });
 }
+
+    // টুলস ওপেন এবং ক্লোজ করার লজিক
+    document.getElementById('openToolsBtn').addEventListener('click', () => {
+        closeAllSheets();
+        document.getElementById('toolsOverlay').classList.add('open');
+    });
+
+    document.getElementById('closeToolsBtn').addEventListener('click', () => {
+        document.getElementById('toolsOverlay').classList.remove('open');
+    });
+
+    // ব্লগ ওপেন এবং ক্লোজ করার লজিক
+    document.getElementById('openBlogBtn').addEventListener('click', () => {
+        closeAllSheets();
+        document.getElementById('blogOverlay').classList.add('open');
+    });
+
+    document.getElementById('closeBlogBtn').addEventListener('click', () => {
+        document.getElementById('blogOverlay').classList.remove('open');
+    });
 
     </script>
 </body>
