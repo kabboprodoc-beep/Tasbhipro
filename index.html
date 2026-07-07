@@ -40,7 +40,6 @@
             --bottom-nav-bg: rgba(15, 23, 42, 0.85);
         }
 
-        /* মদিনা গ্রিন (Medina Green) */
         .theme-medina {
             --bg-gradient: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #6ee7b7 100%);
             --container-bg: rgba(255, 255, 255, 0.45);
@@ -61,7 +60,6 @@
         .theme-medina .nav-item.active { color: #10b981; }
         .theme-medina .name-arabic { color: #059669; }
 
-        /* কাবা ব্ল্যাক (Kaaba Black) */
         .theme-kaaba {
             --bg-gradient: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
             --container-bg: rgba(10, 10, 10, 0.7);
@@ -100,12 +98,13 @@
             transition: background 0.3s ease;
         }
 
+        /* Fixed: Responsive container spacing for iOS/Mobile Safebottom */
         .app-container {
             width: 100%;
-            height: calc(100dvh - 70px);
+            height: 100dvh;
             background: var(--container-bg);
             backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            padding: 20px 15px 20px 15px; 
+            padding: 20px 15px calc(85px + env(safe-area-inset-bottom)) 15px; 
             overflow-y: auto;
             overflow-x: hidden;
             display: flex; flex-direction: column; gap: 12px;
@@ -114,7 +113,6 @@
         
         .app-container::-webkit-scrollbar { display: none; }
 
-        /* Top Header */
         .top-bar {
             display: flex; justify-content: center; align-items: center;
             width: 100%; margin-bottom: 5px; padding-bottom: 10px;
@@ -124,7 +122,6 @@
 
         .app-title { font-size: 1.3rem; font-weight: 700; color: var(--text-title); letter-spacing: 0.5px; }
 
-        /* Widgets Grid */
         .widget-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
             transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
@@ -133,8 +130,7 @@
 
         .mini-card {
             background: var(--panel-bg); border: 1px solid var(--panel-border);
-            padding: 10px;
-            border-radius: 16px;
+            padding: 10px; border-radius: 16px;
             display: flex; align-items: center; gap: 10px;
             font-size: 0.8rem; font-weight: 600;
             box-shadow: 0 4px 15px rgba(0,0,0,0.03);
@@ -142,7 +138,6 @@
 
         .mini-card.full-width { grid-column: span 2; }
 
-        /* Main Display Panel */
         .display-panel {
             background: var(--panel-bg); border: 1px solid var(--panel-border);
             border-radius: 24px; padding: 15px; text-align: center; 
@@ -164,7 +159,6 @@
         .total-cycles { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
         .meaning-box { margin-top: 12px; font-size: 0.85rem; color: var(--text-muted); min-height: 38px; line-height: 1.3; }
 
-        /* Inputs Area */
         .inputs-group { 
             display: flex; gap: 10px; margin-top: 5px; width: 100%; 
             transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
@@ -188,7 +182,6 @@
             display: none; outline: none; min-width: 0;
         }
 
-        /* Controller Area */
         .controller-section {
             display: flex; flex-direction: row; justify-content: space-evenly; align-items: center; 
             margin-top: auto; padding-bottom: 10px; width: 100%; flex-shrink: 0;
@@ -225,7 +218,6 @@
         }
         .icon-btn:active { transform: scale(0.9); }
 
-        /* Voice Icon Style */
         .small-voice-btn {
             width: 40px; height: 40px; border-radius: 50%;
             background: var(--panel-bg); border: 1px solid rgba(16, 185, 129, 0.4);
@@ -244,9 +236,10 @@
         }
         .dark-version .small-voice-btn:not(.voice-active) { background: rgba(30, 41, 59, 0.8); }
 
-        /* Bottom Navigation Bar */
+        /* Fixed: Responsive Navigation Size */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 70px;
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            height: calc(70px + env(safe-area-inset-bottom));
             background: var(--bottom-nav-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--panel-border);
             display: flex; justify-content: space-around; align-items: center;
@@ -263,7 +256,6 @@
         .nav-item.active { color: #0ea5e9; }
         .nav-icon { font-size: 1.3rem; margin-bottom: 2px; }
 
-        /* Zen Mode Toggle Button Styles */
         .zen-toggle-btn {
             position: absolute; right: 0;
             background: var(--btn-bg); border: 1px solid rgba(14, 165, 233, 0.2);
@@ -276,7 +268,6 @@
             background: #10b981; color: white; border-color: #10b981; 
         }
 
-        /* --- ZEN MODE LOGIC --- */
         body.is-zen-mode .bottom-nav { transform: translateY(100%); }
         body.is-zen-mode .app-container { height: 100dvh; justify-content: center; padding-bottom: 40px; }
         body.is-zen-mode .widget-grid { max-height: 0; opacity: 0; margin: 0; gap: 0; }
@@ -284,18 +275,17 @@
         body.is-zen-mode .action-btn-wrapper { opacity: 0; pointer-events: none; }
         body.is-zen-mode .display-panel { transform: scale(1.05); margin-bottom: 20px; }
 
-        /* Slide-Up Dashboard/Settings Panels */
+        /* Fixed: Overlay Padding */
         .slide-overlay {
             position: fixed; bottom: -100%; left: 0; width: 100%; height: 85dvh;
             background: var(--panel-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
             border-top: 2px solid var(--panel-border); border-radius: 32px 32px 0 0;
-            z-index: 999 !important; padding: 24px; transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999 !important; padding: 24px 24px calc(24px + env(safe-area-inset-bottom)) 24px; transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex; flex-direction: column; gap: 15px; box-shadow: 0 -10px 30px rgba(0,0,0,0.1);
         }
         .slide-overlay.open { bottom: 0; }
         .overlay-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 15px; margin-bottom: 5px; flex-shrink: 0; }
 
-        /* Settings Grid inside Sheet */
         .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; overflow-y: auto; }
         .setting-card {
             background: rgba(14, 165, 233, 0.05); border: 1px solid rgba(14, 165, 233, 0.1);
@@ -306,7 +296,6 @@
         .setting-card i { font-size: 1.5rem; }
         .setting-card:active { transform: scale(0.95); }
 
-        /* Chart */
         .chart-container { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 2px; }
         .chart-container::-webkit-scrollbar { display: none; }
         .chart-row { display: flex; flex-direction: column; gap: 4px; }
@@ -314,7 +303,6 @@
         .bar-bg { width: 100%; height: 12px; background: rgba(0,0,0,0.05); border-radius: 6px; overflow: hidden; }
         .bar-fill { height: 100%; background: linear-gradient(90deg, #0ea5e9, #2563eb); width: 0%; transition: width 0.5s ease-in-out; }
 
-        /* Overlays (FS & Breathe & Modals) */
         .fullscreen-overlay, .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100dvh; z-index: 9999 !important;
         }
@@ -335,7 +323,6 @@
         .modal-btn { padding: 10px 20px; border-radius: 12px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; flex: 1; font-size: 1rem;}
         .modal-btn:active { transform: scale(0.95); }
 
-        /* Breathe */
         .breathe-container { position: relative; width: 220px; height: 220px; display: flex; justify-content: center; align-items: center; margin: 0 auto; }
         .breathe-circle {
             width: 140px; height: 140px; border-radius: 50%;
@@ -352,7 +339,6 @@
             100% { transform: scale(1); box-shadow: 0 0 20px rgba(14, 165, 233, 0.3); }
         }
 
-        /* 99 Names Fixed CSS */
         .names-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
@@ -375,7 +361,6 @@
         .name-bangla { font-size: 0.9rem; font-weight: 600; color: var(--text-main); }
         .name-meaning { font-size: 0.75rem; color: var(--text-muted); line-height: 1.2; }
         
-        /* Dev Info & Export Special Styles */
         .dev-avatar { width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; font-size: 2rem; display: flex; justify-content: center; align-items: center; margin: 0 auto 15px auto; border: 3px solid rgba(255, 255, 255, 0.5); }
         .dev-details { margin-top: 15px; text-align: left; background: rgba(14, 165, 233, 0.05); padding: 15px; border-radius: 16px; border: 1px solid rgba(14, 165, 233, 0.1); }
         .dev-item { display: flex; align-items: center; gap: 10px; font-size: 0.85rem; margin-bottom: 8px; color: var(--text-main); font-weight: 500; }
@@ -383,7 +368,6 @@
         .dev-item:last-child { margin-bottom: 0; }
         .export-opt:hover { background: rgba(14, 165, 233, 0.1); }
 
-/* Morning & Evening Adhkar UI */
         .adhkar-card { background: var(--panel-bg); border: 1px solid var(--panel-border); border-radius: 16px; padding: 15px; position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: all 0.3s; margin-bottom: 12px; }
         .adhkar-card.completed { background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); }
         .adhkar-arabic { font-size: 1.25rem; color: #0ea5e9; font-weight: 700; font-family: 'Noto Serif Bengali', serif; text-align: right; margin-bottom: 10px; line-height:1.6;}
@@ -397,7 +381,7 @@
         .adhkar-card.completed .adhkar-tap-btn { background: #10b981; pointer-events: none; }
         
         .dark-version .adhkar-card.completed { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.4); }
-        
+               
     </style>
 </head>
 <body>
@@ -489,7 +473,9 @@
             </div>
         </div>
 
-    </div> <div class="bottom-nav">
+    </div> 
+    
+    <div class="bottom-nav">
         <div class="nav-item active" id="navHome">
             <i class="fa-solid fa-house nav-icon"></i>
             <span>হোম</span>
@@ -516,7 +502,30 @@
         </div>
     </div>
     
-    <!-- সকাল ও সন্ধ্যার আমল ওভারলে (New Adhkar Feature) -->
+    <div class="slide-overlay" id="surahOverlay" style="height: 90dvh;">
+        <div class="overlay-header">
+            <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-book-quran"></i> ছোট সূরাসমূহ</h3>
+            <button class="icon-btn" id="closeSurahBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="surahListContainer" style="overflow-y: auto; flex: 1; padding-bottom: 20px; padding-right: 5px;">
+        </div>
+    </div>
+    
+    <div class="slide-overlay" id="duaOverlay" style="height: 90dvh;">
+        <div class="overlay-header">
+            <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-hands-praying"></i> প্রয়োজনীয় দোয়া</h3>
+            <button class="icon-btn" id="closeDuaBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; flex-shrink: 0;">
+            <button class="modal-btn" id="tabDailyDua" style="background: #0ea5e9; color: white; padding: 10px;">দৈনন্দিন দোয়া</button>
+            <button class="modal-btn" id="tabRabbanaDua" style="background: var(--btn-bg); color: var(--text-main); border: 1px solid rgba(14, 165, 233, 0.2); padding: 10px;">রাব্বানা দোয়া</button>
+        </div>
+        
+        <div id="duaListContainer" style="overflow-y: auto; flex: 1; padding-bottom: 20px; padding-right: 5px;">
+        </div>
+    </div>
+
     <div class="slide-overlay" id="adhkarOverlay" style="height: 90dvh;">
         <div class="overlay-header">
             <h3 style="color: var(--text-main); font-weight: 700;"><i class="fa-solid fa-cloud-sun"></i> প্রতিদিনের আমল</h3>
@@ -529,7 +538,6 @@
         </div>
         
         <div id="adhkarListContainer" style="overflow-y: auto; flex: 1; padding-bottom: 20px; padding-right: 5px;">
-            <!-- Adhkar Cards will be injected here by JS -->
         </div>
     </div>
 
@@ -539,13 +547,13 @@
             <button class="icon-btn" id="closeSettingsBtn" style="width: 36px; height: 36px;"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div style="overflow-y: auto; flex: 1; padding-bottom: 20px;">
-            <div class="setting-card" onclick="openNamazSettings()" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); margin-bottom: 20px; flex-direction: row; justify-content: flex-start; gap: 15px;">
+            <div class="setting-card" onclick="openNamazSettings()" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); margin-bottom: 25px; flex-direction: row; justify-content: flex-start; gap: 15px;">
                 <i class="fa-solid fa-clock" style="color: #10b981; font-size: 1.2rem;"></i>
                 <span style="color: #10b981; font-weight: 600;">নামাজের সময় নির্ধারণ</span>
             </div>
             
-            <h4 style="margin-bottom: 10px; color: var(--text-main);">থিম ও অ্যাপ সেটিংস</h4>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px;">
+            <h4 style="margin-bottom: 12px; color: var(--text-main);">থিম ও অ্যাপ সেটিংস</h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;">
                 <div class="setting-card theme-btn active" data-theme="default" style="padding: 10px;">
                     <i class="fa-solid fa-droplet" style="color: #0ea5e9;"></i> <span style="font-size:0.75rem;">স্কাই</span>
                 </div>
@@ -567,9 +575,34 @@
                 </div>
             </div>
 
-            <h4 style="margin-bottom: 10px; color: var(--text-main);">ইসলামিক রিসোর্স</h4>
+            <!-- ডাটা ব্যাকআপ ও রিস্টোর সেকশন (ফিক্সড স্পেসিং) -->
+            <h4 style="margin-top: 30px; margin-bottom: 12px; color: var(--text-main);">ডাটা ব্যাকআপ ও রিস্টোর</h4>
+            <div class="settings-grid">
+                <div class="setting-card" id="backupDataBtn" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
+                    <i class="fa-solid fa-cloud-arrow-down" style="color: #10b981;"></i> 
+                    <span style="color: #10b981; font-size: 0.85rem;">ব্যাকআপ নিন</span>
+                </div>
+                <div class="setting-card" id="restoreDataBtn" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.2);">
+                    <i class="fa-solid fa-cloud-arrow-up" style="color: #f59e0b;"></i> 
+                    <span style="color: #f59e0b; font-size: 0.85rem;">রিস্টোর করুন</span>
+                </div>
+            </div>
+
+            <!-- ফাইল সিলেক্ট করার হিডেন ইনপুট -->
+            <input type="file" id="restoreFileInput" accept=".json" style="display: none;">
+
+            <!-- ইসলামিক রিসোর্স সেকশন (ফিক্সড স্পেসিং) -->
+            <h4 style="margin-top: 30px; margin-bottom: 12px; color: var(--text-main);">ইসলামিক রিসোর্স</h4>
             <div class="settings-grid">
                 <div class="setting-card" onclick="openWebExternal('https://dua.gtaf.org/')"><i class="fa-solid fa-book-open"></i> <span>হিসনুল মুসলিম</span></div>
+                <div class="setting-card" id="openDuaBtn" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
+                    <i class="fa-solid fa-hands-praying" style="color: #10b981;"></i> 
+                    <span style="color: #10b981;">প্রয়োজনীয় দোয়া</span>
+                </div>
+                <div class="setting-card" id="openSurahBtn" style="background: rgba(14, 165, 233, 0.1); border-color: rgba(14, 165, 233, 0.2);">
+                    <i class="fa-solid fa-book-open-reader" style="color: #0ea5e9;"></i> 
+                    <span style="color: #0ea5e9;">ছোট সূরা</span>
+                </div>
                 <div class="setting-card" onclick="openWebExternal('https://www.hadithbd.com/')"><i class="fa-solid fa-scroll"></i> <span>বাংলা হাদিস</span></div>
                 <div class="setting-card" onclick="openWebExternal('https://quran.com/')"><i class="fa-solid fa-book-quran"></i> <span>কুরআন</span></div>
                 <div class="setting-card" onclick="openWebExternal('https://muslimbangla.com/masails')"><i class="fa-solid fa-question-circle"></i> <span>মাসলা-মাসায়েল</span></div>
@@ -578,6 +611,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="slide-overlay" id="analyticsOverlay">
         <div class="overlay-header">
@@ -596,19 +630,16 @@
         </div>
         
         <div style="display: flex; gap: 8px; margin-bottom: 15px; width: 100%;">
-    <select id="filterTypeSelect" style="padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-title); font-weight: 600; outline: none; flex-shrink: 0;">
-        <option value="default">ডিফল্ট (৭ দিন)</option>
-        <option value="day">দিন অনুযায়ী</option>
-        <option value="month">মাস অনুযায়ী</option>
-    </select>
-    
-    <input type="date" id="dateFilterInput" style="display: none; flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-main); font-family: inherit; outline: none; font-weight: 500;">
-    
-    <input type="month" id="monthFilterInput" style="display: none; flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-main); font-family: inherit; outline: none; font-weight: 500;">
-</div>
+            <select id="filterTypeSelect" style="padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-title); font-weight: 600; outline: none; flex-shrink: 0;">
+                <option value="default">ডিফল্ট (৭ দিন)</option>
+                <option value="day">দিন অনুযায়ী</option>
+                <option value="month">মাস অনুযায়ী</option>
+            </select>
+            <input type="date" id="dateFilterInput" style="display: none; flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-main); font-family: inherit; outline: none; font-weight: 500;">
+            <input type="month" id="monthFilterInput" style="display: none; flex: 1; padding: 10px; border-radius: 12px; border: 1px solid rgba(14, 165, 233, 0.3); background: var(--panel-bg); color: var(--text-main); font-family: inherit; outline: none; font-weight: 500;">
+        </div>
 
         <div id="exportableReportArea" style="display: flex; flex-direction: column; gap: 15px; flex: 1; padding: 10px; background: var(--panel-bg); border-radius: 16px; overflow-y: auto;">
-            
             <div style="display: flex; gap: 10px;">
                 <div class="mini-card" style="flex: 1; background: rgba(14, 165, 233, 0.1); border: none; flex-direction: column; align-items: flex-start;">
                     <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">আজকের মোট জিকির</span>
@@ -630,7 +661,6 @@
                     <i class="fa-solid fa-trash-can"></i> অল রিসেট
                 </button>
             </div>
-
         </div>
     </div>
 
@@ -733,7 +763,6 @@
 </div>
 
     <script>
-        // Dynamic PWA Manifest Injector
         function setupDynamicPWA() {
             const manifestData = {
                 "name": "Digital Tasbih - Pro Islamic Suite",
@@ -855,10 +884,6 @@
         const devModal = document.getElementById('devModal');
         const adhkarOverlay = document.getElementById('adhkarOverlay');
 
-        
-        // ==========================================
-        // ডায়নামিক থিম লজিক (Dynamic Theme Controller)
-        // ==========================================
         const themeBtns = document.querySelectorAll('.theme-btn');
         let currentTheme = localStorage.getItem('tb_theme') || (localStorage.getItem('tb_dark') === 'true' ? 'dark' : 'default');
 
@@ -897,7 +922,6 @@
             btn.addEventListener('click', () => applyAppTheme(btn.dataset.theme));
         });
 
-        
         function initApp() {
             zikrSelector.selectedIndex = currentZikrIdx;
             
@@ -1032,89 +1056,83 @@
         }
 
         function renderAnalyticsView() {
-    chartWrapper.innerHTML = "";
-    
-    // Get filter values
-    const filterType = document.getElementById('filterTypeSelect') ? document.getElementById('filterTypeSelect').value : 'default';
-    const dateVal = document.getElementById('dateFilterInput') ? document.getElementById('dateFilterInput').value : '';
-    const monthVal = document.getElementById('monthFilterInput') ? document.getElementById('monthFilterInput').value : '';
+            chartWrapper.innerHTML = "";
+            
+            const filterType = document.getElementById('filterTypeSelect') ? document.getElementById('filterTypeSelect').value : 'default';
+            const dateVal = document.getElementById('dateFilterInput') ? document.getElementById('dateFilterInput').value : '';
+            const monthVal = document.getElementById('monthFilterInput') ? document.getElementById('monthFilterInput').value : '';
 
-    let displayTotal = 0;
-    let zikrAggregates = {};
-    
-    // UI Label Elements
-    const card1Label = document.getElementById('todayTotalCount').previousElementSibling;
-    const card2Label = document.getElementById('weeklyTotalCount').previousElementSibling;
+            let displayTotal = 0;
+            let zikrAggregates = {};
+            
+            const card1Label = document.getElementById('todayTotalCount').previousElementSibling;
+            const card2Label = document.getElementById('weeklyTotalCount').previousElementSibling;
 
-    if ((filterType === 'day' && dateVal) || (filterType === 'month' && monthVal)) {
-        // FILTER MODE
-        let targetDates = [];
-        if(filterType === 'day') {
-            targetDates = [dateVal];
-            card1Label.innerText = "নির্বাচিত দিনের জিকির";
-        } else {
-            targetDates = Object.keys(historyData).filter(d => d.startsWith(monthVal));
-            card1Label.innerText = "নির্বাচিত মাসের জিকির";
-        }
-        
-        targetDates.forEach(d => {
-            if(historyData[d]) {
-                Object.keys(historyData[d]).forEach(z => {
-                    const val = historyData[d][z];
-                    displayTotal += val;
-                    if(!zikrAggregates[z]) zikrAggregates[z] = 0;
-                    zikrAggregates[z] += val;
+            if ((filterType === 'day' && dateVal) || (filterType === 'month' && monthVal)) {
+                let targetDates = [];
+                if(filterType === 'day') {
+                    targetDates = [dateVal];
+                    card1Label.innerText = "নির্বাচিত দিনের জিকির";
+                } else {
+                    targetDates = Object.keys(historyData).filter(d => d.startsWith(monthVal));
+                    card1Label.innerText = "নির্বাচিত মাসের জিকির";
+                }
+                
+                targetDates.forEach(d => {
+                    if(historyData[d]) {
+                        Object.keys(historyData[d]).forEach(z => {
+                            const val = historyData[d][z];
+                            displayTotal += val;
+                            if(!zikrAggregates[z]) zikrAggregates[z] = 0;
+                            zikrAggregates[z] += val;
+                        });
+                    }
                 });
+                
+                document.getElementById('todayTotalCount').innerText = bnNum(displayTotal);
+                card2Label.innerText = "জিকিরের ধরন";
+                document.getElementById('weeklyTotalCount').innerText = bnNum(Object.keys(zikrAggregates).length) + " টি";
+                
+            } else {
+                card1Label.innerText = "আজকের মোট জিকির";
+                card2Label.innerText = "৭ দিনের জিকির";
+                
+                const today = getTodayDateString();
+                let todayTotal = 0;
+                if(historyData[today]) Object.values(historyData[today]).forEach(v => todayTotal += v);
+                document.getElementById('todayTotalCount').innerText = bnNum(todayTotal);
+
+                let weeklyTotal = 0;
+                const dates = Object.keys(historyData).sort().reverse().slice(0, 7);
+                
+                dates.forEach(d => {
+                    Object.keys(historyData[d]).forEach(z => {
+                        const val = historyData[d][z];
+                        weeklyTotal += val;
+                        if(!zikrAggregates[z]) zikrAggregates[z] = 0;
+                        zikrAggregates[z] += val;
+                    });
+                });
+                document.getElementById('weeklyTotalCount').innerText = bnNum(weeklyTotal);
             }
-        });
-        
-        document.getElementById('todayTotalCount').innerText = bnNum(displayTotal);
-        card2Label.innerText = "জিকিরের ধরন";
-        document.getElementById('weeklyTotalCount').innerText = bnNum(Object.keys(zikrAggregates).length) + " টি";
-        
-    } else {
-        // DEFAULT MODE (Today & 7 Days)
-        card1Label.innerText = "আজকের মোট জিকির";
-        card2Label.innerText = "৭ দিনের জিকির";
-        
-        const today = getTodayDateString();
-        let todayTotal = 0;
-        if(historyData[today]) Object.values(historyData[today]).forEach(v => todayTotal += v);
-        document.getElementById('todayTotalCount').innerText = bnNum(todayTotal);
 
-        let weeklyTotal = 0;
-        const dates = Object.keys(historyData).sort().reverse().slice(0, 7);
-        
-        dates.forEach(d => {
-            Object.keys(historyData[d]).forEach(z => {
-                const val = historyData[d][z];
-                weeklyTotal += val;
-                if(!zikrAggregates[z]) zikrAggregates[z] = 0;
-                zikrAggregates[z] += val;
+            const maxVal = Math.max(...Object.values(zikrAggregates), 1);
+            Object.keys(zikrAggregates).forEach(z => {
+                const countVal = zikrAggregates[z];
+                const percentage = (countVal / maxVal) * 100;
+                const row = document.createElement('div');
+                row.className = 'chart-row';
+                row.innerHTML = `
+                    <div class="chart-label"><span>${z}</span><span style="color: #0ea5e9;">${bnNum(countVal)} বার</span></div>
+                    <div class="bar-bg"><div class="bar-fill" style="width: ${percentage}%"></div></div>
+                `;
+                chartWrapper.appendChild(row);
             });
-        });
-        document.getElementById('weeklyTotalCount').innerText = bnNum(weeklyTotal);
-    }
 
-    // Render Chart
-    const maxVal = Math.max(...Object.values(zikrAggregates), 1);
-    Object.keys(zikrAggregates).forEach(z => {
-        const countVal = zikrAggregates[z];
-        const percentage = (countVal / maxVal) * 100;
-        const row = document.createElement('div');
-        row.className = 'chart-row';
-        row.innerHTML = `
-            <div class="chart-label"><span>${z}</span><span style="color: #0ea5e9;">${bnNum(countVal)} বার</span></div>
-            <div class="bar-bg"><div class="bar-fill" style="width: ${percentage}%"></div></div>
-        `;
-        chartWrapper.appendChild(row);
-    });
-
-    if(Object.keys(zikrAggregates).length === 0) {
-        chartWrapper.innerHTML = `<p style="text-align:center; font-size:0.9rem; color:var(--text-muted); margin-top:20px;">এই সময়ে কোনো ডেটা পাওয়া যায়নি।</p>`;
-    }
-}
-
+            if(Object.keys(zikrAggregates).length === 0) {
+                chartWrapper.innerHTML = `<p style="text-align:center; font-size:0.9rem; color:var(--text-muted); margin-top:20px;">এই সময়ে কোনো ডেটা পাওয়া যায়নি।</p>`;
+            }
+        }
 
         tapButton.addEventListener('touchstart', (e) => { e.preventDefault(); coreTap(); });
         tapButton.addEventListener('click', (e) => { if(e.pointerType !== 'touch') coreTap(); });
@@ -1142,12 +1160,17 @@
             }
         }
         
-            function closeAllSheets() {
+        function closeAllSheets() {
             stopAdhkarAudioSafely(); 
+            stopSurahAudioSafely(); 
+            
             settingsOverlay.classList.remove('open'); 
             analyticsOverlay.classList.remove('open'); 
             namesOverlay.classList.remove('open');
-            document.getElementById('adhkarOverlay').classList.remove('open');     
+            document.getElementById('adhkarOverlay').classList.remove('open');
+            document.getElementById('duaOverlay').classList.remove('open');
+            document.getElementById('surahOverlay').classList.remove('open'); 
+            
             navItems.forEach(n => n.classList.remove('active'));
         }
 
@@ -1211,7 +1234,7 @@
             "যে চুপ থাকে, সে মুক্তি পায়। (তিরমিজি)", "সৎকাজ হলো উত্তম চরিত্র। (মুসলিম)", "আল্লাহ তায়ালা সুন্দর, তিনি সৌন্দর্য ভালোবাসেন। (মুসলিম)",
             "তোমাদের মধ্যে সর্বোত্তম সে, যে আল-কোরআন শেখে এবং শেখায়। (বুখারি)", "রাগ কোরো না, তাহলে তোমার জন্য জান্নাত। (তাবারানি)",
             "যে ব্যক্তি ইলম অন্বেষণে বের হয়, আল্লাহ তার জান্নাতের পথ সহজ করে দেন। (মুসলিম)", "লজ্জাশীলতা ঈমানের অঙ্গ। (বুখারি)",
-            "মুমিনের জন্য দুনিয়া কারাগার আর জান্নাত হলো আখিরাত। (মুসলিম)", "যে ব্যক্তি আমাদের ছোটদের স্নেহ করে بدی না, সে আমাদের দলভুক্ত নয়। (তিরমিজি)",
+            "মুমিনের জন্য দুনিয়া কারাগার আর জান্নাত হলো আখিরাত। (মুসলিম)", "যে ব্যক্তি আমাদের ছোটদের স্নেহ করে না, সে আমাদের দলভুক্ত নয়। (তিরমিজি)",
             "দান-সদকা সম্পদ কমায় না। (মুসলিম)", "মুমিন এক গর্তে দুইবার দংশিত হয় না। (বুখারি)", "আল্লাহর নিকট সবচেয়ে প্রিয় আমল হলো যা নিয়মিত করা হয়। (বুখারি)",
             "তোমরা একে অপরের প্রতি হিংসা কোরো না। (মুসলিম)", "অর্ধেক ঈমান হলো পবিত্রতা। (মুসলিম)", "যে ব্যক্তি আখিরাতকে তার মূল লক্ষ্য বানায়, আল্লাহ তার হৃদয়কে অভাবমুক্ত করে দেন। (তিরমিজি)",
             "মিথ্যা বলা থেকে বিরত থাকো, মিথ্যা মানুষকে পাপের দিকে নিয়ে যায়। (বুখারি)", "মাতা-পিতার সন্তুষ্টির মাঝেই আল্লাহর সন্তুষ্টি। (তিরমিজি)",
@@ -1266,7 +1289,7 @@
             { ar: "ٱلْجَبَّارُ", bn: "আল-জাব্বার", mean: "অপ্রতিরোধ্য" }, { ar: "ٱلْمُتَكَبِّرُ", bn: "আল-মুতাকাব্বির", mean: "অহংকারের অধিকারী" },
             { ar: "ٱلْخَالِقُ", bn: "আল-খালিক", mean: "সৃষ্টিকর্তা" }, { ar: "ٱلْبَارِئُ", bn: "আল-বারী", mean: "সঠিকভাবে রূপদানকারী" },
             { ar: "ٱلْمُصَوِّرُ", bn: "আল-মুসাওয়ির", mean: "আকৃতিদানকারী" }, { ar: "ٱلْغَفَّارُ", bn: "আল-গাফফার", mean: "পরম ক্ষমাশীল" },
-            { ar: "ٱلْقَهَّارُ", bn: "আল-কাহহার", mean: "ক কঠোর দমনকারী" }, { ar: "ٱلْوَهَّابُ", bn: "আল-ওয়াহহাব", mean: "সবকিছু দানকারী" },
+            { ar: "ٱلْقَهَّارُ", bn: "আল-কাহহার", mean: "কঠোর দমনকারী" }, { ar: "ٱلْوَهَّابُ", bn: "আল-ওয়াহহাব", mean: "সবকিছু দানকারী" },
             { ar: "ٱلرَّزَّاقُ", bn: "আর-রাজ্জাক", mean: "রিজিকদাতা" }, { ar: "ٱلْفَتَّاحُ", bn: "আল-ফাত্তাহ", mean: "বিজয়দানকারী" },
             { ar: "ٱلْعَلِيْمُ", bn: "আল-আলীম", mean: "সর্বজ্ঞানী" }, { ar: "ٱلْقَابِضُ", bn: "আল-ক্বাবিদ", mean: "সংকুচিতকারী" },
             { ar: "ٱلْبَاسِطُ", bn: "আল-বাসিত", mean: "প্রসারিতকারী" }, { ar: "ٱلْخَافِضُ", bn: "আল-খাফিদ", mean: "অবনতকারী" },
@@ -1359,9 +1382,6 @@
             document.getElementById('nextNamazText').innerText = nextNamaz;
         }
 
-        // ==========================================
-        // হিজরি ক্যালেন্ডার (Hijri Date Logic - Bug Fixed)
-        // ==========================================
         function displayHijriDate() {
             try {
                 const formatter = new Intl.DateTimeFormat('en-US-u-ca-islamic-umalqura', {
@@ -1431,37 +1451,32 @@
             initAdhkar(); 
         };
 
-// Filter Logic Events
-document.addEventListener('DOMContentLoaded', () => {
-    const filterType = document.getElementById('filterTypeSelect');
-    const dateInput = document.getElementById('dateFilterInput');
-    const monthInput = document.getElementById('monthFilterInput');
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterType = document.getElementById('filterTypeSelect');
+            const dateInput = document.getElementById('dateFilterInput');
+            const monthInput = document.getElementById('monthFilterInput');
 
-    if(filterType) {
-        filterType.addEventListener('change', (e) => {
-            const val = e.target.value;
-            dateInput.style.display = val === 'day' ? 'block' : 'none';
-            monthInput.style.display = val === 'month' ? 'block' : 'none';
-            
-            // Clear inputs when switching
-            if(val === 'default') {
-                dateInput.value = '';
-                monthInput.value = '';
+            if(filterType) {
+                filterType.addEventListener('change', (e) => {
+                    const val = e.target.value;
+                    dateInput.style.display = val === 'day' ? 'block' : 'none';
+                    monthInput.style.display = val === 'month' ? 'block' : 'none';
+                    
+                    if(val === 'default') {
+                        dateInput.value = '';
+                        monthInput.value = '';
+                    }
+                    renderAnalyticsView();
+                });
+                
+                dateInput.addEventListener('change', renderAnalyticsView);
+                monthInput.addEventListener('change', renderAnalyticsView);
             }
-            renderAnalyticsView();
         });
-        
-        dateInput.addEventListener('change', renderAnalyticsView);
-        monthInput.addEventListener('change', renderAnalyticsView);
-    }
-});
 
         function openWebExternal(url) { window.open(url, '_blank'); settingsOverlay.classList.remove('open'); }
         function closeWebModal() { const modal = document.getElementById('webModal'); const frame = document.getElementById('webFrame'); frame.src = ''; modal.style.display = 'none'; }
 
-        // ==========================================
-        // Voice Recognition 
-        // ==========================================
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
         let recognition;
         let isVoiceActive = false;
@@ -1480,9 +1495,6 @@ document.addEventListener('DOMContentLoaded', () => {
             10: ["ইউনুস", "ইউনুসের দোয়া", "লা ইলাহা ইল্লা আনতা", "সুবহানাকা ইন্নি কুনতু"]
         };
 
-        // ==========================================
-        // জিকির রিপোর্ট রিসেট লজিক
-        // ==========================================
         function resetTodayReport() {
             const today = getTodayDateString();
             if (!historyData[today] || Object.keys(historyData[today]).length === 0) {
@@ -1577,7 +1589,6 @@ document.addEventListener('DOMContentLoaded', () => {
             voiceBtnElement.addEventListener('click', toggleVoiceRecognition);
         }        
         
-        // Zen Mode Logic
         let isZenMode = false;
         const zenToggleBtn = document.getElementById('zenToggleBtn');
 
@@ -1594,10 +1605,705 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
         
-        // ==========================================
-        // সকাল ও সন্ধ্যার আমল লজিক (Morning & Evening Adhkar Logic)
-        // ==========================================
-                                        const adhkarData = {
+        const surahData = [
+    {
+        number: 1,
+        title: "১. সূরা আল-ফাতিহা",
+        ar: "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ. الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ. الرَّحْمَٰنِ الرَّحِيمِ. مَالِكِ يَوْمِ الدِّينِ. إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ. اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ. صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+        bn: "উচ্চারণ: বিসমিল্লাহির রাহমানির রাহীম। আলহামদুলিল্লাহি রাব্বিল আলামীন। আররাহমানির রাহীম। মালিকি ইয়াওমিদ্দীন। ইয়্যাকা নাবুদু ওয়া ইয়্যাকা নাস্তায়ীন। ইহদিনাস সিরাতাল মুস্তাকীম। সিরাতাল্লাযীনা আনআমতা আলাইহিম গাইরিল মাগদূবি আলাইহিম ওয়ালাদ্দাল্লীন।",
+        mean: "অর্থ: পরম করুণাময় অসীম দয়ালু আল্লাহর নামে। সমস্ত প্রশংসা জগতসমূহের প্রতিপালক আল্লাহর জন্য। যিনি পরম করুণাময়, অসীম দয়ালু। বিচার দিনের মালিক। আমরা কেবল আপনারই ইবাদত করি এবং আপনারই কাছে সাহায্য চাই। আমাদেরকে সরল পথ দেখান। তাদের পথ, যাদেরকে আপনি নেয়ামত দিয়েছেন; তাদের পথ নয় যারা গযবপ্রাপ্ত এবং পথভ্রষ্ট।"
+    },
+    {
+        number: 99,
+        title: "২. সূরা আয-যিলযাল",
+        ar: "إِذَا زُلْزِلَتِ الْأَرْضُ زِلْزَالَهَا. وَأَخْرَجَتِ الْأَرْضُ أَثْقَالَهَا. وَقَالَ الْإِنسَانُ مَا لَهَا. يَوْمَئِذٍ تُحَدِّثُ أَخْبَارَهَا. بِأَنَّ رَبَّكَ أَوْحَىٰ لَهَا. يَوْمَئِذٍ يَصْدُرُ النَّاسُ أَشْتَاتًا لِّيُرَوْا أَعْمَالَهُمْ. فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ. وَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ شَرًّا يَرَهُ",
+        bn: "উচ্চারণ: ইযা যুলযিলাতিল আরদু যিলযালাহা। ওয়া আখরাজাতিল আরদু আসকালাহা। ওয়া কালাল ইনসানু মা-লাহা। ইয়াওমাইযিন তুহাদ্দিসু আখবারাহা। বিআন্না রাব্বাকা আওহা-লাহা। ইয়াওমাইযিন ইয়াসদুরুন্নাসু আশতাতাল লিইউরাও আ'মালাহুম। ফামাইঁ ইয়া'মাল মিসকালা যাররাতিন খাইরাইঁ ইয়ারাহ। ওয়া মাইঁ ইয়া'মাল মিসকালা যাররাতিন শাররাইঁ ইয়ারাহ।",
+        mean: "অর্থ: যখন পৃথিবী তার কম্পনে প্রকম্পিত হবে। এবং পৃথিবী তার ভেতরের বোঝা বের করে দেবে। এবং মানুষ বলবে, এর কী হলো? সেদিন সে তার বৃত্তান্ত বর্ণনা করবে। কারণ আপনার রব তাকে প্রত্যাদেশ করবেন। সেদিন মানুষ ভিন্ন ভিন্ন দলে বের হবে, যাতে তাদেরকে তাদের আমল দেখানো যায়। অতঃপর কেউ অণু পরিমাণ সৎকর্ম করলে সে তা দেখবে। এবং কেউ অণু পরিমাণ অসৎকর্ম করলে সে তাও দেখবে।"
+    },
+    {
+        number: 100,
+        title: "৩. সূরা আল-আদিয়াত",
+        ar: "وَالْعَادِيَاتِ ضَبْحًا. فَالْمُورِيَاتِ قَدْحًا. فَالْمُغِيرَاتِ صُبْحًا. فَأَثَرْنَ بِهِ نَقْعًا. فَوَسَطْنَ بِهِ جَمْعًا. إِنَّ الْإِنسَانَ لِرَبِّهِ لَكَنُودٌ. وَإِنَّهُ عَلَىٰ ذَٰلِكَ لَشَهِيدٌ. وَإِنَّهُ لِحُبِّ الْخَيْرِ لَشَدِيدٌ. ۞ أَفَلَا يَعْلَمُ إِذَا بُعْثِرَ مَا فِي الْقُبُورِ. وَحُصِّلَ مَا فِي الصُّدُورِ. إِنَّ رَبَّهُم بِهِمْ يَوْمَئِذٍ لَّخَبِيرٌ",
+        bn: "উচ্চারণ: ওয়াল আ-দিয়াতি দাবহা। ফালমূরিয়াতি ক্বাদহা। ফালমুগীরাতি সুবহা। ফাআসাওনা বিহী নাকআ। ফাওয়াসাতনা বিহী জামআ। ইন্নাল ইনসানা লিরাব্বিহী লাকানূদ। ওয়া ইন্নাহু আলা যালিকা লাশাহীদ। ওয়া ইন্নাহু লিহুব্বিল খাইরি লাশাদীদ। আফালা ইয়া'লামু ইযা বু'সিরা মা-ফিল কুবূর। ওয়া হুসসিলা মা-ফিস সুদূর। ইন্না রাব্বাহুম বিহিম ইয়াওমাইযিল লা খাবীর।",
+        mean: "অর্থ: শপথ ঊর্ধ্বশ্বাসে ধাবমান অশ্বরাজির। যারা ক্ষুরাঘাতে অগ্নিস্ফুলিঙ্গ বিচ্ছুরিত করে। যারা প্রভাতে আক্রমণ করে। এবং সে সময়ে ধূলি উৎক্ষিপ্ত করে। অতঃপর শত্রুদলের অভ্যন্তরে ঢুকে পড়ে। নিশ্চয়ই মানুষ তার রবের প্রতি বড়ই অকৃতজ্ঞ। এবং নিশ্চয়ই সে এ বিষয়ে নিজেই সাক্ষী। এবং নিশ্চয়ই সে ধন-সম্পদের আসক্তিতে প্রবল। সে কি জানে না যখন কবরে যা আছে তা উত্থিত হবে? এবং অন্তরে যা আছে তা প্রকাশ করা হবে? নিশ্চয়ই তাদের রব সেদিন তাদের সম্পর্কে সম্যক অবগত।"
+    },
+    {
+        number: 101,
+        title: "৪. সূরা আল-কারিয়াহ",
+        ar: "الْقَارِعَةُ. مَا الْقَارِعَةُ. وَمَا أَدْرَاكَ مَا الْقَارِعَةُ. يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ. وَتَكُونُ الْجِبَالُ كَالْعِهْنِ الْمَنفُوشِ. فَأَمَّا مَن ثَقُلَتْ مَوَازِينُهُ. فَهُوَ فِي عِيشَةٍ رَّاضِيَةٍ. وَأَمَّا مَنْ خَفَّتْ مَوَازِينُهُ. فَأُمُّهُ هَاوِيَةٌ. وَمَا أَدْرَاكَ مَا هِيَهْ. نَارٌ حَامِيَةٌ",
+        bn: "উচ্চারণ: আলক্বারিআহ। মালক্বারিআহ। ওয়া মা-আদাকা মালক্বারিআহ। ইয়াওমা ইয়াকূনুননাসু কালফারাসিল মাবসূস। ওয়া তাকূনুল জিবালু কাল'ইহনিল মানফূশ। ফাআম্মা মান সাকুলাত মাওয়াযীনুহ। ফাহুওয়া ফী 'ঈশাতির রাদিয়াহ। ওয়া আম্মা মান খাফফাত মাওয়াযীনুহ। ফা উম্মুহু হা-বিয়াহ। ওয়া মা-আদাকা মা-হিয়াহ। নারুন হামিয়াহ।",
+        mean: "অর্থ: করাঘাতকারী (কিয়ামত)। করাঘাতকারী কী? আপনি কি জানেন করাঘাতকারী কী? যেদিন মানুষ হবে বিক্ষিপ্ত পতঙ্গের মতো। এবং পাহাড়গুলো হবে ধুনিত রঙিন পশমের মতো। অতঃপর যার পাল্লা ভারী হবে, সে তো সন্তোষজনক জীবনে থাকবে। আর যার পাল্লা হালকা হবে, তার ঠিকানা হবে ‘হাবিয়া’। আপনি কি জানেন তা কী? তা হলো অতি উত্তপ্ত আগুন।"
+    },
+    {
+        number: 102,
+        title: "৫. সূরা আত-তাকাসুর",
+        ar: "أَلْهَاكُمُ التَّكَاثُرُ. حَتَّىٰ زُرْتُمُ الْمَقَابِرَ. كَلَّا سَوْفَ تَعْلَمُونَ. ثُمَّ كَلَّا سَوْفَ تَعْلَمُونَ. كَلَّا لَوْ تَعْلَمُونَ عِلْمَ الْيَقِينِ. لَتَرَوُنَّ الْجَحِيمَ. ثُمَّ لَتَرَوُنَّهَا عَيْنَ الْيَقِينِ. ثُمَّ لَتُسْأَلُنَّ يَوْمَئِذٍ عَنِ النَّعِيمِ",
+        bn: "উচ্চারণ: আলহা-কুমুত তাকা-সুর। হাত্তা যুরতুমুল মাক্বাবির। কাল্লা সাওফা তা'লামূন। সুম্মা কাল্লা সাওফা তা'লামূন। কাল্লা লাও তা'লামূনা 'ইলমাল ইয়াক্বীন। লাতারাউন্নাল জাহীম। সুম্মা লাতারাউন্নাহা 'আইনাল ইয়াক্বীন। সুম্মা লাতুসআলুন্না ইয়াওমাইযিন 'আনিন না'ঈম।",
+        mean: "অর্থ: প্রাচুর্যের প্রতিযোগিতা তোমাদেরকে ভুলিয়ে রেখেছে। যতক্ষণ না তোমরা কবরে পৌঁছাও। কখনই নয়, তোমরা শীঘ্রই জানতে পারবে। আবারও বলি, কখনই নয়, তোমরা শীঘ্রই জানতে পারবে। কখনই নয়, যদি তোমরা নিশ্চিত জ্ঞানে জানতে! তোমরা অবশ্যই জাহান্নাম দেখবে। অতঃপর তোমরা অবশ্যই তা চাক্ষুষ নিশ্চিত জ্ঞানে দেখবে। অতঃপর সেদিন তোমাদেরকে নেয়ামত সম্পর্কে অবশ্যই জিজ্ঞাসা করা হবে।"
+    },
+    {
+        number: 103,
+        title: "৬. সূরা আল-আসর",
+        ar: "وَالْعَصْرِ. إِنَّ الْإِنسَانَ لَفِي خُسْرٍ. إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ",
+        bn: "উচ্চারণ: ওয়াল আসর। ইন্নাল ইনসানা লাফী খুসর। ইল্লাল্লাযীনা আমানূ ওয়া আমিলুস সালিহাতি ওয়া তাওয়াসাও বিলহাক্কি ওয়া তাওয়াসাও বিসসাবর।",
+        mean: "অর্থ: সময়ের শপথ! নিশ্চয়ই মানুষ ক্ষতির মধ্যে নিমজ্জিত। তবে তারা ছাড়া যারা ঈমান এনেছে, সৎকাজ করেছে, পরস্পরকে সত্যের উপদেশ দিয়েছে এবং পরস্পরকে ধৈর্যের উপদেশ দিয়েছে।"
+    },
+    {
+        number: 104,
+        title: "৭. সূরা আল-হুমাযাহ",
+        ar: "وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ. الَّذِي جَمَعَ مَالًا وَعَدَّدَهُ. يَحْسَبُ أَنَّ مَالَهُ أَخْلَدَهُ. كَلَّا ۖ لَيُنبَذَنَّ فِي الْحُطَمَةِ. وَمَا أَدْرَاكَ مَا الْحُطَمَةُ. نَارُ اللَّهِ الْمُوقَدَةُ. الَّتِي تَطَّلِعُ عَلَى الْأَفْئِدَةِ. إِنَّهَا عَلَيْهِم مُّؤْصَدَةٌ. فِي عَمَدٍ مُّمَدَّدَةٍ",
+        bn: "উচ্চারণ: ওয়াইলুল লিকুল্লি হুমাযাতিল লুমাযাহ। আল্লাযী জামাআ মা-লাওঁ ওয়া আদ্দাদাহ। ইয়াহসাবু আন্না মা-লাহূ আখলাদাহ। কাল্লা লাইউম্বাযান্না ফিল হুতামাহ। ওয়া মা আদরাকা মাল হুতামাহ। নারুল্লাহিল মূকাদাহ। আল্লাতী তাত্তালিউ আলাল আফইদাহ। ইন্নাহা আলাইহিম মু'সাদাহ। ফী আমাদিম মুমাদ্দাদাহ।",
+        mean: "অর্থ: ধ্বংস প্রত্যেক এমন ব্যক্তির জন্য, যে পশ্চাতে ও সম্মুখে মানুষের নিন্দা করে। যে সম্পদ জমা করে এবং তা গুনে গুনে রাখে। সে মনে করে যে, তার সম্পদ তাকে চিরঞ্জীব করে রাখবে। কখনই নয়, সে অবশ্যই নিক্ষিপ্ত হবে ‘হুতামায়’ (চূর্ণ-বিচূর্ণকারী আগুনে)। আপনি কি জানেন হুতামা কী? তা আল্লাহর প্রজ্জ্বলিত আগুন। যা হৃদয় পর্যন্ত পৌঁছে যাবে। নিশ্চয়ই তা তাদের ওপর আবদ্ধ করে দেওয়া হবে। দীর্ঘায়িত স্তম্ভসমূহের মধ্যে।"
+    },
+    {
+        number: 105,
+        title: "৮. সূরা আল-ফীল",
+        ar: "أَلَمْ تَرَ كَيْفَ فَعَلَ رَبُّكَ بِأَصْحَابِ الْفِيلِ. أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ. وَأَرْسَلَ عَلَيْهِمْ طَيْرًا أَبَابِيلَ. تَرْمِيهِم بِحِجَارَةٍ مِّن سِجِّيلٍ. فَجَعَلَهُمْ كَعَصْفٍ مَّأْكُولٍ",
+        bn: "উচ্চারণ: আলাম তারা কাইফা ফাআলা রাব্বুকা বিআসহাবিল ফীল। আলাম ইয়াজআল কাইদাহুম ফী তাদলীল। ওয়া আরসালা আলাইহিম তাইরান আবাবীল। তারমীহিম বিহিযারাতিল মিন সিজ্জীল। ফাজাআলাহুম কাআস্ফিম মা'কূল।",
+        mean: "অর্থ: আপনি কি দেখেননি আপনার রব হাতিওয়ালাদের সাথে কী আচরণ করেছেন? তিনি কি তাদের চক্রান্ত ব্যর্থ করে দেননি? এবং তিনি তাদের ওপর ঝাঁকে ঝাঁকে পাখি পাঠিয়েছেন। যারা তাদের ওপর পোড়ামাটির পাথর নিক্ষেপ করছিল। অতঃপর তিনি তাদেরকে ভক্ষিত ঘাস-পাতার মতো করে দিলেন।"
+    },
+    {
+        number: 106,
+        title: "৯. সূরা কুরাইশ",
+        ar: "لِإِيلَافِ قُرَيْشٍ. إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ. فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ. الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ",
+        bn: "উচ্চারণ: লিঈলাফি কুরাইশ। ঈলাফিহিম রিহলাতাশ শিতায়ি ওয়াসসাইফ। ফালইয়া'বুদূ রাব্বা হাযাল বাইত। আল্লাযী আতআমাহুম মিন জূইওঁ ওয়া আমানাহুম মিন খাওফ।",
+        mean: "অর্থ: কুরাইশদের আসক্তির কারণে, আসক্তি তাদের শীত ও গ্রীষ্মকালীন সফরের। সুতরাং তাদের উচিত এই ঘরের (কাবার) রবের ইবাদত করা। যিনি তাদেরকে ক্ষুধায় আহার দিয়েছেন এবং ভয় থেকে নিরাপদ করেছেন।"
+    },
+    {
+        number: 107,
+        title: "১০. সূরা আল-মাউন",
+        ar: "أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ. فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ. وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ. فَوَيْلٌ لِّلْمُصَلِّينَ. الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ. الَّذِينَ هُمْ يُرَاءُونَ. وَيَمْنَعُونَ الْمَاعُونَ",
+        bn: "উচ্চারণ: আরাআইতাল্লাযী ইউকাযযিবু বিদ্দীন। ফাযালিকাল্লাযী ইয়াদু'উল ইয়াতীম। ওয়ালা ইয়াহুদ্দু আলা-তাআমিল মিসকীন। ফাওয়াইলুল লিলমুসাললীন। আল্লাযীনা হুম আন সালাতিহিম সাহূন। আল্লাযীনা হুম ইউরাঊন। ওয়া ইয়ামনাঊনাল মাঊন।",
+        mean: "অর্থ: আপনি কি তাকে দেখেছেন, যে বিচার দিনকে অস্বীকার করে? সে তো ওই ব্যক্তি, যে এতিমকে রূঢ়ভাবে তাড়িয়ে দেয়। এবং সে মিসকিনকে খাবার দিতে উৎসাহিত করে না। সুতরাং দুর্ভোগ সেসব নামাজির জন্য, যারা তাদের নামাজ সম্পর্কে উদাসীন। যারা লোক-দেখানো কাজ করে। এবং সামান্য প্রয়োজনীয় জিনিসপত্র দেওয়া থেকেও বিরত থাকে।"
+    },
+    {
+        number: 108,
+        title: "১১. সূরা আল-কাওসার",
+        ar: "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ. فَصَلِّ لِرَبِّكَ وَانْحَرْ. إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ",
+        bn: "উচ্চারণ: ইন্না আ'তাইনাকাল কাওসার। ফাসাল্লি লিরাব্বিকা ওয়ানহার। ইন্না শানিআকা হুওয়াল আবতার।",
+        mean: "অর্থ: নিশ্চয়ই আমি আপনাকে কাওসার (প্রচুর কল্যাণ/হাউজে কাওসার) দান করেছি। সুতরাং আপনার রবের উদ্দেশ্যে নামাজ পড়ুন এবং কুরবানি করুন। নিশ্চয়ই আপনার প্রতি বিদ্বেষ পোষণকারীই লেজকাটা (নির্বংশ)।"
+    },
+    {
+        number: 109,
+        title: "১২. সূরা আল-কাফিরুন",
+        ar: "قُلْ يَا أَيُّهَا الْكَافِرُونَ. لَا أَعْبُدُ مَا تَعْبُدُونَ. وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ. وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ. وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ. لَكُمْ دِينُكُمْ وَلِيَ دِينِ",
+        bn: "উচ্চারণ: কুল ইয়া আইয়্যূহাল কাফিরূন। লা আ'বুদু মা তা'বুদূন। ওয়ালা আনতুম আবিদূনা মা আ'বুদ। ওয়ালা আনা আবিদুম মা আবাদতুম। ওয়ালা আনতুম আবিদূনা মা আ'বুদ। লাকুম দ্বীনুকুম ওয়ালিয়া দ্বীন।",
+        mean: "অর্থ: বলুন, হে কাফিররা! আমি তার ইবাদত করি না যার ইবাদত তোমরা করো। এবং তোমরাও তাঁর ইবাদতকারী নও যাঁর ইবাদত আমি করি। এবং আমি তার ইবাদতকারী হব না যার ইবাদত তোমরা করেছ। এবং তোমরাও তাঁর ইবাদতকারী হবে না যাঁর ইবাদত আমি করি। তোমাদের দ্বীন তোমাদের জন্য, আর আমার দ্বীন আমার জন্য।"
+    },
+    {
+        number: 110,
+        title: "১৩. সূরা আন-নাসর",
+        ar: "إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ. وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا. فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا",
+        bn: "উচ্চারণ: ইযা জা-আ নাসرুল্লাহি ওয়াল ফাতহ। ওয়া রাইতান্নাসা ইয়াদখুলূনা ফী দ্বীনিল্লাহি আফওয়াজা। ফাসাব্বিহ বিহামদি রাব্বিকা ওয়াসতাগফিরহ, ইন্নাহু কানা তাওয়্যাবা।",
+        mean: "অর্থ: যখন আল্লাহর সাহায্য ও বিজয় আসবে। এবং আপনি মানুষকে দলে দলে আল্লাহর দ্বীনে প্রবেশ করতে দেখবেন। তখন আপনি আপনার রবের প্রশংসাসহ পবিত্রতা বর্ণনা করুন এবং তাঁর কাছে ক্ষমা প্রার্থনা করুন। নিশ্চয়ই তিনি তওবা কবুলকারী।"
+    },
+    {
+        number: 111,
+        title: "১৪. সূরা আল-লাহাব",
+        ar: "تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ. مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ. سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ. وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ. فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ",
+        bn: "উচ্চারণ: তাব্বাত ইয়াদা আবী লাহাবিওঁ ওয়া তাব্ব। মা আগনা আনহু মালুহূ ওয়ামা কাসাব। সাইয়াসলা নারান যাতা লাহাব। ওয়ামরাআতুহূ হাম্মালাতাল হাতাব। ফী জীদিহা হাবলুম মিম মাসাদ।",
+        mean: "অর্থ: আবু লাহাবের দুই হাত ধ্বংস হোক এবং সে নিজেও ধ্বংস হোক। তার সম্পদ ও সে যা উপার্জন করেছে তা তার কোনো কাজে আসেনি। শীঘ্রই সে লেলিহান আগুনে প্রবেশ করবে। এবং তার স্ত্রীও, যে ইন্ধন বহনকারিণী। তার গলায় থাকবে পাকানো রশি।"
+    },
+    {
+        number: 112,
+        title: "১৫. সূরা আল-ইখলাস",
+        ar: "قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ",
+        bn: "উচ্চারণ: কুল হুওয়াল্লাহু আহাদ। আল্লাহুস সামাদ। লাম ইয়ালিদ ওয়ালাম ইউলাদ। ওয়ালাম ইয়াকুল্লাহু কুফুওয়ান আহাদ।",
+        mean: "অর্থ: বলুন, তিনিই আল্লাহ, এক-অদ্বিতীয়। আল্লাহ কারো মুখাপেক্ষী নন, সবাই তাঁর মুখাপেক্ষী। তিনি কাউকে জন্ম দেননি এবং কারো থেকে জন্ম নেননি। আর তাঁর সমতুল্য কেউই নেই।"
+    },
+    {
+        number: 113,
+        title: "১৬. সূরা আল-ফালাক",
+        ar: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِن شَرِّ مَا خَلَقَ. وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ",
+        bn: "উচ্চারণ: কুল আঊযু বিরাব্বিল ফালাক। মিন শাররি মা খালাক। ওয়া মিন শাররি গাসিকিন ইযা ওয়াকাব। ওয়া মিন শাররিন নাফফাসা-তি ফিল উকাদ। ওয়া মিন শাররি হাসিদিন ইযা হাসাদ।",
+        mean: "অর্থ: বলুন, আমি আশ্রয় গ্রহণ করছি প্রভাতের রবের। তিনি যা সৃষ্টি করেছেন তার অনিষ্ট থেকে। এবং অন্ধকারের অনিষ্ট থেকে যখন তা গভীর হয়। এবং গিঁটে ফুঁ দেওয়া জাদুকরীদের অনিষ্ট থেকে। এবং হিংসুকের অনিষ্ট থেকে যখন সে হিংসা করে।"
+    },
+    {
+        number: 114,
+        title: "১৭. সূরা আন-নাস",
+        ar: "قُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَٰهِ النَّاسِ. مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَالنَّاسِ",
+        bn: "উচ্চারণ: কুল আঊযু বিরাব্বিন নাস। মালিকিন নাস। ইলাহিন নাস। মিন শাররিল ওয়াসওয়াসিল খান্নাস। আল্লাযী ইউওয়াসউইসু ফী সুদূরিন নাস। মিনাল জিন্নাতি ওয়ান নাস।",
+        mean: "অর্থ: বলুন, আমি আশ্রয় গ্রহণ করছি মানুষের রবের, মানুষের অধিপতির, মানুষের উপাস্যের। আত্মগোপনকারী কুমন্ত্রণাদাতার অনিষ্ট থেকে, যে কুমন্ত্রণা দেয় মানুষের অন্তরে, জ্বিন ও মানুষের মধ্য থেকে।"
+    },      
+    {
+        number: 93,
+        title: "১৮. সূরা আদ্ব-দোহা",
+        ar: "وَالضُّحَى. وَاللَّيْلِ إِذَا سَجَى. مَا وَدَّعَكَ رَبُّكَ وَمَا قَلَى. وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَى. وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَى. أَلَمْ يَجِدْكَ يَتِيمًا فَآوَى. وَوَجَدَكَ ضَالًّا فَهَدَى. وَوَجَدَكَ عَائِلًا فَأَغْنَى. فَأَمَّا الْيَتِيمَ فَلَا تَقْهَرْ. وَأَمَّا السَّائِلَ فَلَا تَنْهَرْ. وَأَمَّا بِنِعْمَةِ رَبِّكَ فَحَدِّثْ",
+        bn: "উচ্চারণ: ওয়াদ্ব-দ্বোহা। ওয়াল্লাইলি ইযা-সাজা। মা-ওয়াদ্দায়াকা রাব্বুকা ওয়ামা-ক্বলা। ওয়ালাল আ-খিরাতু খইরুল্লাকা মিনাল ঊলা। ওয়ালাসাওফা ইউ’ত্বীকা রাব্বুকা ফাতারদ্বা। আলাম ইয়াজিদকা ইয়াতীমান ফাআ-ওয়া। ওয়াওয়াজাদাকা দ্বো-ল্লান ফাহাদা। ওয়াওয়াজাদাকা আ-য়িলান ফাআগনা। ফাআম্মাল ইয়াতীমা ফালা-তাক্বহার। ওয়াআম্মাস সা-য়িলা ফালা-তানহার। ওয়াআম্মা বিনি’মাতি রাব্বিকা ফাহাদ্দিস।",
+        mean: "অর্থ: শপথ পূর্বাহ্নের। শপথ রজনীর, যখন তা নিঝুম হয়। আপনার রব আপনাকে ত্যাগ করেননি এবং আপনার প্রতি বিরূপও হননি..."
+    },
+    {
+        number: 94,
+        title: "১৯. সূরা আশ-শারহ",
+        ar: "أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ. وَوَضَعْنَا عَنكَ وِزْرَكَ. الَّذِي أَنقَضَ ظَهْرَكَ. وَرَفَعْنَا لَكَ ذِكْرَكَ. فَإِنَّ مَعَ الْعُسْرِ يُسْرًا. إِنَّ مَعَ الْعُسْرِ يُسْرًا. فَإِذَا فَرَغْتَ فَانصَبْ. وَإِلَى رَبِّكَ فَارْغَب",
+        bn: "উচ্চারণ: আলাম নাশরাহ লাকা সাদরাক। ওয়াওয়াদ্বয়না-আনকা ওয়াযরাক। আল্লাযী আনক্বাদ্বা জ্বাহরাক। ওয়ারাফা’না-লাকা যিকরাক। ফায়িন্না মায়াল উসরি ইউসরা। ইন্না মায়াল উসরি ইউসরা। ফায়িযা-ফারাগতা ফানসাব। ওয়াইলা-রাব্বিকা ফারগাব।",
+        mean: "অর্থ: আমি কি আপনার বক্ষ আপনার কল্যাণে প্রশস্ত করিনি? এবং আপনার থেকে নামিয়ে দিয়েছি আপনার বোঝা..."
+    },
+    {
+        number: 95,
+        title: "২০. সূরা আত-ত্বীন",
+        ar: "وَالتِّينِ وَالزَّيْتُونِ. وَطُورِ سِينِينَ. وَهَذَا الْبَلَدِ الْأَمِينِ. لَقَدْ خَلَقْنَا الْإِنسَانَ فِي أَحْسَنِ تَقْوِيمٍ. ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ. إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ فَلَهُمْ أَجْرٌ غَيْرُ مَمْنُونٍ. فَمَا يُكَذِّبُكَ بَعْدُ بِالدِّينِ. أَلَيْسَ اللَّهُ بِأَحْكَمِ الْحَاكِمِينَ",
+        bn: "উচ্চারণ: ওয়াত্তীনি ওয়াযযাইতূন। ওয়া তূরি সীনীন। ওয়াহা-যাল বালাদিল আমীন। লাক্বাদ খালাক্বানাল ইনসা-না ফী আহসানি তাক্বওয়ীম। ছুম্মা রাদাদনা-হু আসফালা সা-ফিলীন। ইল্লাল্লাযীনা আ-মানূ ওয়াআমিলুস্ব স্বা-লিহা-তি ফালাহুম আজরুন গইরুমামনূন। ফামা-ইউকাযযিবুকা বা’দুবিদ্দীন। আলাইসাল্লা-হু বিআহকামিল হা-কিমীন।",
+        mean: "অর্থ: শপথ আঞ্জির (ডুমুর) ও যয়তুনের, এবং সিনাই প্রান্তরস্থ তূর পর্বতের, এবং এই নিরাপদ নগরের..."
+    },
+    {
+        number: 96,
+        title: "২১. সূরা আল-আলাক",
+        ar: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ. خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ. اقْرَأْ وَرَبُّكَ الْأَكْرَمُ. الَّذِي عَلَّمَ بِالْقَلَمِ. عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ...",
+        bn: "উচ্চারণ: ইক্করা বিসমি রাব্বিকাল্লাযী খালাক্ব। খালাক্বাল ইনসা-না মিন আলাক্ব। ইক্করা ওয়া রাব্বুকাল আকরাম। আল্লাযী আল্লামা বিলক্বালাম। আল্লামাল ইনসা-না মা-লাম ইয়া’লাম...",
+        mean: "অর্থ: পাঠ করুন আপনার রবের নামে যিনি সৃষ্টি করেছেন। যিনি মানুষকে সৃষ্টি করেছেন জমাট রক্ত থেকে..."
+    },
+    {
+        number: 97,
+        title: "২২. সূরা আল-কদর",
+        ar: "إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ. وَمَا أَدْرَاكَ مَا لَيْلَةُ الْقَدْرِ. لَيْلَةُ الْقَدْرِ خَيْرٌ مِّنْ أَلْفِ شَهْرٍ. تَنَزَّلُ الْمَلَائِكَةُ وَالرُّوحُ فِيهَا بِإِذْنِ رَبِّهِم مِّن كُلِّ أَمْرٍ. سَلَامٌ هِيَ حَتَّى مَطْلَعِ الْفَجْرِ",
+        bn: "উচ্চারণ: ইন্না আনযালনা-হু ফী লাইলাতিল ক্বাদর। ওয়ামা আদরা-কা মা-লাইলাতুল ক্বাদর। লাইলাতুল ক্বাদরি খইরুম মিন আলফি শাহার। তানাযযালুল মালা-য়িকাতু ওয়াররূহু ফীহা-বিইযনি রাব্বিহিম মিন কুল্লি আমর। সালা-মুন হিয়া হাত্তা-মাত্বলায়িল ফাজর।",
+        mean: "অর্থ: নিশ্চয়ই আমি এটি (কুরআন) লাইলাতুল কদরে নাজিল করেছি। আপনি কি জানেন লাইলাতুল কদর কী? লাইলাতুল কদর হাজার মাস অপেক্ষা উত্তম..."
+    },
+    {
+        number: 98,
+        title: "২৩. সূরা আল-বাইয়্যিনাহ",
+        ar: "لَمْ يَكُنِ الَّذِينَ كَفَرُوا مِنْ أَهْلِ الْكِتَابِ وَالْمُشْرِكِينَ مُنفَكِّينَ حَتَّى تَأْتِيَهُمُ الْبَيِّنَةُ. رَسُولٌ مِّنَ اللَّهِ يَتْلُو صُحُفًا مُّطَهَّرَةً. فِيهَا كُتُبٌ قَيِّمَةٌ...",
+        bn: "উচ্চারণ: লাম ইয়াকুনিল্লাযীনা কাফারূ মিন আহলিল কিতা-বি ওয়ালমুশরিকীনা মুনফাক্কীনা হাত্তা-তা’তিয়াহুমুল বাইয়্যিনাহ। রাসূলুম মিনাল্লা-হি ইয়াতলূ সুহুফাম মুত্বাহহারাহ...",
+        mean: "অর্থ: আহলে কিতাব ও মুশরিকদের মধ্যে যারা কাফের তারা ততক্ষণ পর্যন্ত নিবৃত্ত হওয়ার ছিল না, যতক্ষণ না তাদের কাছে স্পষ্ট প্রমাণ আসত..."
+    },
+    {
+        number: 86,
+        title: "২৪. সূরা আত-তারিক",
+        ar: "وَالسَّمَاءِ وَالطَّارِقِ. وَمَا أَدْرَاكَ مَا الطَّارِقُ. النَّجْمُ الثَّاقِبُ. إِن كُلُّ نَفْسٍ لَّمَّا عَلَيْهَا حَافِظٌ...",
+        bn: "উচ্চারণ: ওয়াসসামা-য়ি ওয়াত্ব ত্বা-রিক্ব। ওয়ামা আদরা-কা মাত্ব ত্বা-রিক্ব। আন্নজমুছ ছা-ক্বিব। ইন কুল্লু নাফসিল লাম্মা-আলাইহা-হা-ফিয...",
+        mean: "অর্থ: শপথ আসমানের এবং রাতের বেলায় আগমনকারীর। আপনি কি জানেন রাতের বেলায় আগমনকারী কী? তা হলো উজ্জ্বল নক্ষত্র..."
+    },
+    {
+        number: 87,
+        title: "২৫. সূরা আল-আলা",
+        ar: "سَبِّحِ اسْمَ رَبِّكَ الْأَعْلَى. الَّذِي خَلَقَ فَسَوَّى. وَالَّذِي قَدَّرَ فَهَدَى. وَالَّذِي أَخْرَجَ الْمَرْعَى...",
+        bn: "উচ্চারণ: সাব্বিহিসমা রাব্বিকাল আ’লা-। আল্লাযী খালাক্বা ফাসাওয়া-। ওয়াল্লাযী ক্বাদ্দারা ফাহাদা-। ওয়াল্লাযী আখরাজাল মারআ-...",
+        mean: "অর্থ: আপনার মহান রবের নামের পবিত্রতা বর্ণনা করুন। যিনি সৃষ্টি করেছেন ও সুবিন্যস্ত করেছেন..."
+    },
+    {
+        number: 88,
+        title: "২৬. সূরা আল-গাশিয়াহ",
+        ar: "هَلْ أَتَاكَ حَدِيثُ الْغَاشِيَةِ. وُجُوهٌ يَوْمَئِذٍ خَاشِعَةٌ. عَامِلَةٌ نَّاصِبَةٌ. تَصْلَى نَارًا حَامِيَةً...",
+        bn: "উচ্চারণ: হাল আতা-কা হাদীসুল গা-শিয়াহ। উজুহুঁ ইয়্যাওমায়িযিন খা-শিয়াহ। আ-মিলাতুন না-সিবাহ। তাসলা-না-রান হা-মিয়াহ...",
+        mean: "অর্থ: আচ্ছন্নকারী (কিয়ামত) এর সংবাদ কি আপনার কাছে পৌঁছেছে? সেদিন অনেক মুখমণ্ডল হবে লাঞ্ছিত..."
+    },
+    {
+        number: 89,
+        title: "২৭. সূরা আল-ফাজর",
+        ar: "وَالْفَجْرِ. وَلَيَالٍ عَشْرٍ. وَالشَّفْعِ وَالْوَتْرِ. وَاللَّيْلِ إِذَا يَسْرِ. هَلْ فِي ذَلِكَ قَسَمٌ لِّذِي حِجْرٍ...",
+        bn: "উচ্চারণ: ওয়ালফাজর। ওয়ালায়া-লিন আশর। ওয়াশশাফয়ি ওয়ালওয়াত্র। ওয়াল্লাইলি ইযা-ইয়াসর। হাল ফী যা-লিকা ক্বাসামুল লিযী হিজর...",
+        mean: "অর্থ: শপথ ফজরের, শপথ দশ রজনীর, শপথ জোড় ও বেজোড়ের, এবং শপথ রজনীর যখন তা গত হতে থাকে..."
+    },
+    {
+        number: 90,
+        title: "২৮. সূরা আল-বালাদ",
+        ar: "لَا أُقْسِمُ بِهَذَا الْبَلَدِ. وَأَنتَ حِلٌّ بِهَذَا الْبَلَدِ. وَوَالِدٍ وَمَا وَلَدَ. لَقَدْ خَلَقْنَا الْإِنسَانَ فِي كَبَدٍ...",
+        bn: "উচ্চারণ: লা-উক্বসিমু বিহা-যাল বালাদ। ওয়াআনতা হিল্লুম বিহা-যাল বালাদ। ওয়াওয়া-লিদিঁউ ওয়ামা-ওয়ালাদ। লাক্বাদ খালাক্বনাল ইনসা-না ফী কাবাদ...",
+        mean: "অর্থ: আমি শপথ করছি এই নগরীর। আর আপনি এই নগরীতে অবস্থান করছেন। শপথ জনকের এবং যা সে জন্ম দিয়েছে..."
+    },
+    {
+        number: 91,
+        title: "২৯. সূরা আশ-শামস",
+        ar: "وَالشَّمْسِ وَضُحَاهَا. وَالْقَمَرِ إِذَا تَلَاهَا. وَالنَّهَارِ إِذَا جَلَّاهَا. وَاللَّيْلِ إِذَا يَغْشَاهَا...",
+        bn: "উচ্চারণ: ওয়াশশামসি ওয়াদ্বুহা-হা-। ওয়ালক্বামারি ইযা-তালা-হা-। ওয়ান্নাহা-রি ইযা-জাল্লা-হা-। ওয়াল্লাইলি ইযা-ইয়াগশা-হা-...",
+        mean: "অর্থ: শপথ সূর্যের ও তার কিরণের। শপথ চন্দ্রের যখন তা সূর্যের পশ্চাতে আসে। শপথ দিবসের যখন তা সূর্যকে প্রদীপ্ত করে..."
+    },
+    {
+        number: 92,
+        title: "৩০. সূরা আল-লাইল",
+        ar: "وَاللَّيْلِ إِذَا يَغْشَى. وَالنَّهَارِ إِذَا تَجَلَّى. وَمَا خَلَقَ الذَّكَرَ وَالْأُنثَى. إِنَّ سَعْيَكُمْ لَشَتَّى...",
+        bn: "উচ্চারণ: ওয়াল্লাইলি ইযা-ইয়াগশা-। ওয়ান্নাহা-রি ইযা-তাজাল্লা-। ওয়ামা-খালাক্বায যাকারা ওয়ালউনছা-। ইন্না সা’য়াকুম লাশাত্তা-...",
+        mean: "অর্থ: শপথ রজনীর যখন সে আচ্ছন্ন করে। শপথ দিবসের যখন সে উদ্ভাসিত হয়। শপথ তাঁর, যিনি নর ও নারী সৃষ্টি করেছেন..."
+    }
+];
+
+
+        let currentSurahAudio = null;
+        let playingSurahIndex = null;
+        let openSurahs = new Set(); 
+
+        window.toggleSurahAudio = function(index, surahNumber) {
+            
+            const formattedNumber = String(surahNumber).padStart(3, '0');
+            const audioUrl = `https://server8.mp3quran.net/afs/${formattedNumber}.mp3`;
+
+            if (currentSurahAudio && playingSurahIndex === index) {
+                currentSurahAudio.pause();
+                currentSurahAudio = null;
+                playingSurahIndex = null;
+                renderSurahList(); 
+                return;
+            }
+
+            if (currentSurahAudio) currentSurahAudio.pause();
+            if (typeof stopAdhkarAudioSafely === "function") stopAdhkarAudioSafely();
+
+            currentSurahAudio = new Audio(audioUrl);
+            playingSurahIndex = index;
+            
+            currentSurahAudio.play().catch(e => {
+                alert("অডিও প্লে করতে সমস্যা হচ্ছে। আপনার ইন্টারনেট কানেকশন চেক করুন।");
+                playingSurahIndex = null;
+                renderSurahList();
+            });
+            
+            currentSurahAudio.onended = () => {
+                currentSurahAudio = null;
+                playingSurahIndex = null;
+                renderSurahList();
+            };
+
+            renderSurahList(); 
+        };
+
+        function stopSurahAudioSafely() {
+            if (currentSurahAudio) {
+                currentSurahAudio.pause();
+                currentSurahAudio = null;
+                playingSurahIndex = null;
+            }
+        }
+
+        function renderSurahList() {
+            const container = document.getElementById('surahListContainer');
+            container.innerHTML = '';
+            
+            surahData.forEach((item, index) => {
+                const isPlaying = playingSurahIndex === index;
+                const isOpen = openSurahs.has(index); 
+                
+                const card = document.createElement('div');
+                card.className = 'adhkar-card'; 
+                card.style.flexShrink = '0'; 
+                
+                let meaningHtml = item.mean ? `<div class="adhkar-meaning" style="margin-bottom: 0; margin-top: 8px;">${item.mean}</div>` : '';
+                
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleSurah(${index})">
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <button class="icon-btn" onclick="event.stopPropagation(); toggleSurahAudio(${index}, ${item.number})" style="width: 32px; height: 32px; border: none; background: ${isPlaying ? '#ef4444' : 'rgba(14, 165, 233, 0.15)'}; color: ${isPlaying ? 'white' : '#0ea5e9'}; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+                                <i class="fa-solid ${isPlaying ? 'fa-stop' : 'fa-play'}"></i>
+                            </button>
+                            <h4 style="color: var(--text-title); margin: 0; font-size: 1.05rem;">${item.title}</h4>
+                        </div>
+                        <i class="fa-solid fa-chevron-down" id="surahIcon-${index}" style="color: var(--text-muted); transition: transform 0.3s ease; transform: ${isOpen ? 'rotate(180deg)' : 'rotate(0deg)'};"></i>
+                    </div>
+                    
+                    <div id="surahContent-${index}" style="display: ${isOpen ? 'block' : 'none'}; margin-top: 15px; border-top: 1px dashed rgba(0,0,0,0.1); padding-top: 15px;">
+                        <div class="adhkar-arabic" style="line-height: 1.8; font-size: 1.3rem;">${item.ar}</div>
+                        <div class="adhkar-bangla" style="font-weight: 500; font-size: 0.85rem; color: var(--text-main); margin-top: 12px; line-height: 1.5;">${item.bn}</div>
+                        ${meaningHtml}
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        window.toggleSurah = function(index) {
+            if ("vibrate" in navigator) navigator.vibrate(20); 
+            
+            const content = document.getElementById(`surahContent-${index}`);
+            const icon = document.getElementById(`surahIcon-${index}`);
+            
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                icon.style.transform = 'rotate(180deg)'; 
+                openSurahs.add(index); 
+            } else {
+                content.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)'; 
+                openSurahs.delete(index); 
+            }
+        };
+
+        document.getElementById('openSurahBtn').addEventListener('click', () => {
+            closeAllSheets();
+            document.getElementById('surahOverlay').classList.add('open');
+            renderSurahList();
+        });
+
+        document.getElementById('closeSurahBtn').addEventListener('click', () => {
+            document.getElementById('surahOverlay').classList.remove('open');
+            stopSurahAudioSafely(); 
+        });
+
+        const duaData = {
+    daily: [
+        {
+            title: "ঘুম থেকে ওঠার দোয়া",
+            ar: "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+            bn: "উচ্চারণ: আলহামদু লিল্লাহিল্লাযী আহ্ইয়ানা বা‘দা মা আমাতানা ওয়া ইলাইহিন নুশূর।",
+            mean: "অর্থ: যাবতীয় প্রশংসা আল্লাহ্‌র জন্য, যিনি আমাদেরকে মৃত্যু দেওয়ার পর পুনরায় জীবিত করেছেন। আর তাঁর দিকেই সকলের পুনরুত্থান।"
+        },
+        {
+            title: "ঘুমানোর দোয়া",
+            ar: "بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",
+            bn: "উচ্চারণ: বিসমিকা আল্লাহুম্মা আমূতু ওয়া আহ্য়া।",
+            mean: "অর্থ: হে আল্লাহ! আপনার নাম নিয়েই আমি মরছি (ঘুমাচ্ছি) এবং আপনার নাম নিয়েই জীবিত (জাগ্রত) হব।"
+        },
+        {
+            title: "টয়লেটে প্রবেশের দোয়া",
+            ar: "بِسْمِ اللَّهِ، اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ",
+            bn: "উচ্চারণ: বিসমিল্লাহি, আল্লাহুম্মা ইন্নী আঊযু বিকা মিনাল খুবুসি ওয়াল খাবাইস।",
+            mean: "অর্থ: আল্লাহর নামে শুরু করছি; হে আল্লাহ! আমি আপনার নিকট অপবিত্র নর ও নারী শয়তান থেকে আশ্রয় প্রার্থনা করছি।"
+        },
+        {
+            title: "টয়লেট থেকে বের হওয়ার দোয়া",
+            ar: "غُفْرَانَكَ",
+            bn: "উচ্চারণ: গুফরা-নাকা।",
+            mean: "অর্থ: (হে আল্লাহ!) আমি আপনার কাছে ক্ষমা প্রার্থনা করছি।"
+        },
+        {
+            title: "ওযুর শেষের দোয়া",
+            ar: "أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ",
+            bn: "উচ্চারণ: আশহাদু আল-লা ইলা-হা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু, ওয়া আশহাদু আন্না মুহাম্মাদান আবদুহু ওয়া রাসূলুহু।",
+            mean: "অর্থ: আমি সাক্ষ্য দিচ্ছি যে, আল্লাহ ছাড়া কোনো সত্য মাবূদ নেই, তিনি একক, তাঁর কোনো শরীক নেই। আমি আরও সাক্ষ্য দিচ্ছি যে, মুহাম্মাদ (সা.) তাঁর বান্দা ও রাসূল।"
+        },
+        {
+            title: "মসজিদে প্রবেশের দোয়া",
+            ar: "اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ",
+            bn: "উচ্চারণ: আল্লাহুম্মাফ তাহ্লী আবওয়াবা রাহমাতিক।",
+            mean: "অর্থ: হে আল্লাহ! আমার জন্য আপনার রহমতের দরজাগুলো খুলে দিন।"
+        },
+        {
+            title: "মসজিদ থেকে বের হওয়ার দোয়া",
+            ar: "اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ",
+            bn: "উচ্চারণ: আল্লাহুম্মা ইন্নী আসআলুক মিন ফাদলিক।",
+            mean: "অর্থ: হে আল্লাহ! আমি আপনার কাছে আপনার অনুগ্রহ চাই।"
+        },
+        {
+            title: "ঘর থেকে বের হওয়ার দোয়া",
+            ar: "بِسْمِ اللَّهِ، تَوَكَّلْتُ عَلَى اللَّهِ، وَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+            bn: "উচ্চারণ: বিসমিল্লাহি, তাওয়াক্কালতু আলাল্লাহি, ওয়ালা হাওলা ওয়ালা কুওয়াতা ইল্লা বিল্লাহ।",
+            mean: "অর্থ: আল্লাহর নামে, আমি আল্লাহর ওপর ভরসা করলাম। আর আল্লাহর সাহায্য ছাড়া (পাপ কাজ থেকে দূরে থাকার) কোনো উপায় এবং (সৎকাজ করার) কোনো শক্তি নেই।"
+        },
+        {
+            title: "ঘরে প্রবেশের দোয়া",
+            ar: "بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى رَبِّنَا تَوَكَّلْنَا",
+            bn: "উচ্চারণ: বিসমিল্লাহি ওয়ালাজনা, ওয়াবিসমিল্লাহি খারাজনা, ওয়াআলা রব্বিনা তাওয়াক্কালনা।",
+            mean: "অর্থ: আল্লাহর নামে আমরা প্রবেশ করলাম, আল্লাহর নামেই আমরা বের হয়েছিলাম এবং আমাদের রবের ওপরই আমরা ভরসা করলাম।"
+        },
+        {
+            title: "খাবার খাওয়ার আগের দোয়া",
+            ar: "بِسْمِ اللَّهِ",
+            bn: "উচ্চারণ: বিসমিল্লাহ। (যদি ভুলে যান তবে বলবেন: বিসমিল্লাহি ফি আউয়ালিহি ওয়া আখিরিহি)",
+            mean: "অর্থ: আল্লাহর নামে শুরু করছি।"
+        },
+        {
+            title: "খাবার শেষের দোয়া",
+            ar: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مِنَ الْمُسْلِمِينَ",
+            bn: "উচ্চারণ: আলহামদু লিল্লাহিল্লাযী আতআমানা ওয়া সাকানা ওয়া জাআলানা মিনাল মুসলিমীন।",
+            mean: "অর্থ: সব প্রশংসা আল্লাহর জন্য, যিনি আমাদেরকে খাইয়েছেন, পান করিয়েছেন এবং মুসলিম বানিয়েছেন।"
+        },
+        {
+            title: "নতুন কাপড় পরার দোয়া",
+            ar: "الْحَمْدُ لِلَّهِ الَّذِي كَسَانِي هَذَا (الثَّوْبَ) وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ",
+            bn: "উচ্চারণ: আলহামদুলিল্লাহিল্লাযী কাসানী হা-যা (আস-সাওবা) ওয়া রাযাকানীহি মিন গাইরি হাওলিম মিন্নী ওয়ালা কুওয়াহ।",
+            mean: "অর্থ: যাবতীয় প্রশংসা আল্লাহর জন্য, যিনি আমাকে এই কাপড়টি পরিয়েছেন এবং আমার কোনো শক্তি-সামর্থ্য ছাড়াই তিনি আমাকে এটি দান করেছেন।"
+        },
+        {
+            title: "আয়না দেখার দোয়া",
+            ar: "اللَّهُمَّ أَنْتَ حَسَّنْتَ خَلْقِي فَحَسِّنْ خُلُقِي",
+            bn: "উচ্চারণ: আল্লাহুম্মা আনতা হাসানতা খালকী, ফাহাসসিন খুলুকী।",
+            mean: "অর্থ: হে আল্লাহ! আপনি আমার শারীরিক গঠন সুন্দর করেছেন, সুতরাং আমার চরিত্রকেও সুন্দর করে দিন।"
+        },
+        {
+            title: "বাহনে ওঠার দোয়া",
+            ar: "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+            bn: "উচ্চারণ: সুবহানাল্লাযী সাখখারা লানা হাযা ওয়ামা কূন্না লাহু মুকরিনীন, ওয়া ইন্না ইলা রব্বিনা লামুনকালিবূন।",
+            mean: "অর্থ: পবিত্র তিনি, যিনি একে (বাহনকে) আমাদের বশীভূত করে দিয়েছেন, অথচ আমরা একে বশীভূত করতে সক্ষম ছিলাম না। আর আমরা তো আমাদের রবের কাছেই ফিরে যাব।"
+        },
+        {
+            title: "আযানের পর পড়ার দোয়া",
+            ar: "اللَّهُمَّ رَبَّ هَذِهِ الدَّعْوَةِ التَّامَّةِ وَالصَّلَاةِ الْقَائِمَةِ آتِ مُحَمَّدًا الْوَسِيلَةَ وَالْفَضِيلَةَ وَابْعَثْهُ مَقَامًا مَحْمُودًا الَّذِي وَعَدْتَهُ",
+            bn: "উচ্চারণ: আল্লাহুম্মা রব্বা হাযিহিদ দাওয়াতিত তাম্মাহ, ওয়াস সালাতিল কায়িমাহ, আ-তি মুহাম্মাদানিল ওয়াসীলাতা ওয়াল ফাদীলাহ, ওয়াবআসহু মাকামাম মাহমুদানিল্লাযী ওয়াআদতাহ।",
+            mean: "অর্থ: হে আল্লাহ! এই পরিপূর্ণ আহ্বান ও প্রতিষ্ঠিত নামাজের আপনি রব। মুহাম্মাদ (সা.)-কে অসিলা ও শ্রেষ্ঠত্ব দান করুন এবং তাঁকে সেই মাকামে মাহমুদ বা প্রশংসিত স্থানে পৌঁছান, যার প্রতিশ্রুতি আপনি তাঁকে দিয়েছেন।"
+        },
+        {
+            title: "বিপদ বা কষ্টের সময় পড়ার দোয়া",
+            ar: "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ، اللَّهُمَّ أْجُرْنِي فِي مُصِيبَتِي وَأَخْلِفْ لِي خَيْرًا مِنْهَا",
+            bn: "উচ্চারণ: ইন্না লিল্লাহি ওয়া ইন্না ইলাইহি রাজিঊন, আল্লাহুম্মাজুরনী ফী মুসীবাতী, ওয়া আখলিফ লী খাইরাম মিনহা।",
+            mean: "অর্থ: নিশ্চয়ই আমরা আল্লাহর জন্য এবং আমরা তাঁরই দিকে প্রত্যাবর্তনকারী। হে আল্লাহ! আমার বিপদে আমাকে সওয়াব দান করুন এবং আমাকে এর চেয়ে উত্তম কিছু বদলা হিসেবে দিন।"
+        },
+        {
+            title: "রাগ নিয়ন্ত্রণের দোয়া",
+            ar: "أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ",
+            bn: "উচ্চারণ: আঊযু বিল্লাহি মিনাশ শাইত্বানির রাজীম।",
+            mean: "অর্থ: আমি বিতাড়িত শয়তান থেকে আল্লাহর কাছে আশ্রয় চাই।"
+        },
+        {
+            title: "বৃষ্টি হতে দেখলে পড়ার দোয়া",
+            ar: "اللَّهُمَّ صَيِّبًا نَافِعًا",
+            bn: "উচ্চারণ: আল্লাহুম্মা সাইয়্যিবান নাফিআ।",
+            mean: "অর্থ: হে আল্লাহ! উপকারী মুষলধারায় বৃষ্টি দিন।"
+        },
+        {
+            title: "মেঘের গর্জন শুনলে পড়ার দোয়া",
+            ar: "سُبْحَانَ الَّذِي يُسَبِّحُ الرَّعْدُ بِحَمْدِهِ وَالْمَلَائِكَةُ مِنْ خِيفَتِهِ",
+            bn: "উচ্চারণ: সুবহানাল্লাযী ইউসাব্বিহুর রা'দু বিহামদিহী ওয়াল মালায়িকাতু মিন খীফাতিহী।",
+            mean: "অর্থ: পবিত্র সেই সত্তা, যাঁর প্রশংসার সাথে মেঘের গর্জন তাসবীহ পাঠ করে এবং ফেরেশতারা তাঁর ভয়ে তাসবীহ পাঠ করে।"
+        },
+        {
+            title: "ইফতারের দোয়া",
+            ar: "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الأَجْرُ إِنْ شَاءَ اللَّهُ",
+            bn: "উচ্চারণ: যাহাবায যামাউ ওয়াবতাল্লাতিল উরূকু ওয়া সাবাতাল আজরু ইনশাআল্লাহ।",
+            mean: "অর্থ: পিপাসা দূর হলো, শিরা-উপশিরা সিক্ত হলো এবং আল্লাহ চাইলে সওয়াব নির্ধারিত হলো।"
+        },
+        {
+            title: "রোগী দেখার দোয়া",
+            ar: "لَا بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ",
+            bn: "উচ্চারণ: লা বা'সা ত্বাহূরুন ইনশাআল্লাহ।",
+            mean: "অর্থ: কোনো ক্ষতি নেই, আল্লাহ চাইলে এটি গুনাহ থেকে পবিত্রকারী হবে।"
+        },
+        {
+            title: "শরীরের ব্যথার জায়গায় পড়ার দোয়া",
+            ar: "بِسْمِ اللَّهِ (ثَلَاثًا)، أَعُوذُ بِاللَّهِ وَقُدْرَتِهِ مِنْ شَرِّ مَا أَجِدُ وَأُحَاذِرُ (سَبْعًا)",
+            bn: "উচ্চারণ: ব্যথার স্থানে হাত রেখে 'বিসমিল্লাহ' ৩ বার এবং 'আঊযু বিল্লাহি ওয়া কুদরতিহি মিন শাররি মা আজিদু ওয়া উহাযিরু' ৭ বার পড়বেন।",
+            mean: "অর্থ: আল্লাহর নামে। আমি যা অনুভব করছি এবং যার আশঙ্কা করছি, তার অনিষ্ট থেকে আল্লাহর এবং তাঁর কুদরতের আশ্রয় নিচ্ছি।"
+        },
+        {
+            title: "নতুন চাঁদ দেখার দোয়া",
+            ar: "اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ، وَالسَّلَامَةِ وَالْإِسْلَامِ، رَبِّي وَرَبُّكَ اللَّهُ",
+            bn: "উচ্চারণ: আল্লাহুম্মা আহিল্লাহু আলাইনা বিল-ইউমনি ওয়াল-ঈমান, ওয়াস-সালা-মাতি ওয়াল-ইসলাম, রব্বী ওয়া রব্বুকাল্লাহ।",
+            mean: "অর্থ: হে আল্লাহ! আপনি এই চাঁদকে আমাদের ওপর বরকত ও ঈমান, শান্তি ও ইসলামের সাথে উদিত করুন। (হে চাঁদ!) আমার ও তোমার রব হচ্ছেন আল্লাহ।"
+        },
+        {
+            title: "বাজারে প্রবেশের দোয়া",
+            ar: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، يُحْيِي وَيُمِيتُ وَهُوَ حَيٌّ لَا يَمُوتُ، بِيَدِهِ الْخَيْرُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+            bn: "উচ্চারণ: লা ইলা-হা ইল্লাল্লাহু ওয়াহদাহু লা শারীকা লাহু... বিইয়াদিহিল খাইরু ওয়াহুওয়া আলা কুল্লি শাইয়িন কাদীর।",
+            mean: "অর্থ: আল্লাহ ছাড়া কোনো সত্য মাবুদ নেই... তাঁর হাতেই সকল কল্যাণ এবং তিনি সবকিছুর ওপর ক্ষমতাবান। (বাজারে প্রবেশ করে এটি পড়লে দশ লক্ষ নেকি লেখা হয়)।"
+        },
+        {
+            title: "হাঁচি দেওয়ার পর",
+            ar: "الْحَمْدُ لِلَّهِ (يَرْحَمُكَ اللَّهُ - يَهْدِيكُمُ اللَّهُ وَيُصْلِحُ بَالَكُمْ)",
+            bn: "উচ্চারণ: হাঁচি দাতা বলবে: 'আলহামদুলিল্লাহ', শ্রোতা বলবে: 'ইয়ারহামুকাল্লাহ', তখন হাঁচি দাতা আবার বলবে: 'ইয়াহদীকুমুল্লাহু ওয়া ইউসলিহু বালাকুম'。",
+            mean: "অর্থ: সমস্ত প্রশংসা আল্লাহর জন্য। শ্রোতার অর্থ: আল্লাহ আপনার ওপর রহম করুন। প্রতিউত্তরের অর্থ: আল্লাহ আপনাদের হেদায়াত দিন এবং আপনাদের অবস্থা সংশোধন করে দিন।"
+        }
+    ],
+    rabbana: [
+        {
+            title: "দুনিয়া ও আখিরাতের কল্যাণের দোয়া",
+            ar: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+            bn: "উচ্চারণ: রাব্বানা আতিনা ফিদ দুনয়া হাসানাতাও ওয়া ফিল আখিরাতি হাসানাতাও ওয়াক্বিনা আযাবান নার।",
+            mean: "অর্থ: হে আমাদের রব! আমাদেরকে দুনিয়াতে কল্যাণ দিন এবং আখিরাতেও কল্যাণ দিন এবং আমাদেরকে আগুনের শাস্তি থেকে রক্ষা করুন। (সূরা আল-বাকারাহ: ২০১)"
+        },
+        {
+            title: "ভুল-ত্রুটি থেকে ক্ষমার দোয়া",
+            ar: "رَبَّنَا لَا تُؤَاخِذْنَا إِنْ نَسِينَا أَوْ أَخْطَأْنَا",
+            bn: "উচ্চারণ: রাব্বানা লা তুআখিজনা ইন্নাসিনা আও আখতানা।",
+            mean: "অর্থ: হে আমাদের রব! যদি আমরা ভুলে যাই অথবা ভুল করি, তবে আপনি আমাদের পাকড়াও করবেন না। (সূরা আল-বাকারাহ: ২৮৬)"
+        },
+        {
+            title: "কঠিন বোঝা থেকে মুক্তির দোয়া",
+            ar: "رَبَّنَا وَلَا تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِنْ قَبْلِنَا",
+            bn: "উচ্চারণ: রাব্বানা ওয়ালা তাহমিল আলাইনা ইসরান কামা হামালতাহু আলাল্লাজিনা মিন কাবলিনা।",
+            mean: "অর্থ: হে আমাদের রব! আমাদের ওপর এমন কঠিন বোঝা চাপিয়ে দেবেন না, যেমনটা আমাদের পূর্ববর্তীদের ওপর চাপিয়েছিলেন। (সূরা আল-বাকারাহ: ২৮৬)"
+        },
+        {
+            title: "সাধ্যের অতীত বিপদ থেকে মুক্তির দোয়া",
+            ar: "رَبَّنَا وَلَا تُحَمِّلْنَا مَا لَا طَاقَةَ لَنَا بِهِ ۖ وَاعْفُ عَنَّا وَاغْفِرْ لَنَا وَارْحَمْنَا ۚ أَنْتَ مَوْلَانَا فَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
+            bn: "উচ্চারণ: রাব্বানা ওয়ালা তুহামমিলনা মা লা-তাকাতা লানা বিহ। ওয়াফু আন্না, ওয়াগফির লানা, ওয়ারহামনা, আনতা মাওলানা ফানসুরনা আলাল ক্বাওমিল কাফিরিন।",
+            mean: "অর্থ: হে আমাদের রব! আপনি আমাদের ওপর এমন বোঝা চাপাবেন না, যা বহন করার সামর্থ্য আমাদের নেই। আপনি আমাদের ক্ষমা করুন... এবং কাফির সম্প্রদায়ের বিরুদ্ধে আমাদের সাহায্য করুন। (সূরা আল-বাকারাহ: ২৮৬)"
+        },
+        {
+            title: "ঈমান অটুট রাখার দোয়া",
+            ar: "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِنْ لَدُنْكَ رَحْمَةً ۚ إِنَّكَ أَنْتَ الْوَهَّابُ",
+            bn: "উচ্চারণ: রাব্বানা লা-তুযিগ কুলুবানা বা'দা ইয হাদাইতানা ওয়াহাব লানা মিল্লাদুনকা রাহমাহ, ইন্নাকা আনতাল ওয়াহহাব।",
+            mean: "অর্থ: হে আমাদের রব! সরল পথ প্রদর্শনের পর আপনি আমাদের অন্তরকে সত্যলঙ্ঘনপ্রবণ করবেন না। আপনার কাছ থেকে আমাদেরকে অনুগ্রহ দান করুন। (সূরা আল ইমরান: ৮)"
+        },
+        {
+            title: "জাহান্নাম থেকে মুক্তির দোয়া",
+            ar: "رَبَّنَا إِنَّنَا آمَنَّا فَاغْفِرْ لَنَا ذُنُوبَنَا وَقِنَا عَذَابَ النَّارِ",
+            bn: "উচ্চারণ: রাব্বানা ইন্নানা আমান্না ফাগফিরলানা যুনুবানা ওয়াকিনা আযাবান নার।",
+            mean: "অর্থ: হে আমাদের রব! নিশ্চয়ই আমরা ঈমান এনেছি, সুতরাং আমাদের গুনাহগুলো ক্ষমা করুন এবং আমাদেরকে জাহান্নামের আজাব থেকে রক্ষা করুন। (সূরা আল ইমরান: ১৬)"
+        },
+        {
+            title: "ঈমানদারদের দলভুক্ত হওয়ার দোয়া",
+            ar: "رَبَّنَا آمَنَّا بِمَا أَنْزَلْتَ وَاتَّبَعْنَا الرَّسُولَ فَاكْتُبْنَا مَعَ الشَّاهِدِينَ",
+            bn: "উচ্চারণ: রাব্বানা আমান্না বিমা আনযালতা ওয়াত্তাবানার রাসূলা ফাকতুবনা মাআশ শাহিদিন।",
+            mean: "অর্থ: হে আমাদের রব! আপনি যা নাজিল করেছেন আমরা তার প্রতি ঈমান এনেছি এবং রাসূলের অনুসরণ করেছি, অতএব আপনি আমাদেরকে সাক্ষ্যদাতাদের তালিকাভুক্ত করুন। (সূরা আল ইমরান: ৫৩)"
+        },
+        {
+            title: "গুনাহ মাফ ও স্থিরতার দোয়া",
+            ar: "رَبَّنَا اغْفِرْ لَنَا ذُنُوبَنَا وَإِسْرَافَنَا فِي أَمْرِنَا وَثَبِّتْ أَقْدَامَنَا وَانْصُرْنَا عَلَى الْقَوْمِ الْكَافِرِينَ",
+            bn: "উচ্চারণ: রাব্বানাগফির লানা যুনুবানা ওয়া ইসরাফানা ফি আমরিনা ওয়া সাব্বিত আকদামানা ওয়ানসুরনা আলাল কাওমিল কাফিরিন।",
+            mean: "অর্থ: হে আমাদের রব! আমাদের গুনাহ এবং আমাদের কাজের সীমালঙ্ঘন ক্ষমা করুন। আমাদের পা স্থির রাখুন এবং কাফিরদের বিরুদ্ধে আমাদের সাহায্য করুন। (সূরা আল ইমরান: ১৪৭)"
+        },
+        {
+            title: "জাহান্নামের আগুন থেকে বাঁচার দোয়া",
+            ar: "رَبَّنَا مَا خَلَقْتَ هَذَا بَاطِلًا سُبْحَانَكَ فَقِنَا عَذَابَ النَّارِ",
+            bn: "উচ্চারণ: রাব্বানা মা খালাকতা হাযা বাতিলান সুবহানাকা ফাকিনা আযাবান নার।",
+            mean: "অর্থ: হে আমাদের রব! আপনি এসব অনর্থক সৃষ্টি করেননি। আপনি পবিত্র। সুতরাং আপনি আমাদেরকে জাহান্নামের আজাব থেকে রক্ষা করুন। (সূরা আল ইমরান: ১৯১)"
+        },
+        {
+            title: "অপমান থেকে রক্ষার দোয়া",
+            ar: "رَبَّنَا إِنَّكَ مَنْ تُدْخِلِ النَّارَ فَقَدْ أَخْزَيْتَهُ ۖ وَمَا لِلظَّالِمِينَ مِنْ أَنْصَارٍ",
+            bn: "উচ্চারণ: রাব্বানা ইন্নাকা মান তুদখিলিন নারা ফাকাদ আখঝাইতাহ, ওয়ামা লিজজ্বালিমিনা মিন আনসার।",
+            mean: "অর্থ: হে আমাদের রব! আপনি যাকে জাহান্নামে প্রবেশ করাবেন, তাকে তো আপনি অপমানিত করলেন! আর জালিমদের কোনো সাহায্যকারী নেই। (সূরা আল ইমরান: ১৯২)"
+        },
+        {
+            title: "ঈমান ও ক্ষমার দোয়া",
+            ar: "رَبَّنَا إِنَّنَا سَمِعْنَا مُنَادِيًا يُنَادِي لِلْإِيمَانِ أَنْ آمِنُوا بِرَبِّكُمْ فَآمَنَّا ۚ رَبَّنَا فَاغْفِرْ لَنَا ذُنُوبَنَا وَكَفِّرْ عَنَّا سَيِّئَاتِنَا وَتَوَفَّنَا مَعَ الْأَبْرَارِ",
+            bn: "উচ্চারণ: রাব্বানা ইন্নানা সামি'না মুনাদিয়াই ইউনাদি লিল-ঈমানি আন আমিনু বিরাব্বিকুম ফা'আমান্না। রাব্বানা ফাগফির লানা যুনুবানা ওয়া কাফফির আন্না সায়্যিআতিনা ওয়া তাওয়াফফানা মাআল আবরার।",
+            mean: "অর্থ: হে আমাদের রব! আমরা এক আহ্বানকারীকে ঈমানের দিকে ডাকতে শুনেছি... সুতরাং আমরা ঈমান এনেছি। হে রব! আমাদের গুনাহ মাফ করুন এবং নেককারদের সাথে আমাদের মৃত্যু দিন। (সূরা আল ইমরান: ১৯৩)"
+        },
+        {
+            title: "কিয়ামতের লাঞ্ছনা থেকে মুক্তির দোয়া",
+            ar: "رَبَّنَا وَآتِنَا مَا وَعَدْتَنَا عَلَى رُسُلِكَ وَلَا تُخْزِنَا يَوْمَ الْقِيَامَةِ ۗ إِنَّكَ لَا تُخْلِفُ الْمِيعَادَ",
+            bn: "উচ্চারণ: রাব্বানা ওয়া আতিনা মা ওয়াআত্তানা আলা রুসুলিকা ওয়ালা তুখযিনা ইয়াওমাল কিয়ামাহ। ইন্নাকা লা তুখলিফুল মিআদ।",
+            mean: "অর্থ: হে আমাদের রব! আপনার রাসূলগণের মাধ্যমে যা প্রতিশ্রুতি দিয়েছেন, তা আমাদের দান করুন এবং কিয়ামতের দিন আমাদের লাঞ্ছিত করবেন না। নিশ্চয় আপনি প্রতিশ্রুতি ভঙ্গ করেন না। (সূরা আল ইমরান: ১৯৪)"
+        },
+        {
+            title: "ক্ষমা ও রহমতের দোয়া (আদম আ.-এর দোয়া)",
+            ar: "رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ",
+            bn: "উচ্চারণ: রাব্বানা যালামনা আনফুসানা ওয়া ইল্লাম তাগফির লানা ওয়া তারহামনা লানাকূনান্না মিনাল খাসিরীন।",
+            mean: "অর্থ: হে আমাদের রব! আমরা নিজেদের প্রতি জুলুম করেছি। আপনি যদি আমাদের ক্ষমা না করেন এবং আমাদের প্রতি দয়া না করেন, তবে অবশ্যই আমরা ক্ষতিগ্রস্তদের অন্তর্ভুক্ত হব। (সূরা আল আরাফ: ২৩)"
+        },
+        {
+            title: "জালিমদের সঙ্গী না হওয়ার দোয়া",
+            ar: "رَبَّنَا لَا تَجْعَلْنَا مَعَ الْقَوْمِ الظَّالِمِينَ",
+            bn: "উচ্চারণ: রাব্বানা লা তাজআলনা মাআল কাওমিজ জ্বালিমিন।",
+            mean: "অর্থ: হে আমাদের রব! আমাদেরকে জালিম সম্প্রদায়ের সঙ্গী করবেন না। (সূরা আল আরাফ: ৪৭)"
+        },
+        {
+            title: "ধৈর্য ও মুসলিম হিসেবে মৃত্যুর দোয়া",
+            ar: "رَبَّنَا أَفْرِغْ عَلَيْنَا صَبْرًا وَتَوَفَّنَا مُسْلِمِينَ",
+            bn: "উচ্চারণ: রাব্বানা আফরিগ আলাইনা সাবরাও ওয়া তাওয়াফফানা মুসলিমিন।",
+            mean: "অর্থ: হে আমাদের রব! আমাদের ধৈর্য দান করুন এবং মুসলিম হিসেবে আমাদের মৃত্যু দিন। (সূরা আল আরাফ: ১২৬)"
+        },
+        {
+            title: "জালিমদের ফিতনা থেকে বাঁচার দোয়া",
+            ar: "رَبَّنَا لَا تَجْعَلْنَا فِتْنَةً لِلْقَوْمِ الظَّالِمِينَ وَنَجِّنَا بِرَحْمَتِكَ مِنَ الْقَوْمِ الْكَافِرِينَ",
+            bn: "উচ্চারণ: রাব্বানা লা তাজআলনা ফিতনাতাল লিলকাওমিজ জ্বালিমিন। ওয়া নাজ্জিনা বিরাহমাতিকা মিনাল কাওমিল কাফিরিন।",
+            mean: "অর্থ: হে আমাদের রব! আমাদেরকে জালিম সম্প্রদায়ের ফিতনার পাত্র বানাবেন না। এবং আপনার রহমতে আমাদেরকে কাফিরদের হাত থেকে রক্ষা করুন। (সূরা ইউনুস: ৮৫-৮৬)"
+        },
+        {
+            title: "নিজ ও মাতা-পিতার ক্ষমার দোয়া",
+            ar: "رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ",
+            bn: "উচ্চারণ: রাব্বানাগফির লি ওয়ালিওয়ালিদাইয়্যা ওয়া লিলমুমিনিনা ইয়াওমা ইয়াকুমুল হিসাব।",
+            mean: "অর্থ: হে আমাদের রব! যেদিন হিসাব কায়েম হবে, সেদিন আমাকে, আমার পিতা-মাতাকে এবং মুমিনদেরকে ক্ষমা করে দিন। (সূরা ইবরাহীম: ৪১)"
+        },
+        {
+            title: "সঠিক পথ ও রহমতের দোয়া (আসহাবে কাহাফ)",
+            ar: "رَبَّنَا آتِنَا مِنْ لَدُنْكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
+            bn: "উচ্চারণ: রাব্বানা আতিনা মিল্লাদুনকা রাহমাতাও ওয়া হাইয়্যি লানা মিন আমরিনা রাশাদা।",
+            mean: "অর্থ: হে আমাদের রব! আমাদেরকে আপনার পক্ষ থেকে রহমত দান করুন এবং আমাদের কাজ সঠিকভাবে সম্পন্ন করার ব্যবস্থা করে দিন। (সূরা আল কাহফ: ১০)"
+        },
+        {
+            title: "নেককার স্ত্রী ও সন্তানের দোয়া",
+            ar: "رَبَّنَا هَبْ لَنَا مِنْ أَزْوَاجِنَا وَذُرِّيَّاتِنَا قُرَّةَ أَعْيُنٍ وَاجْعَلْنَا لِلْمُتَّقِينَ إِمَامًا",
+            bn: "উচ্চারণ: রাব্বানা হাবলানা মিন আজওয়াজিনা ওয়া জুররিয়্যাতিনা কুররাতা আ'ইউনিউ ওয়াজআলনা লিলমুত্তাকিনা ইমামা।",
+            mean: "অর্থ: হে আমাদের রব! আমাদের স্ত্রী ও সন্তানদের পক্ষ থেকে আমাদের জন্য চোখের শীতলতা দান করুন এবং আমাদেরকে মুত্তাকিদের ইমাম (নেতা) বানিয়ে দিন। (সূরা আল ফুরকান: ৭৪)"
+        },
+        {
+            title: "ক্ষমা ও পূর্বসূরীদের প্রতি ভালোবাসার দোয়া",
+            ar: "رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ وَلَا تَجْعَلْ فِي قُلُوبِنَا غِلًّا لِلَّذِينَ آمَنُوا رَبَّنَا إِنَّكَ رَءُوفٌ رَحِيمٌ",
+            bn: "উচ্চারণ: রাব্বানাগফির লানা ওয়ালি ইখওয়ানিনাল্লাজিনা সাবাকুনা বিল ঈমান, ওয়ালা তাজআল ফি কুলুবিনা গিল্লাল লিল্লাজিনা আমানু, রাব্বানা ইন্নাকা রাউফুর রাহিম।",
+            mean: "অর্থ: হে আমাদের রব! আমাদেরকে এবং আমাদের আগে যারা ঈমান এনেছে তাদের ক্ষমা করুন। আর মুমিনদের প্রতি আমাদের অন্তরে কোনো বিদ্বেষ রাখবেন না। হে আমাদের রব! নিশ্চয় আপনি পরম দয়ালু। (সূরা আল হাশর: ১০)"
+        },
+        {
+            title: "পূর্ণাঙ্গ নূর ও ক্ষমার দোয়া",
+            ar: "رَبَّنَا أَتْمِمْ لَنَا نُورَنَا وَاغْفِرْ لَنَا ۖ إِنَّكَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+            bn: "উচ্চারণ: রাব্বানা আতমিম লানা নূরানা ওয়াগফির লানা, ইন্নাকা আলা কুল্লি শাইয়িন ক্বাদির।",
+            mean: "অর্থ: হে আমাদের রব! আমাদের জন্য আমাদের নূরকে পূর্ণাঙ্গ করে দিন এবং আমাদের ক্ষমা করুন। নিশ্চয় আপনি সবকিছুর ওপর ক্ষমতাবান। (সূরা আত-তাহরীম: ৮)"
+        },
+        {
+            title: "কবুল হওয়ার দোয়া",
+            ar: "رَبَّنَا تَقَبَّلْ مِنَّا ۖ إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ",
+            bn: "উচ্চারণ: রাব্বানা তাকাব্বাল মিন্না, ইন্নাকা আনতাস সামি'উল আলিম।",
+            mean: "অর্থ: হে আমাদের রব! আমাদের পক্ষ থেকে (এই নেক আমল) কবুল করুন। নিশ্চয় আপনি সর্বশ্রোতা, সর্বজ্ঞানী। (সূরা আল বাকারাহ: ১২৭)"
+        },
+        {
+            title: "মাতা-পিতার জন্য দোয়া",
+            ar: "رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+            bn: "উচ্চারণ: রাব্বির হামহুমা কামা রাব্বাইয়ানি সাগিরা।",
+            mean: "অর্থ: হে আমার রব! তাদের উভয়ের প্রতি রহম করুন, যেমন শৈশবে তারা আমাকে লালন-পালন করেছেন। (সূরা বনী ইসরাইল: ২৪)"
+        },
+        {
+            title: "জ্ঞান বৃদ্ধির দোয়া",
+            ar: "رَبِّ زِدْنِي عِلْمًا",
+            bn: "উচ্চারণ: রাব্বি জিদনি ইলমা।",
+            mean: "অর্থ: হে আমার রব! আমার জ্ঞান বৃদ্ধি করে দিন। (সূরা ত্বোয়াহা: ১১৪)"
+        },
+        {
+            title: "অসুস্থতা ও বিপদের দোয়া (আইয়ুব আ.-এর দোয়া)",
+            ar: "أَنِّي مَسَّنِيَ الضُّرُّ وَأَنْتَ أَرْحَمُ الرَّاحِمِينَ",
+            bn: "উচ্চারণ: আন্নি মাসসানিয়াদ দুররু ওয়া আনতা আরহামুর রাহিমিন।",
+            mean: "অর্থ: আমাকে দুঃখ-কষ্ট স্পর্শ করেছে, আর আপনি তো সর্বশ্রেষ্ঠ দয়ালু। (সূরা আম্বিয়া: ৮৩)"
+        },
+        {
+            title: "সন্তান লাভের দোয়া (জাকারিয়া আ.-এর দোয়া)",
+            ar: "رَبِّ هَبْ لِي مِنْ لَدُنْكَ ذُرِّيَّةً طَيِّبَةً ۖ إِنَّكَ سَمِيعُ الدُّعَاءِ",
+            bn: "উচ্চারণ: রাব্বি হাবলি মিল্লাদুনকা জুররিয়্যাতান ত্বাইয়্যিবাহ, ইন্নাকা সামিউদ দুআ।",
+            mean: "অর্থ: হে আমার রব! আমাকে আপনার পক্ষ থেকে পবিত্র সন্তান দান করুন। নিশ্চয়ই আপনি দোয়া শ্রবণকারী। (সূরা আল ইমরান: ৩৮)"
+        },
+        {
+            title: "নামাজ কায়েমের তৌফিক চাওয়ার দোয়া",
+            ar: "رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ",
+            bn: "উচ্চারণ: রাব্বিজ আলনি মুকিমাস সালাতি ওয়া মিন জুররিয়্যাতি, রাব্বানা ওয়া তাকাব্বাল দুআ।",
+            mean: "অর্থ: হে আমার রব! আমাকে এবং আমার বংশধরদের নামাজ প্রতিষ্ঠাকারী বানান। হে আমাদের রব! আমার দোয়া কবুল করুন। (সূরা ইবরাহীম: ৪০)"
+        }
+    ]
+};
+
+        let currentDuaTab = 'daily';
+
+        function renderDuaList() {
+            const container = document.getElementById('duaListContainer');
+            container.innerHTML = '';
+            
+            const list = duaData[currentDuaTab];
+            list.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'adhkar-card'; 
+                card.innerHTML = `
+                    <h4 style="color: var(--text-title); margin-bottom: 12px; font-size: 0.95rem; border-bottom: 1px dashed rgba(0,0,0,0.1); padding-bottom: 8px;">${item.title}</h4>
+                    <div class="adhkar-arabic">${item.ar}</div>
+                    <div class="adhkar-bangla" style="font-weight: 500; font-size: 0.85rem; color: var(--text-main); margin-top: 10px;">${item.bn}</div>
+                    <div class="adhkar-meaning" style="margin-bottom: 0; margin-top: 5px;">${item.mean}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        document.getElementById('openDuaBtn').addEventListener('click', () => {
+            closeAllSheets();
+            document.getElementById('duaOverlay').classList.add('open');
+            renderDuaList();
+        });
+
+        document.getElementById('closeDuaBtn').addEventListener('click', () => {
+            document.getElementById('duaOverlay').classList.remove('open');
+        });
+
+        document.getElementById('tabDailyDua').addEventListener('click', () => {
+            currentDuaTab = 'daily';
+            document.getElementById('tabDailyDua').style.background = '#0ea5e9';
+            document.getElementById('tabDailyDua').style.color = 'white';
+            document.getElementById('tabDailyDua').style.border = 'none';
+            
+            document.getElementById('tabRabbanaDua').style.background = 'var(--btn-bg)';
+            document.getElementById('tabRabbanaDua').style.color = 'var(--text-main)';
+            document.getElementById('tabRabbanaDua').style.border = '1px solid rgba(14, 165, 233, 0.2)';
+            
+            renderDuaList();
+        });
+
+        document.getElementById('tabRabbanaDua').addEventListener('click', () => {
+            currentDuaTab = 'rabbana';
+            document.getElementById('tabRabbanaDua').style.background = '#0ea5e9';
+            document.getElementById('tabRabbanaDua').style.color = 'white';
+            document.getElementById('tabRabbanaDua').style.border = 'none';
+            
+            document.getElementById('tabDailyDua').style.background = 'var(--btn-bg)';
+            document.getElementById('tabDailyDua').style.color = 'var(--text-main)';
+            document.getElementById('tabDailyDua').style.border = '1px solid rgba(14, 165, 233, 0.2)';
+            
+            renderDuaList();
+        });
+
+        const adhkarData = {
             morning: [
                 { 
                     id: "m1", 
@@ -1754,19 +2460,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     audio: "https://www.hisnmuslim.com/audio/ar/ar_099.mp3" 
                 },
                 { 
-                    id: "e10", 
-                    ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", 
-                    bn: "<strong>সুবহানাল্লাহি ওয়া বিহামদিহি</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: সুবহানাল্লাহি ওয়া বিহামদিহি।</span>", 
-                    mean: "<strong>অর্থ:</strong> আল্লাহ পবিত্র এবং সমস্ত প্রশংসা তাঁরই।<br><br><strong>ফজিলত:</strong> ১০০ বার পড়লে সমুদ্রের ফেনার সমপরিমাণ গুনাহ মাফ হয়ে যায়।", 
-                    target: 100,
-                    audio: "https://audiomack.com//zikr-e-elahi/song/subhanallahi-wabihamdihi-subhanallahil-azeem" 
-                }
+    id: "e10", 
+    ar: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ", 
+    bn: "<strong>সুবহানাল্লাহি ওয়া বিহামদিহি</strong><br><span style='font-size: 0.8rem; font-weight: 400;'>উচ্চারণ: সুবহানাল্লাহি ওয়া বিহামদিহি।</span>", 
+    mean: "<strong>অর্থ:</strong> আল্লাহ পবিত্র এবং সমস্ত প্রশংসা তাঁরই।<br><br><strong>ফজিলত:</strong> ১০০ বার পড়লে সমুদ্রের ফেনার সমপরিমাণ গুনাহ মাফ হয়ে যায়।", 
+    target: 100,
+    audio: "https://www.hisnmuslim.com/audio/ar/ar_090.mp3"
+}
             ]
         };        
 
-        
         let adhkarProgress = JSON.parse(localStorage.getItem('tb_adhkar_prog')) || {};
-        
         let currentAdhkarTab = 'morning';
 
         function initAdhkar() {
@@ -1775,7 +2479,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAdhkarList();
         }
 
-                        function renderAdhkarList() {
+        function renderAdhkarList() {
             const todayStr = getTodayDateString();
             const container = document.getElementById('adhkarListContainer');
             container.innerHTML = '';
@@ -1786,7 +2490,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const isCompleted = currentCount >= item.target;
                 const isPlaying = playingAdhkarId === item.id;
                 
-                // অডিও বাটন HTML
                 const audioBtn = item.audio ? 
                     `<button class="icon-btn" onclick="toggleAdhkarAudio('${item.id}', '${item.audio}')" style="width: 32px; height: 32px; border: none; background: ${isPlaying ? '#ef4444' : 'rgba(14, 165, 233, 0.15)'}; color: ${isPlaying ? 'white' : '#0ea5e9'}; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                         <i class="fa-solid ${isPlaying ? 'fa-stop' : 'fa-play'}"></i>
@@ -1832,30 +2535,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
         
-                // আমল মেনু ওপেন করা
         document.getElementById('navAdhkar').addEventListener('click', () => { 
             closeAllSheets(); 
             document.getElementById('navAdhkar').classList.add('active'); 
             adhkarOverlay.classList.add('open'); 
         });
 
-        // আমল মেনু ক্লোজ করা
         document.getElementById('closeAdhkarBtn').addEventListener('click', () => { 
             closeAllSheets(); 
             document.getElementById('navHome').classList.add('active'); 
         });
 
-        // সকালের আমল ট্যাব ক্লিক ইভেন্ট
         document.getElementById('tabMorning').addEventListener('click', () => { 
-            stopAdhkarAudioSafely(); // অডিও চললে তা বন্ধ করবে
+            stopAdhkarAudioSafely(); 
             currentAdhkarTab = 'morning'; 
             
-            // সকালের ট্যাব অ্যাক্টিভ স্টাইল
             document.getElementById('tabMorning').style.background = '#0ea5e9';
             document.getElementById('tabMorning').style.color = 'white';
             document.getElementById('tabMorning').style.border = 'none';
             
-            // সন্ধ্যার ট্যাব ইনঅ্যাক্টিভ স্টাইল
             document.getElementById('tabEvening').style.background = 'var(--btn-bg)';
             document.getElementById('tabEvening').style.color = 'var(--text-main)';
             document.getElementById('tabEvening').style.border = '1px solid rgba(14, 165, 233, 0.2)';
@@ -1863,17 +2561,14 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAdhkarList(); 
         });
 
-        // সন্ধ্যার আমল ট্যাব ক্লিক ইভেন্ট
         document.getElementById('tabEvening').addEventListener('click', () => { 
-            stopAdhkarAudioSafely(); // অডিও চললে তা বন্ধ করবে
+            stopAdhkarAudioSafely(); 
             currentAdhkarTab = 'evening'; 
             
-            // সন্ধ্যার ট্যাব অ্যাক্টিভ স্টাইল
             document.getElementById('tabEvening').style.background = '#0ea5e9';
             document.getElementById('tabEvening').style.color = 'white';
             document.getElementById('tabEvening').style.border = 'none';
             
-            // সকালের ট্যাব ইনঅ্যাক্টিভ স্টাইল
             document.getElementById('tabMorning').style.background = 'var(--btn-bg)';
             document.getElementById('tabMorning').style.color = 'var(--text-main)';
             document.getElementById('tabMorning').style.border = '1px solid rgba(14, 165, 233, 0.2)';
@@ -1881,32 +2576,27 @@ document.addEventListener('DOMContentLoaded', () => {
             renderAdhkarList(); 
         });
 
-        // অডিও কন্ট্রোলের জন্য ভেরিয়েবল
         let currentAdhkarAudio = null;
         let playingAdhkarId = null;
 
-        // অডিও প্লে/পজ করার ফাংশন
         window.toggleAdhkarAudio = function(id, audioUrl) {
             if (!audioUrl || audioUrl === 'undefined') {
                 alert("এই আমলটির অডিও এখনো যুক্ত করা হয়নি।");
                 return;
             }
 
-            // যদি একই অডিও চলতে থাকে, তবে পজ করে দিন
             if (currentAdhkarAudio && playingAdhkarId === id) {
                 currentAdhkarAudio.pause();
                 currentAdhkarAudio = null;
                 playingAdhkarId = null;
-                renderAdhkarList(); // UI আপডেট করার জন্য
+                renderAdhkarList(); 
                 return;
             }
 
-            // অন্য কোনো অডিও চলতে থাকলে তা বন্ধ করুন
             if (currentAdhkarAudio) {
                 currentAdhkarAudio.pause();
             }
 
-            // নতুন অডিও চালু করুন
             currentAdhkarAudio = new Audio(audioUrl);
             playingAdhkarId = id;
             
@@ -1917,39 +2607,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 renderAdhkarList();
             });
             
-            // অডিও শেষ হলে স্টেট রিসেট করুন
             currentAdhkarAudio.onended = () => {
                 currentAdhkarAudio = null;
                 playingAdhkarId = null;
                 renderAdhkarList();
             };
 
-            renderAdhkarList(); // UI আপডেট করে পজ বাটন দেখানোর জন্য
+            renderAdhkarList(); 
         };
-
-// ==========================================
-// Page Reverse Logic & Exit Confirmation
-// ==========================================
 
 let allowAppExit = false;
 
-// অ্যাপ লোড হওয়ার সময় একটি ডিফল্ট হিস্ট্রি স্টেট পুশ করা হলো
 window.history.pushState({ page: 'home' }, "", "");
 
 window.addEventListener('popstate', function(event) {
-    if (allowAppExit) return; // যদি ইউজার 'হ্যাঁ' সিলেক্ট করে থাকে, তবে নরমালি ব্যাক হবে
+    if (allowAppExit) return; 
 
-    // বর্তমানে কোন কোন ওভারলে/মডাল ওপেন আছে তা চেক করা
     const openSlideOverlays = document.querySelectorAll('.slide-overlay.open');
     const openFsOverlays = document.querySelectorAll('.fullscreen-overlay[style*="display: flex"]');
     const openModals = document.querySelectorAll('.modal-overlay.show:not(#exitModal)');
     const exitModal = document.getElementById('exitModal');
 
     if (openSlideOverlays.length > 0 || openFsOverlays.length > 0 || openModals.length > 0) {
-        // যদি কোনো মেনু/ওভারলে ওপেন থাকে, তবে সেগুলো ক্লোজ করবে (অ্যাপ থেকে বের হবে না)
         closeAllSheets(); 
         
-        // ফুলস্ক্রিন ওভারলে ম্যানুয়ালি ক্লোজ করা
         const fsOverlay = document.getElementById('fsOverlay');
         const breatheOverlay = document.getElementById('breatheOverlay');
         const webModal = document.getElementById('webModal');
@@ -1957,42 +2638,136 @@ window.addEventListener('popstate', function(event) {
         if(breatheOverlay) breatheOverlay.style.display = 'none';
         if(webModal) webModal.style.display = 'none';
         
-        // অন্যান্য কাস্টম মডাল ক্লোজ করা
         openModals.forEach(m => m.classList.remove('show'));
-
-        // হোম স্টেট আবার পুশ করা, যাতে পরের বার ব্যাক চাপলে ইক্সিট মডাল আসে
         window.history.pushState({ page: 'home' }, "", "");
         
     } else if (exitModal.classList.contains('show')) {
-        // ইক্সিট মডাল ওপেন থাকা অবস্থায় ব্যাক চাপলে মডালটি সরে যাবে
         exitModal.classList.remove('show');
         window.history.pushState({ page: 'home' }, "", "");
         
     } else {
-        // হোম পেজে থাকা অবস্থায় ব্যাক চাপলে ইক্সিট কনফার্মেশন মডাল দেখাবে
         exitModal.classList.add('show');
         window.history.pushState({ page: 'exit_confirm' }, "", "");
     }
 });
 
-// "না" বাটনে ক্লিক করলে
 document.getElementById('exitNoBtn').addEventListener('click', () => {
     document.getElementById('exitModal').classList.remove('show');
 });
 
-// "হ্যাঁ" বাটনে ক্লিক করলে
 document.getElementById('exitYesBtn').addEventListener('click', () => {
     allowAppExit = true;
     document.getElementById('exitModal').classList.remove('show');
     
-    // ব্রাউজার বা PWA থেকে বের হওয়ার কমান্ড
     window.history.go(-2); 
     
-    // কিছু কিছু ডিভাইসে/ব্রাউজারে সরাসরি ক্লোজ করার ফলব্যাক
     setTimeout(() => {
         window.close();
     }, 150);
 });
+
+// ==========================================
+// ডাটা ব্যাকআপ ও রিস্টোর (JSON) লজিক
+// ==========================================
+
+const backupDataBtn = document.getElementById('backupDataBtn');
+const restoreDataBtn = document.getElementById('restoreDataBtn');
+const restoreFileInput = document.getElementById('restoreFileInput');
+
+// ১. ডাটা ব্যাকআপ (Export JSON)
+if (backupDataBtn) {
+    backupDataBtn.addEventListener('click', () => {
+        const appData = {};
+        let hasData = false;
+        
+        // লোকাল স্টোরেজ থেকে শুধু এই অ্যাপের ডাটা (tb_ দিয়ে শুরু হওয়া) কালেক্ট করা
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('tb_')) {
+                appData[key] = localStorage.getItem(key);
+                hasData = true;
+            }
+        }
+
+        if (!hasData) {
+            alert("ব্যাকআপ নেওয়ার মতো কোনো ডাটা পাওয়া যায়নি!");
+            return;
+        }
+
+        // ডাটাকে JSON স্ট্রিং এ রূপান্তর করে ফাইল তৈরি
+        const dataStr = JSON.stringify(appData, null, 2);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        
+        // ফাইল ডাউনলোডের জন্য টেম্পোরারি <a> ট্যাগ তৈরি
+        const a = document.createElement('a');
+        a.href = url;
+        const date = new Date().toISOString().split('T')[0]; // আজকের তারিখ
+        a.download = `Tasbih_Pro_Backup_${date}.json`;
+        
+        document.body.appendChild(a);
+        a.click();
+        
+        // ক্লিনআপ
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        if ("vibrate" in navigator) navigator.vibrate(50);
+        alert("আপনার ডাটা সফলভাবে ব্যাকআপ নেওয়া হয়েছে। ফাইলটি গুগল ড্রাইভ বা সুরক্ষিত জায়গায় রাখুন।");
+    });
+}
+
+// ২. রিস্টোর বাটন ক্লিক করলে হিডেন ফাইল ইনপুট ট্রিগার হবে
+if (restoreDataBtn) {
+    restoreDataBtn.addEventListener('click', () => {
+        restoreFileInput.click();
+    });
+}
+
+// ৩. ডাটা রিস্টোর (Import JSON)
+if (restoreFileInput) {
+    restoreFileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                let isValidBackup = false;
+                
+                // চেক করা যে এটা আসলেই আমাদের অ্যাপের ব্যাকআপ ফাইল কিনা
+                for (const key in importedData) {
+                    if (key.startsWith('tb_')) {
+                        isValidBackup = true;
+                        // ডাটা লোকাল স্টোরেজে সেভ করা
+                        localStorage.setItem(key, importedData[key]);
+                    }
+                }
+
+                if (isValidBackup) {
+                    if ("vibrate" in navigator) navigator.vibrate([100, 50, 100]);
+                    alert("ডাটা সফলভাবে রিস্টোর হয়েছে! পরিবর্তনগুলো কার্যকর করতে অ্যাপটি রিলোড করা হচ্ছে...");
+                    
+                    // রিস্টোর হওয়ার পর পেজ রিফ্রেশ করে নতুন ডাটা লোড করা
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    alert("দুঃখিত, এটি সঠিক ব্যাকআপ ফাইল নয়! দয়া করে সঠিক JSON ফাইল সিলেক্ট করুন।");
+                }
+            } catch (error) {
+                alert("ফাইলটি পড়ার সময় একটি ত্রুটি হয়েছে। এটি সঠিক JSON ফরম্যাটে আছে কিনা চেক করুন।");
+                console.error("Restore Error:", error);
+            }
+            // একই ফাইল আবার সিলেক্ট করার জন্য ইনপুট ফিল্ড রিসেট করা
+            restoreFileInput.value = '';
+        };
+        
+        // ফাইল রিড করা শুরু
+        reader.readAsText(file);
+    });
+}
 
     </script>
 </body>
